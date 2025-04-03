@@ -1,0 +1,33 @@
+package eas
+
+import (
+	"github.com/fintreal/expo-eas-sdk-go/internal/api/account"
+	"github.com/fintreal/expo-eas-sdk-go/internal/api/app"
+	"github.com/fintreal/expo-eas-sdk-go/internal/api/appvariable"
+	"github.com/fintreal/expo-eas-sdk-go/internal/api/me"
+	"github.com/fintreal/expo-eas-sdk-go/internal/graphql"
+)
+
+// EASClient capable of interacting with Expo EAS GraphQL API
+type EASClient struct {
+	Me          me.MeService
+	App         app.AppService
+	AppVariable appvariable.AppVariableService
+	Account     account.AccountService
+}
+
+// EASClient capable of interacting with Expo EAS GraphQL API
+//
+// @token Expo Personal Access Token or Robot Access Token
+func NewEASClient(token string) *EASClient {
+	if token == "" {
+		panic("expo token can't be an empty string")
+	}
+	graphql := graphql.NewGraphQL(token)
+	return &EASClient{
+		Me:          me.NewMeService(graphql),
+		App:         app.NewAppService(graphql),
+		AppVariable: appvariable.NewAppVariableService(graphql),
+		Account:     account.NewAccountService(graphql),
+	}
+}

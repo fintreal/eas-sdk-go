@@ -1,15 +1,14 @@
 package eas
 
 import (
-	"fmt"
 	"math/rand"
 	"os"
 	"testing"
 
-	"github.com/fintreal/expo-eas-sdk-go/internal/api/account"
-	"github.com/fintreal/expo-eas-sdk-go/internal/api/app"
-	"github.com/fintreal/expo-eas-sdk-go/internal/api/appvariable"
-	"github.com/fintreal/expo-eas-sdk-go/internal/api/me"
+	"github.com/fintreal/eas-sdk-go/internal/api/account"
+	"github.com/fintreal/eas-sdk-go/internal/api/app"
+	"github.com/fintreal/eas-sdk-go/internal/api/appvariable"
+	"github.com/fintreal/eas-sdk-go/internal/api/me"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -26,7 +25,6 @@ func TestGetMe(t *testing.T) {
 	}
 
 	actualData, actualErr := client.Me.Get()
-	fmt.Printf("%+v", actualData)
 	assert.Equal(t, expectedData, actualData)
 	assert.Equal(t, nil, actualErr)
 }

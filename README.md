@@ -1,14 +1,14 @@
-# expo-eas-sdk-go
+# eas-sdk-go
 
-Expo EAS SDK for Go.
-- Manage Expo EAS app and environment variables from code
-- Uses Expo EAS GraphQL API
+Expo Application Services SDK for Go.
+- Manage Expo apps and environment variables from code
+- Uses Expo GraphQL API
 - Builds on [machinebox/graphql](https://github.com/machinebox/graphql). Big Thanks!
 
 
 ## Installation
 ```
-go get github.com/fintreal/expo-eas-sdk-go
+go get github.com/fintreal/eas-sdk-go
 ```
 
 ## Usage

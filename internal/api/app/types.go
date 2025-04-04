@@ -1,6 +1,6 @@
 package app
 
-import "github.com/fintreal/expo-eas-sdk-go/internal/graphql"
+import "github.com/fintreal/eas-sdk-go/internal/graphql"
 
 type AppData struct {
 	Id   string `json:"id"`

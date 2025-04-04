@@ -1,7 +1,7 @@
 package appvariable
 
 import (
-	"github.com/fintreal/expo-eas-sdk-go/internal/graphql"
+	"github.com/fintreal/eas-sdk-go/internal/graphql"
 )
 
 type AppVariableData struct {

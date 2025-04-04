@@ -5,7 +5,7 @@ import (
 	"testing"
 	"unsafe"
 
-	"github.com/fintreal/expo-eas-sdk-go/internal/graphql/machinebox"
+	"github.com/fintreal/eas-sdk-go/internal/graphql/machinebox"
 	"github.com/machinebox/graphql"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"

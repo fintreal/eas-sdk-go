@@ -1,11 +1,11 @@
 package eas
 
 import (
-	"github.com/fintreal/expo-eas-sdk-go/internal/api/account"
-	"github.com/fintreal/expo-eas-sdk-go/internal/api/app"
-	"github.com/fintreal/expo-eas-sdk-go/internal/api/appvariable"
-	"github.com/fintreal/expo-eas-sdk-go/internal/api/me"
-	"github.com/fintreal/expo-eas-sdk-go/internal/graphql"
+	"github.com/fintreal/eas-sdk-go/internal/api/account"
+	"github.com/fintreal/eas-sdk-go/internal/api/app"
+	"github.com/fintreal/eas-sdk-go/internal/api/appvariable"
+	"github.com/fintreal/eas-sdk-go/internal/api/me"
+	"github.com/fintreal/eas-sdk-go/internal/graphql"
 )
 
 // EASClient capable of interacting with Expo EAS GraphQL API

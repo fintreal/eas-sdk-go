@@ -3,7 +3,7 @@ package app
 import (
 	"testing"
 
-	"github.com/fintreal/expo-eas-sdk-go/internal/graphql"
+	"github.com/fintreal/eas-sdk-go/internal/graphql"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )

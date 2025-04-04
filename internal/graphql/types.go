@@ -1,7 +1,7 @@
 package graphql
 
 import (
-	"github.com/fintreal/expo-eas-sdk-go/internal/graphql/machinebox"
+	"github.com/fintreal/eas-sdk-go/internal/graphql/machinebox"
 	"github.com/machinebox/graphql"
 )
 

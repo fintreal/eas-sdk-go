@@ -5,7 +5,6 @@ Expo Application Services SDK for Go.
 - Uses Expo GraphQL API
 - Builds on [machinebox/graphql](https://github.com/machinebox/graphql). Big Thanks!
 
-
 ## Installation
 ```
 go get github.com/fintreal/eas-sdk-go

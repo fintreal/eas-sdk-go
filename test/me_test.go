@@ -1,7 +1,6 @@
 package test
 
 import (
-	"os"
 	"testing"
 
 	"github.com/fintreal/eas-sdk-go/internal/api/me"
@@ -10,7 +9,7 @@ import (
 
 func TestGetMe(t *testing.T) {
 	expectedData := &me.MeData{
-		Id:          os.Getenv("EXPO_ME_ID"),
+		Id:          meId,
 		DisplayName: "integration-test",
 	}
 

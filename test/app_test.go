@@ -1,7 +1,6 @@
 package test
 
 import (
-	"os"
 	"testing"
 
 	"github.com/fintreal/eas-sdk-go/internal/api/app"
@@ -10,7 +9,7 @@ import (
 
 func TestAppGet(t *testing.T) {
 	expectedData := &app.AppData{
-		Id:   os.Getenv("EXPO_TEST_GET_APP_ID"),
+		Id:   immutableAppId,
 		Name: "Test App",
 		Slug: "test-app",
 	}
@@ -23,7 +22,7 @@ func TestAppGet(t *testing.T) {
 
 func TestAppCreate(t *testing.T) {
 	inputData := app.CreateAppData{
-		AccountId: os.Getenv("EXPO_ACCOUNT_ID"),
+		AccountId: accountId,
 		Name:      generateRandomString(10),
 		Slug:      generateRandomString(10),
 	}
@@ -38,7 +37,7 @@ func TestAppCreate(t *testing.T) {
 
 func TestAppUpdate(t *testing.T) {
 	expectedData := &app.AppData{
-		Id:   os.Getenv("EXPO_TEST_UPDATE_APP_ID"),
+		Id:   mutableAppId,
 		Name: generateRandomString(10),
 		Slug: "test-app-update",
 	}

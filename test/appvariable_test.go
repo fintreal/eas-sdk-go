@@ -1,7 +1,6 @@
 package test
 
 import (
-	"os"
 	"testing"
 
 	"github.com/fintreal/eas-sdk-go/internal/api/appvariable"
@@ -10,14 +9,14 @@ import (
 
 func TestAppEnvironmentVariableGet(t *testing.T) {
 	expectedData := &appvariable.AppVariableData{
-		Id:           os.Getenv("EXPO_TEST_GET_ENVIRONMENT_VARIABLE_ID"),
+		Id:           immutableAppVariableId,
 		Name:         "TEST_ENVIRONMENT_VARIABLE",
 		Value:        "VALUE",
 		Visibility:   "PUBLIC",
 		Environments: []string{"PREVIEW"},
 	}
 
-	actualData, actualErr := client.AppVariable.Get(expectedData.Id, os.Getenv("EXPO_TEST_GET_APP_ID"))
+	actualData, actualErr := client.AppVariable.Get(expectedData.Id, immutableAppId)
 
 	assert.Equal(t, expectedData, actualData)
 	assert.Equal(t, nil, actualErr)
@@ -25,14 +24,14 @@ func TestAppEnvironmentVariableGet(t *testing.T) {
 
 func TestAppEnvironmentVariableGetByName(t *testing.T) {
 	expectedData := &appvariable.AppVariableData{
-		Id:           os.Getenv("EXPO_TEST_GET_ENVIRONMENT_VARIABLE_ID"),
+		Id:           immutableAppVariableId,
 		Name:         "TEST_ENVIRONMENT_VARIABLE",
 		Value:        "VALUE",
 		Visibility:   "PUBLIC",
 		Environments: []string{"PREVIEW"},
 	}
 
-	actualData, actualErr := client.AppVariable.GetByName(expectedData.Name, os.Getenv("EXPO_TEST_GET_APP_ID"))
+	actualData, actualErr := client.AppVariable.GetByName(expectedData.Name, immutableAppId)
 
 	assert.Equal(t, expectedData, actualData)
 	assert.Equal(t, nil, actualErr)
@@ -40,7 +39,7 @@ func TestAppEnvironmentVariableGetByName(t *testing.T) {
 
 func TestAppEnvironmentVariableUpdate(t *testing.T) {
 	updateData := appvariable.UpdateAppVariableData{
-		Id:           os.Getenv("EXPO_TEST_UPDATE_ENVIRONMENT_VARIABLE_ID"),
+		Id:           mutableAppVariableId,
 		Name:         generateRandomString(10),
 		Value:        generateRandomString(10),
 		Visibility:   "PUBLIC",
@@ -59,7 +58,7 @@ func TestAppEnvironmentVariableUpdate(t *testing.T) {
 
 func TestAppEnvironmentVariableCreateAndDelete(t *testing.T) {
 	inputData := appvariable.CreateAppVariableData{
-		AppId:        os.Getenv("EXPO_TEST_GET_APP_ID"),
+		AppId:        immutableAppId,
 		Name:         generateRandomString(10),
 		Value:        generateRandomString(10),
 		Visibility:   "PUBLIC",

@@ -32,8 +32,8 @@ func TestGet(t *testing.T) {
 }
 
 func newGetGraphQLMock(data *AppleCertificateData) *graphql.GraphQLMock {
-	mockResponse := getAppleCertifiactesResponse{
-		Account: getAppleCertifiactes{
+	mockResponse := getAppleCertificatesResponse{
+		Account: getAppleCertificates{
 			ById: byId{
 				Data: []AppleCertificateData{*data},
 			},

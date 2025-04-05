@@ -3,7 +3,7 @@ package provisioningprofile
 import "fmt"
 
 type byId struct {
-	Data []provisioningProfileData `json:"appleDistributionCertificates"`
+	Data []provisioningProfileData `json:"appleProvisioningProfiles"`
 }
 
 type getProvisioningProfiles struct {
@@ -15,19 +15,20 @@ type getProvisioningProfilesResponse struct {
 }
 
 const getQuery = `
-	query ($accountId: String!, $id: ID!) {
-        account {
-            byId(accountId: $accountId) {
-                appleProvisioningProfiles(appleAppIdentifierId: $id) {
-                    id
-                    provisioningProfile
-                    appleAppIdentifier {
-                        id
-                    }
-                }
-            }
-        }
-	}`
+	query ($accountId: String!) {
+			account {
+					byId(accountId: $accountId) {
+							appleProvisioningProfiles {
+									id
+									provisioningProfile
+									appleAppIdentifier {
+											id
+									}
+							}
+					}
+			}
+	}
+`
 
 func (service *provisioningProfileService) Get(id string, accountId string) (*ProvisioningProfileData, error) {
 	variables := map[string]any{

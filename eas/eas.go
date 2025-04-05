@@ -3,6 +3,7 @@ package eas
 import (
 	"github.com/fintreal/eas-sdk-go/internal/api/account"
 	"github.com/fintreal/eas-sdk-go/internal/api/app"
+	"github.com/fintreal/eas-sdk-go/internal/api/apple/provisioningprofile"
 	"github.com/fintreal/eas-sdk-go/internal/api/appleappbundleidentifier"
 	"github.com/fintreal/eas-sdk-go/internal/api/applecertificate"
 	"github.com/fintreal/eas-sdk-go/internal/api/appleteam"
@@ -20,6 +21,7 @@ type EASClient struct {
 	AppleTeam                appleteam.AppleTeamService
 	AppleAppBundleIdentifier appleappbundleidentifier.AppleAppBundleIdentifierService
 	AppleCertificate         applecertificate.AppleCertificateService
+	AppleProvisioningProfile provisioningprofile.ProvisioningProfileService
 }
 
 // EASClient capable of interacting with Expo EAS GraphQL API
@@ -38,5 +40,6 @@ func NewEASClient(token string) *EASClient {
 		AppleTeam:                appleteam.NewAppleTeamService(graphql),
 		AppleAppBundleIdentifier: appleappbundleidentifier.NewAppleAppBundleIdentifierService(graphql),
 		AppleCertificate:         applecertificate.NewAppleCertificateService(graphql),
+		AppleProvisioningProfile: provisioningprofile.NewProvisioningProfileService(graphql),
 	}
 }

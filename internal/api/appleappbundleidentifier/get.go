@@ -41,7 +41,6 @@ func (s *appleAppBundleIdentifierService) GetByIdentifier(identifier string, acc
 	if err != nil {
 		return nil, err
 	}
-	fmt.Printf("%+v", response)
 	return findBundleIdentifierByIdentifier(response.Account.ById.Data, identifier)
 }
 

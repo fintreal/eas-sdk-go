@@ -42,7 +42,7 @@ func newGetGraphQLMock(data *AppleCertificateData) *graphql.GraphQLMock {
 
 	graphQLMock := graphql.NewGraphQLMock()
 	graphQLMock.On("Query", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
-		*args.Get(2).(*getAppleCertifiactesResponse) = mockResponse
+		*args.Get(2).(*getAppleCertificatesResponse) = mockResponse
 	}).Return(nil)
 	return graphQLMock
 }

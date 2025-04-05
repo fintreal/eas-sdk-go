@@ -4,12 +4,12 @@ type byId struct {
 	Data []AppleCertificateData `json:"appleDistributionCertificates"`
 }
 
-type getAppleCertifiactes struct {
+type getAppleCertificates struct {
 	ById byId `json:"byId"`
 }
 
-type getAppleCertifiactesResponse struct {
-	Account getAppleCertifiactes `json:"account"`
+type getAppleCertificatesResponse struct {
+	Account getAppleCertificates `json:"account"`
 }
 
 const getAppleCertificateQuery = `
@@ -29,7 +29,7 @@ func (service *appleCertificateService) GetAppleCertificateBySerialNumber(serial
 		"accountId": accountId,
 	}
 
-	var response getAppleCertifiactesResponse
+	var response getAppleCertificatesResponse
 
 	err := service.graphql.Query(getAppleCertificateQuery, variables, &response)
 	if err != nil {

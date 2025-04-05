@@ -1,7 +1,5 @@
 package appleteam
 
-import "fmt"
-
 type getAppleTeam struct {
 	Data *appleTeamData `json:"byAppleTeamIdentifier"`
 }
@@ -39,8 +37,6 @@ func (service *appleTeamService) GetByIdentifier(identifier string, accountId st
 	if err != nil {
 		return nil, err
 	}
-
-	fmt.Printf("%+v", response)
 
 	return &AppleTeamData{
 		Id:         response.GetAppleTeam.Data.Id,

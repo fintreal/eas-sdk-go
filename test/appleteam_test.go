@@ -1,7 +1,6 @@
 package test
 
 import (
-	"os"
 	"testing"
 
 	"github.com/fintreal/eas-sdk-go/internal/api/appleteam"
@@ -10,10 +9,10 @@ import (
 
 func TestGetAppleTeamByIdentifier(t *testing.T) {
 	expectedData := &appleteam.AppleTeamData{
-		Id:         os.Getenv("EXPO_TEST_GET_APPLE_TEAM_ID"),
-		AccountId:  os.Getenv("EXPO_ACCOUNT_ID"),
-		Identifier: os.Getenv("EXPO_TEST_GET_APPLE_TEAM_IDENTIFIER"),
-		Name:       os.Getenv("EXPO_TEST_GET_APPLE_TEAM_NAME"),
+		Id:         immutableAppleTeamId,
+		AccountId:  accountId,
+		Identifier: "TEST_IDENTIFIER",
+		Name:       "TEST_NAME",
 		Type:       "COMPANY_OR_ORGANIZATION",
 	}
 
@@ -25,7 +24,7 @@ func TestGetAppleTeamByIdentifier(t *testing.T) {
 
 func TestCreateAppleTeamByIdentifier(t *testing.T) {
 	expectedData := &appleteam.AppleTeamData{
-		AccountId:  os.Getenv("EXPO_ACCOUNT_ID"),
+		AccountId:  accountId,
 		Identifier: generateRandomString(10),
 		Name:       generateRandomString(10),
 		Type:       "COMPANY_OR_ORGANIZATION", // RANDOMIZE
@@ -35,7 +34,7 @@ func TestCreateAppleTeamByIdentifier(t *testing.T) {
 		Identifier: expectedData.Identifier,
 		Name:       expectedData.Name,
 		Type:       expectedData.Type,
-		AccountId:  os.Getenv("EXPO_ACCOUNT_ID"),
+		AccountId:  accountId,
 	}
 
 	actualData, actualErr := client.AppleTeam.Create(input)
@@ -49,8 +48,8 @@ func TestCreateAppleTeamByIdentifier(t *testing.T) {
 
 func TestUpdateAppleTeamByIdentifier(t *testing.T) {
 	expectedData := &appleteam.AppleTeamData{
-		Id:         "cc513f5d-366d-42d6-aa40-e8132c3c78a3",
-		AccountId:  os.Getenv("EXPO_ACCOUNT_ID"),
+		Id:         mutableAppleTeamId,
+		AccountId:  accountId,
 		Identifier: "TEST_UPDATE_TEAM",
 		Name:       generateRandomString(10),
 		Type:       "COMPANY_OR_ORGANIZATION", // RANDOMIZE

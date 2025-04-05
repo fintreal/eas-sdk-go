@@ -3,6 +3,7 @@ package eas
 import (
 	"github.com/fintreal/eas-sdk-go/internal/api/account"
 	"github.com/fintreal/eas-sdk-go/internal/api/app"
+	"github.com/fintreal/eas-sdk-go/internal/api/appleappbundleidentifier"
 	"github.com/fintreal/eas-sdk-go/internal/api/appleteam"
 	"github.com/fintreal/eas-sdk-go/internal/api/appvariable"
 	"github.com/fintreal/eas-sdk-go/internal/api/me"
@@ -22,3 +23,6 @@ type UpdateAppVariableData = appvariable.UpdateAppVariableData
 type AppleTeamData = appleteam.AppleTeamData
 type CreateAppleTeamData = appleteam.CreateAppleTeamData
 type UpdateAppleTeamData = appleteam.UpdateAppleTeamData
+
+type AppleAppBundleIdentifierData = appleappbundleidentifier.AppleAppBundleIdentifierData
+type CreateAppleAppBundleIdentifierData = appleappbundleidentifier.CreateAppleAppBundleIdentifierData

@@ -4,6 +4,7 @@ import (
 	"github.com/fintreal/eas-sdk-go/internal/api/account"
 	"github.com/fintreal/eas-sdk-go/internal/api/app"
 	"github.com/fintreal/eas-sdk-go/internal/api/appleappbundleidentifier"
+	"github.com/fintreal/eas-sdk-go/internal/api/applecertificate"
 	"github.com/fintreal/eas-sdk-go/internal/api/appleteam"
 	"github.com/fintreal/eas-sdk-go/internal/api/appvariable"
 	"github.com/fintreal/eas-sdk-go/internal/api/me"
@@ -26,3 +27,5 @@ type UpdateAppleTeamData = appleteam.UpdateAppleTeamData
 
 type AppleAppBundleIdentifierData = appleappbundleidentifier.AppleAppBundleIdentifierData
 type CreateAppleAppBundleIdentifierData = appleappbundleidentifier.CreateAppleAppBundleIdentifierData
+
+type AppleCertificateData = applecertificate.AppleCertificateData

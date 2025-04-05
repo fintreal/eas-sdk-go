@@ -9,6 +9,7 @@ import (
 
 var token = os.Getenv("EXPO_TOKEN")
 var client = eas.NewEASClient(token)
+var immutableProvisioningProfileBase64 = os.Getenv("IMMUTABLE_PROVISIONING_PROFILE_BASE64")
 
 // TEST IDs
 

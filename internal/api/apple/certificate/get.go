@@ -1,15 +1,9 @@
 package certificate
 
-type byId struct {
-	Data []CertificateData `json:"appleDistributionCertificates"`
-}
-
-type getCertificates struct {
-	ById byId `json:"byId"`
-}
+import "github.com/fintreal/eas-sdk-go/internal/utils"
 
 type getCertificatesResponse struct {
-	Account getCertificates `json:"account"`
+	Data []CertificateData `json:"appleDistributionCertificates"`
 }
 
 const getQuery = `
@@ -29,7 +23,7 @@ func (service *certificateService) GetBySerialNumber(serialNumber string, accoun
 		"accountId": accountId,
 	}
 
-	var response getCertificatesResponse
+	var response utils.AccountResponse[getCertificatesResponse]
 
 	err := service.graphql.Query(getQuery, variables, &response)
 	if err != nil {

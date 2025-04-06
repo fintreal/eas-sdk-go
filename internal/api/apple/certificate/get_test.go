@@ -21,15 +21,15 @@ func TestGetBySerialNumber(t *testing.T) {
 	expectedVariables := map[string]any{"accountId": accountId}
 	graphQLMock := newGetGraphQLMock(expectedResponse)
 	service := NewCertificateService(graphQLMock)
-	result, err := service.GetBySerialNumber(expectedResponse.SerialNumber, accountId)
+	actualResponse, actualErr := service.GetBySerialNumber(expectedResponse.SerialNumber, accountId)
 
 	actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
 	actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)
 
 	assert.Equal(t, getQuery, actualQuery)
 	assert.Equal(t, expectedVariables, actualVariables)
-	assert.Equal(t, expectedResponse, result)
-	assert.Equal(t, nil, err)
+	assert.Equal(t, expectedResponse, actualResponse)
+	assert.Equal(t, nil, actualErr)
 }
 
 func newGetGraphQLMock(data *CertificateData) *graphql.GraphQLMock {

@@ -6,11 +6,11 @@ type AppStoreApiKeyData struct {
 	Id               string `json:"id"`
 	Name             string `json:"name"`
 	IssuerIdentifier string `json:"issuerIdentifier"`
-	KeyIdentifier    string `json:"keyIdentifier"`
+	Identifier       string `json:"keyIdentifier"`
 }
 
 type AppStoreApiKeyService interface {
-	GetByIdentifier(identifier string) (*AppStoreApiKeyData, error)
+	GetByIdentifier(identifier string, accountId string) (*AppStoreApiKeyData, error)
 }
 
 type appStoreApiKeyService struct {

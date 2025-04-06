@@ -4,19 +4,20 @@ import (
 	"testing"
 
 	"github.com/fintreal/eas-sdk-go/internal/api/appvariable"
+	"github.com/fintreal/eas-sdk-go/test/utils"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestAppEnvironmentVariableGet(t *testing.T) {
 	expectedData := &appvariable.AppVariableData{
-		Id:           immutableAppVariableId,
+		Id:           utils.ImmutableAppVariableId,
 		Name:         "TEST_ENVIRONMENT_VARIABLE",
 		Value:        "VALUE",
 		Visibility:   "PUBLIC",
 		Environments: []string{"PREVIEW"},
 	}
 
-	actualData, actualErr := client.AppVariable.Get(expectedData.Id, immutableAppId)
+	actualData, actualErr := utils.Client.AppVariable.Get(expectedData.Id, utils.ImmutableAppId)
 
 	assert.Equal(t, expectedData, actualData)
 	assert.Equal(t, nil, actualErr)
@@ -24,14 +25,14 @@ func TestAppEnvironmentVariableGet(t *testing.T) {
 
 func TestAppEnvironmentVariableGetByName(t *testing.T) {
 	expectedData := &appvariable.AppVariableData{
-		Id:           immutableAppVariableId,
+		Id:           utils.ImmutableAppVariableId,
 		Name:         "TEST_ENVIRONMENT_VARIABLE",
 		Value:        "VALUE",
 		Visibility:   "PUBLIC",
 		Environments: []string{"PREVIEW"},
 	}
 
-	actualData, actualErr := client.AppVariable.GetByName(expectedData.Name, immutableAppId)
+	actualData, actualErr := utils.Client.AppVariable.GetByName(expectedData.Name, utils.ImmutableAppId)
 
 	assert.Equal(t, expectedData, actualData)
 	assert.Equal(t, nil, actualErr)
@@ -39,14 +40,14 @@ func TestAppEnvironmentVariableGetByName(t *testing.T) {
 
 func TestAppEnvironmentVariableUpdate(t *testing.T) {
 	updateData := appvariable.UpdateAppVariableData{
-		Id:           mutableAppVariableId,
-		Name:         generateRandomString(10),
-		Value:        generateRandomString(10),
+		Id:           utils.MutableAppVariableId,
+		Name:         utils.GenerateRandomString(10),
+		Value:        utils.GenerateRandomString(10),
 		Visibility:   "PUBLIC",
 		Environments: []string{"PRODUCTION"},
 	}
 
-	actualData, actualErr := client.AppVariable.Update(updateData)
+	actualData, actualErr := utils.Client.AppVariable.Update(updateData)
 
 	assert.Equal(t, actualData.Id, updateData.Id)
 	assert.Equal(t, actualData.Name, updateData.Name)
@@ -58,14 +59,14 @@ func TestAppEnvironmentVariableUpdate(t *testing.T) {
 
 func TestAppEnvironmentVariableCreateAndDelete(t *testing.T) {
 	inputData := appvariable.CreateAppVariableData{
-		AppId:        immutableAppId,
-		Name:         generateRandomString(10),
-		Value:        generateRandomString(10),
+		AppId:        utils.ImmutableAppId,
+		Name:         utils.GenerateRandomString(10),
+		Value:        utils.GenerateRandomString(10),
 		Visibility:   "PUBLIC",
 		Environments: []string{"DEVELOPMENT", "PREVIEW"},
 	}
 
-	actualData, actualErr := client.AppVariable.Create(inputData)
+	actualData, actualErr := utils.Client.AppVariable.Create(inputData)
 
 	assert.Equal(t, inputData.Name, actualData.Name)
 	assert.Equal(t, inputData.Value, actualData.Value)
@@ -74,7 +75,7 @@ func TestAppEnvironmentVariableCreateAndDelete(t *testing.T) {
 	assert.Equal(t, nil, actualErr)
 
 	// Delete
-	actualErr = client.AppVariable.Delete(actualData.Id)
+	actualErr = utils.Client.AppVariable.Delete(actualData.Id)
 
 	assert.Equal(t, nil, actualErr)
 }

@@ -3,10 +3,7 @@ package eas
 import (
 	"github.com/fintreal/eas-sdk-go/internal/api/account"
 	"github.com/fintreal/eas-sdk-go/internal/api/app"
-	"github.com/fintreal/eas-sdk-go/internal/api/apple/provisioningprofile"
-	"github.com/fintreal/eas-sdk-go/internal/api/appleappbundleidentifier"
-	"github.com/fintreal/eas-sdk-go/internal/api/applecertificate"
-	"github.com/fintreal/eas-sdk-go/internal/api/appleteam"
+	"github.com/fintreal/eas-sdk-go/internal/api/apple"
 	"github.com/fintreal/eas-sdk-go/internal/api/appvariable"
 	"github.com/fintreal/eas-sdk-go/internal/api/me"
 	"github.com/fintreal/eas-sdk-go/internal/graphql"
@@ -14,14 +11,11 @@ import (
 
 // EASClient capable of interacting with Expo EAS GraphQL API
 type EASClient struct {
-	Me                       me.MeService
-	App                      app.AppService
-	AppVariable              appvariable.AppVariableService
-	Account                  account.AccountService
-	AppleTeam                appleteam.AppleTeamService
-	AppleAppBundleIdentifier appleappbundleidentifier.AppleAppBundleIdentifierService
-	AppleCertificate         applecertificate.AppleCertificateService
-	AppleProvisioningProfile provisioningprofile.ProvisioningProfileService
+	Me          me.MeService
+	App         app.AppService
+	AppVariable appvariable.AppVariableService
+	Account     account.AccountService
+	Apple       apple.AppleService
 }
 
 // EASClient capable of interacting with Expo EAS GraphQL API
@@ -33,13 +27,10 @@ func NewEASClient(token string) *EASClient {
 	}
 	graphql := graphql.NewGraphQL(token)
 	return &EASClient{
-		Me:                       me.NewMeService(graphql),
-		App:                      app.NewAppService(graphql),
-		AppVariable:              appvariable.NewAppVariableService(graphql),
-		Account:                  account.NewAccountService(graphql),
-		AppleTeam:                appleteam.NewAppleTeamService(graphql),
-		AppleAppBundleIdentifier: appleappbundleidentifier.NewAppleAppBundleIdentifierService(graphql),
-		AppleCertificate:         applecertificate.NewAppleCertificateService(graphql),
-		AppleProvisioningProfile: provisioningprofile.NewProvisioningProfileService(graphql),
+		Me:          me.NewMeService(graphql),
+		App:         app.NewAppService(graphql),
+		AppVariable: appvariable.NewAppVariableService(graphql),
+		Account:     account.NewAccountService(graphql),
+		Apple:       apple.NewAppleService(graphql),
 	}
 }

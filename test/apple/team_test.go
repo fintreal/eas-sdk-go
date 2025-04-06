@@ -1,43 +1,44 @@
-package test
+package appletest
 
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/api/appleteam"
+	"github.com/fintreal/eas-sdk-go/eas"
+	"github.com/fintreal/eas-sdk-go/test/utils"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestGetAppleTeamByIdentifier(t *testing.T) {
-	expectedData := &appleteam.AppleTeamData{
-		Id:         immutableAppleTeamId,
-		AccountId:  accountId,
+	expectedData := &eas.AppleTeamData{
+		Id:         utils.ImmutableAppleTeamId,
+		AccountId:  utils.AccountId,
 		Identifier: "TEST_IDENTIFIER",
 		Name:       "TEST_NAME",
 		Type:       "COMPANY_OR_ORGANIZATION",
 	}
 
-	actualData, actualErr := client.AppleTeam.GetByIdentifier(expectedData.Identifier, expectedData.AccountId)
+	actualData, actualErr := utils.Client.Apple.Team.GetByIdentifier(expectedData.Identifier, expectedData.AccountId)
 
 	assert.Equal(t, expectedData, actualData)
 	assert.Equal(t, nil, actualErr)
 }
 
 func TestCreateAppleTeamByIdentifier(t *testing.T) {
-	expectedData := &appleteam.AppleTeamData{
-		AccountId:  accountId,
-		Identifier: generateRandomString(10),
-		Name:       generateRandomString(10),
+	expectedData := &eas.AppleTeamData{
+		AccountId:  utils.AccountId,
+		Identifier: utils.GenerateRandomString(10),
+		Name:       utils.GenerateRandomString(10),
 		Type:       "COMPANY_OR_ORGANIZATION", // RANDOMIZE
 	}
 
-	input := appleteam.CreateAppleTeamData{
+	input := eas.CreateAppleTeamData{
 		Identifier: expectedData.Identifier,
 		Name:       expectedData.Name,
 		Type:       expectedData.Type,
-		AccountId:  accountId,
+		AccountId:  utils.AccountId,
 	}
 
-	actualData, actualErr := client.AppleTeam.Create(input)
+	actualData, actualErr := utils.Client.Apple.Team.Create(input)
 
 	assert.Equal(t, expectedData.AccountId, actualData.AccountId)
 	assert.Equal(t, expectedData.Identifier, actualData.Identifier)
@@ -47,21 +48,21 @@ func TestCreateAppleTeamByIdentifier(t *testing.T) {
 }
 
 func TestUpdateAppleTeamByIdentifier(t *testing.T) {
-	expectedData := &appleteam.AppleTeamData{
-		Id:         mutableAppleTeamId,
-		AccountId:  accountId,
+	expectedData := &eas.AppleTeamData{
+		Id:         utils.MutableAppleTeamId,
+		AccountId:  utils.AccountId,
 		Identifier: "TEST_UPDATE_TEAM",
-		Name:       generateRandomString(10),
+		Name:       utils.GenerateRandomString(10),
 		Type:       "COMPANY_OR_ORGANIZATION", // RANDOMIZE
 	}
 
-	input := appleteam.UpdateAppleTeamData{
+	input := eas.UpdateAppleTeamData{
 		Id:   expectedData.Id,
 		Name: expectedData.Name,
 		Type: expectedData.Type,
 	}
 
-	actualData, actualErr := client.AppleTeam.Update(input)
+	actualData, actualErr := utils.Client.Apple.Team.Update(input)
 
 	assert.Equal(t, expectedData, actualData)
 	assert.Equal(t, nil, actualErr)

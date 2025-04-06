@@ -4,16 +4,17 @@ import (
 	"testing"
 
 	"github.com/fintreal/eas-sdk-go/internal/api/me"
+	"github.com/fintreal/eas-sdk-go/test/utils"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestGetMe(t *testing.T) {
 	expectedData := &me.MeData{
-		Id:          meId,
+		Id:          utils.MeId,
 		DisplayName: "integration-test",
 	}
 
-	actualData, actualErr := client.Me.Get()
+	actualData, actualErr := utils.Client.Me.Get()
 	assert.Equal(t, expectedData, actualData)
 	assert.Equal(t, nil, actualErr)
 }

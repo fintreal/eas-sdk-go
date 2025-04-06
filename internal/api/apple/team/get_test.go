@@ -1,4 +1,4 @@
-package appleteam
+package team
 
 import (
 	"testing"
@@ -9,7 +9,7 @@ import (
 )
 
 func TestGetByIdentifier(t *testing.T) {
-	expectedData := &AppleTeamData{
+	expectedData := &TeamData{
 		Id:         "test-id",
 		Name:       "test-name",
 		Identifier: "test-identifier",
@@ -24,21 +24,21 @@ func TestGetByIdentifier(t *testing.T) {
 
 	graphQLMock := newGetGraphQLMock(expectedData)
 
-	service := NewAppleTeamService(graphQLMock)
+	service := NewTeamService(graphQLMock)
 
 	actualData, actualErr := service.GetByIdentifier(expectedData.Identifier, expectedData.AccountId)
 
 	actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
 	actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)
 
-	assert.Equal(t, getAppleTeamByIdentifierQuery, actualQuery)
+	assert.Equal(t, getQuery, actualQuery)
 	assert.Equal(t, expectedVariables, actualVariables)
 	assert.Equal(t, expectedData, actualData)
 	assert.Equal(t, nil, actualErr)
 }
 
-func newGetGraphQLMock(data *AppleTeamData) *graphql.GraphQLMock {
-	mockData := &appleTeamData{
+func newGetGraphQLMock(data *TeamData) *graphql.GraphQLMock {
+	mockData := &teamData{
 		Id:         data.Id,
 		Name:       data.Name,
 		Identifier: data.Identifier,
@@ -47,7 +47,7 @@ func newGetGraphQLMock(data *AppleTeamData) *graphql.GraphQLMock {
 	}
 	graphQLMock := graphql.NewGraphQLMock()
 	graphQLMock.On("Query", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
-		*args.Get(2).(*getAppleTeamResponse) = getAppleTeamResponse{GetAppleTeam: getAppleTeam{Data: mockData}}
+		*args.Get(2).(*getTeamResponse) = getTeamResponse{GetTeam: getTeam{Data: mockData}}
 	}).Return(nil)
 	return graphQLMock
 }

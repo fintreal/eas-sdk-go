@@ -1,9 +1,9 @@
-package appleappbundleidentifier
+package bundleidentifier
 
 import "fmt"
 
 type byId struct {
-	Data []appleAppBundleIdentifierData `json:"appleAppIdentifiers"`
+	Data []appBundleIdentifierData `json:"appleAppIdentifiers"`
 }
 
 type getBundleIdentifiers struct {
@@ -14,7 +14,7 @@ type getBundleIdentifiersResponse struct {
 	Account getBundleIdentifiers `json:"account"`
 }
 
-const getAppleTeamByIdentifierQuery = `
+const getQuery = `
 	query ($accountId: String!, $identifier: String!) {
 		account {
 			byId(accountId: $accountId) {
@@ -29,7 +29,7 @@ const getAppleTeamByIdentifierQuery = `
 		}
 	}`
 
-func (s *appleAppBundleIdentifierService) GetByIdentifier(identifier string, accountId string) (*AppleAppBundleIdentifierData, error) {
+func (s *appBundleIdentifierService) GetByIdentifier(identifier string, accountId string) (*AppBundleIdentifierData, error) {
 	variables := map[string]any{
 		"identifier": identifier,
 		"accountId":  accountId,
@@ -37,20 +37,20 @@ func (s *appleAppBundleIdentifierService) GetByIdentifier(identifier string, acc
 
 	var response getBundleIdentifiersResponse
 
-	err := s.graphql.Query(getAppleTeamByIdentifierQuery, variables, &response)
+	err := s.graphql.Query(getQuery, variables, &response)
 	if err != nil {
 		return nil, err
 	}
 	return findBundleIdentifierByIdentifier(response.Account.ById.Data, identifier)
 }
 
-func findBundleIdentifierByIdentifier(identifiers []appleAppBundleIdentifierData, identifier string) (*AppleAppBundleIdentifierData, error) {
+func findBundleIdentifierByIdentifier(identifiers []appBundleIdentifierData, identifier string) (*AppBundleIdentifierData, error) {
 	for _, bundleIdentifier := range identifiers {
 		if bundleIdentifier.Identifier == identifier {
-			return &AppleAppBundleIdentifierData{
+			return &AppBundleIdentifierData{
 				Id:         bundleIdentifier.Id,
 				Identifier: bundleIdentifier.Identifier,
-				TeamId:     bundleIdentifier.AppleTeam.Id,
+				TeamId:     bundleIdentifier.Team.Id,
 			}, nil
 		}
 	}

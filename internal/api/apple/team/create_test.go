@@ -1,4 +1,4 @@
-package appleteam
+package team
 
 import (
 	"testing"
@@ -8,8 +8,8 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-func UpdateCreate(t *testing.T) {
-	expectedData := &AppleTeamData{
+func TestCreate(t *testing.T) {
+	expectedData := &TeamData{
 		Id:         "test-id",
 		Name:       "test-name",
 		Identifier: "test-identifier",
@@ -18,34 +18,36 @@ func UpdateCreate(t *testing.T) {
 	}
 
 	expectedVariables := map[string]any{
-		"id":   expectedData.Id,
-		"name": expectedData.Name,
-		"type": expectedData.Type,
+		"identifier": expectedData.Identifier,
+		"name":       expectedData.Name,
+		"accountId":  expectedData.AccountId,
+		"type":       expectedData.Type,
 	}
 
-	inputData := UpdateAppleTeamData{
-		Id:   expectedData.Id,
-		Name: expectedData.Name,
-		Type: expectedData.Type,
+	inputData := CreateTeamData{
+		Name:       expectedData.Name,
+		Identifier: expectedData.Identifier,
+		Type:       expectedData.Type,
+		AccountId:  expectedData.AccountId,
 	}
 
-	graphQLMock := newUpdateGraphQLMock(expectedData)
+	graphQLMock := newCreateGraphQLMock(expectedData)
 
-	service := NewAppleTeamService(graphQLMock)
+	service := NewTeamService(graphQLMock)
 
-	actualData, actualErr := service.Update(inputData)
+	actualData, actualErr := service.Create(inputData)
 
 	actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
 	actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)
 
-	assert.Equal(t, createAppleTeamMutation, actualQuery)
+	assert.Equal(t, createQuery, actualQuery)
 	assert.Equal(t, expectedVariables, actualVariables)
 	assert.Equal(t, expectedData, actualData)
 	assert.Equal(t, nil, actualErr)
 }
 
-func newUpdateGraphQLMock(data *AppleTeamData) *graphql.GraphQLMock {
-	mockData := &appleTeamData{
+func newCreateGraphQLMock(data *TeamData) *graphql.GraphQLMock {
+	mockData := &teamData{
 		Id:         data.Id,
 		Name:       data.Name,
 		Identifier: data.Identifier,
@@ -54,7 +56,7 @@ func newUpdateGraphQLMock(data *AppleTeamData) *graphql.GraphQLMock {
 	}
 	graphQLMock := graphql.NewGraphQLMock()
 	graphQLMock.On("Query", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
-		*args.Get(2).(*updateAppleTeamResponse) = updateAppleTeamResponse{UpdateAppleTeam: updateAppleTeam{Data: mockData}}
+		*args.Get(2).(*createTeamResponse) = createTeamResponse{CreateTeam: createTeam{Data: mockData}}
 	}).Return(nil)
 	return graphQLMock
 }

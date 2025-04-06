@@ -1,0 +1,22 @@
+package appletest
+
+import (
+	"testing"
+
+	"github.com/fintreal/eas-sdk-go/eas"
+	"github.com/fintreal/eas-sdk-go/test/utils"
+	"github.com/stretchr/testify/assert"
+)
+
+func TestGetAppStoreApiKeyByIdentifier(t *testing.T) {
+	expectedData := &eas.AppStoreApiKeyData{
+		Id:               "564e9d75-ff77-4860-92ee-7c0ab2066c82",
+		Identifier:       "349P6U74M8",
+		IssuerIdentifier: "c226a277-e124-405a-a571-794533cd587a",
+		Name:             "App Store API Key",
+	}
+
+	actualData, actualErr := utils.Client.Apple.AppStoreApiKey.GetByIdentifier(expectedData.Identifier, utils.AccountId)
+	assert.Equal(t, expectedData, actualData)
+	assert.Equal(t, nil, actualErr)
+}

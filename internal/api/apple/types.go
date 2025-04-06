@@ -1,6 +1,7 @@
 package apple
 
 import (
+	"github.com/fintreal/eas-sdk-go/internal/api/apple/appstoreapikey"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/bundleidentifier"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/certificate"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/provisioningprofile"
@@ -13,6 +14,7 @@ type AppleService struct {
 	Certificate         certificate.CertificateService
 	BundleIdentifier    bundleidentifier.AppBundleIdentifierService
 	ProvisioningProfile provisioningprofile.ProvisioningProfileService
+	AppStoreApiKey      appstoreapikey.AppStoreApiKeyService
 }
 
 func NewAppleService(graphQL graphql.GraphQL) AppleService {
@@ -21,5 +23,6 @@ func NewAppleService(graphQL graphql.GraphQL) AppleService {
 		Certificate:         certificate.NewCertificateService(graphQL),
 		BundleIdentifier:    bundleidentifier.NewAppBundleIdentifierService(graphQL),
 		ProvisioningProfile: provisioningprofile.NewProvisioningProfileService(graphQL),
+		AppStoreApiKey:      appstoreapikey.NewAppStoreApiKeyService(graphQL),
 	}
 }

@@ -1,4 +1,4 @@
-package certificate
+package appstoreapikey
 
 import (
 	"testing"
@@ -9,19 +9,21 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-func TestGetBySerialNumber(t *testing.T) {
+func TestGetByIdentifier(t *testing.T) {
+	identifier := "test-identifier"
 	accountId := "test-account-id"
-	expectedResponse := &CertificateData{
-		Id:           "test-id",
-		SerialNumber: "test-serial-number",
-		// P12Base64:    "test-p12-base64",
-		// Password:     "test-password",
-		// PrivateKey:   "test-private-key",
+	expectedResponse := &AppStoreApiKeyData{
+		Id:               "test-id",
+		Name:             "test-name",
+		IssuerIdentifier: "test-issuer-identifier",
+		Identifier:       identifier,
 	}
 	expectedVariables := map[string]any{"accountId": accountId}
+
 	graphQLMock := newGetGraphQLMock(expectedResponse)
-	service := NewCertificateService(graphQLMock)
-	actualResponse, actualErr := service.GetBySerialNumber(expectedResponse.SerialNumber, accountId)
+	service := NewAppStoreApiKeyService(graphQLMock)
+
+	actualResponse, actualErr := service.GetByIdentifier(identifier, accountId)
 
 	actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
 	actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)
@@ -32,18 +34,18 @@ func TestGetBySerialNumber(t *testing.T) {
 	assert.Equal(t, nil, actualErr)
 }
 
-func newGetGraphQLMock(data *CertificateData) *graphql.GraphQLMock {
-	mockResponse := utils.AccountResponse[getCertificatesResponse]{
-		Account: utils.Account[getCertificatesResponse]{
-			ById: getCertificatesResponse{
-				Data: []CertificateData{*data},
+func newGetGraphQLMock(data *AppStoreApiKeyData) *graphql.GraphQLMock {
+	mockResponse := utils.AccountResponse[appStoreApiKeysResponse]{
+		Account: utils.Account[appStoreApiKeysResponse]{
+			ById: appStoreApiKeysResponse{
+				Data: []AppStoreApiKeyData{*data},
 			},
 		},
 	}
 
 	graphQLMock := graphql.NewGraphQLMock()
 	graphQLMock.On("Query", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
-		*args.Get(2).(*utils.AccountResponse[getCertificatesResponse]) = mockResponse
+		*args.Get(2).(*utils.AccountResponse[appStoreApiKeysResponse]) = mockResponse
 	}).Return(nil)
 	return graphQLMock
 }

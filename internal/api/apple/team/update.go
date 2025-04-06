@@ -1,14 +1,14 @@
-package appleteam
+package team
 
-type updateAppleTeam struct {
-	Data *appleTeamData `json:"updateAppleTeam"`
+type updateTeam struct {
+	Data *teamData `json:"updateAppleTeam"`
 }
 
-type updateAppleTeamResponse struct {
-	UpdateAppleTeam updateAppleTeam `json:"appleTeam"`
+type updateTeamResponse struct {
+	UpdateAppleTeam updateTeam `json:"appleTeam"`
 }
 
-const updateAppleTeamMutation = `
+const updateQuery = `
 	mutation ($id: ID!, $name: String!, $type: AppleTeamType!) {
 		appleTeam {
 			updateAppleTeam(
@@ -26,22 +26,22 @@ const updateAppleTeamMutation = `
 		}
 	}`
 
-func (service *appleTeamService) Update(data UpdateAppleTeamData) (*AppleTeamData, error) {
+func (service *teamService) Update(data UpdateTeamData) (*TeamData, error) {
 	variables := map[string]any{
 		"id":   data.Id,
 		"name": data.Name,
 		"type": data.Type,
 	}
 
-	var response updateAppleTeamResponse
+	var response updateTeamResponse
 
-	err := service.graphql.Query(updateAppleTeamMutation, variables, &response)
+	err := service.graphql.Query(updateQuery, variables, &response)
 
 	if err != nil {
 		return nil, err
 	}
 
-	return &AppleTeamData{
+	return &TeamData{
 		Id:         response.UpdateAppleTeam.Data.Id,
 		Name:       response.UpdateAppleTeam.Data.Name,
 		Identifier: response.UpdateAppleTeam.Data.Identifier,

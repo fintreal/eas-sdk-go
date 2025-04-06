@@ -1,4 +1,4 @@
-package appleappbundleidentifier
+package bundleidentifier
 
 import (
 	"testing"
@@ -11,7 +11,7 @@ import (
 func TestCreate(t *testing.T) {
 	identifier := "test-identifier"
 	accountId := "test-account-id"
-	expectedResponse := &AppleAppBundleIdentifierData{
+	expectedResponse := &AppBundleIdentifierData{
 		Id:         "test-id",
 		Identifier: identifier,
 		TeamId:     "test-team-id",
@@ -25,9 +25,9 @@ func TestCreate(t *testing.T) {
 
 	graphQLMock := newCreateGraphQLMock(expectedResponse)
 
-	service := NewAppleAppBundleIdentifierService(graphQLMock)
+	service := NewAppBundleIdentifierService(graphQLMock)
 
-	result, err := service.Create(CreateAppleAppBundleIdentifierData{
+	result, err := service.Create(CreateAppBundleIdentifierData{
 		AccountId:  accountId,
 		Identifier: identifier,
 		TeamId:     expectedResponse.TeamId,
@@ -36,20 +36,20 @@ func TestCreate(t *testing.T) {
 	actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
 	actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)
 
-	assert.Equal(t, createAppleAppIdentifierMutation, actualQuery)
+	assert.Equal(t, createQuery, actualQuery)
 	assert.Equal(t, expectedVariables, actualVariables)
 	assert.Equal(t, expectedResponse, result)
 	assert.Equal(t, nil, err)
 
 }
 
-func newCreateGraphQLMock(data *AppleAppBundleIdentifierData) *graphql.GraphQLMock {
-	mockResponse := createAppleAppBundleIdentifierResponse{
-		CreateAppleAppIdentifier: createAppleAppBundleIdentifier{
-			Data: appleAppBundleIdentifierData{
+func newCreateGraphQLMock(data *AppBundleIdentifierData) *graphql.GraphQLMock {
+	mockResponse := createAppBundleIdentifierResponse{
+		CreateAppIdentifier: createAppBundleIdentifier{
+			Data: appBundleIdentifierData{
 				Id:         data.Id,
 				Identifier: data.Identifier,
-				AppleTeam: appleTeam{
+				Team: team{
 					Id: data.TeamId,
 				},
 			},
@@ -58,7 +58,7 @@ func newCreateGraphQLMock(data *AppleAppBundleIdentifierData) *graphql.GraphQLMo
 
 	graphQLMock := graphql.NewGraphQLMock()
 	graphQLMock.On("Query", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
-		*args.Get(2).(*createAppleAppBundleIdentifierResponse) = mockResponse
+		*args.Get(2).(*createAppBundleIdentifierResponse) = mockResponse
 	}).Return(nil)
 	return graphQLMock
 }

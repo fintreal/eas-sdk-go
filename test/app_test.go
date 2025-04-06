@@ -4,17 +4,18 @@ import (
 	"testing"
 
 	"github.com/fintreal/eas-sdk-go/internal/api/app"
+	"github.com/fintreal/eas-sdk-go/test/utils"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestAppGet(t *testing.T) {
 	expectedData := &app.AppData{
-		Id:   immutableAppId,
+		Id:   utils.ImmutableAppId,
 		Name: "Test App",
 		Slug: "test-app",
 	}
 
-	actualData, actualErr := client.App.Get(expectedData.Id)
+	actualData, actualErr := utils.Client.App.Get(expectedData.Id)
 
 	assert.Equal(t, expectedData, actualData)
 	assert.Equal(t, nil, actualErr)
@@ -22,13 +23,13 @@ func TestAppGet(t *testing.T) {
 
 func TestAppCreate(t *testing.T) {
 	inputData := app.CreateAppData{
-		AccountId: accountId,
-		Name:      generateRandomString(10),
-		Slug:      generateRandomString(10),
+		AccountId: utils.AccountId,
+		Name:      utils.GenerateRandomString(10),
+		Slug:      utils.GenerateRandomString(10),
 	}
 
 	// Create
-	expectedData, actualErr := client.App.Create(inputData)
+	expectedData, actualErr := utils.Client.App.Create(inputData)
 
 	assert.Equal(t, inputData.Name, expectedData.Name)
 	assert.Equal(t, inputData.Slug, expectedData.Slug)
@@ -37,8 +38,8 @@ func TestAppCreate(t *testing.T) {
 
 func TestAppUpdate(t *testing.T) {
 	expectedData := &app.AppData{
-		Id:   mutableAppId,
-		Name: generateRandomString(10),
+		Id:   utils.MutableAppId,
+		Name: utils.GenerateRandomString(10),
 		Slug: "test-app-update",
 	}
 
@@ -47,7 +48,7 @@ func TestAppUpdate(t *testing.T) {
 		Name: expectedData.Name,
 	}
 
-	actualData, actualErr := client.App.Update(updateData)
+	actualData, actualErr := utils.Client.App.Update(updateData)
 
 	assert.Equal(t, expectedData, actualData)
 	assert.Equal(t, nil, actualErr)

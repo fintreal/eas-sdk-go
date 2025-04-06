@@ -1,4 +1,4 @@
-package appleteam
+package team
 
 import "github.com/fintreal/eas-sdk-go/internal/graphql"
 
@@ -6,7 +6,7 @@ type account struct {
 	Id string `json:"id"`
 }
 
-type appleTeamData struct {
+type teamData struct {
 	Id         string  `json:"id"`
 	Name       string  `json:"appleTeamName"`
 	Identifier string  `json:"appleTeamIdentifier"`
@@ -14,7 +14,7 @@ type appleTeamData struct {
 	Account    account `json:"account"`
 }
 
-type AppleTeamData struct {
+type TeamData struct {
 	Id         string
 	Name       string
 	Identifier string
@@ -22,33 +22,33 @@ type AppleTeamData struct {
 	AccountId  string
 }
 
-type CreateAppleTeamData struct {
+type CreateTeamData struct {
 	Name       string
 	Identifier string
 	Type       string
 	AccountId  string
 }
 
-type UpdateAppleTeamData struct {
+type UpdateTeamData struct {
 	Id   string
 	Name string
 	Type string
 }
 
-type AppleTeamService interface {
-	Create(data CreateAppleTeamData) (*AppleTeamData, error)
-	Update(data UpdateAppleTeamData) (*AppleTeamData, error)
-	GetByIdentifier(identifier string, accountId string) (*AppleTeamData, error)
+type TeamService interface {
+	Create(data CreateTeamData) (*TeamData, error)
+	Update(data UpdateTeamData) (*TeamData, error)
+	GetByIdentifier(identifier string, accountId string) (*TeamData, error)
 }
 
-type appleTeamService struct {
+type teamService struct {
 	graphql graphql.GraphQL
 }
 
-var _ AppleTeamService = (*appleTeamService)(nil)
+var _ TeamService = (*teamService)(nil)
 
-func NewAppleTeamService(graphql graphql.GraphQL) AppleTeamService {
-	return &appleTeamService{
+func NewTeamService(graphql graphql.GraphQL) TeamService {
+	return &teamService{
 		graphql: graphql,
 	}
 }

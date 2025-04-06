@@ -1,4 +1,4 @@
-package appleappbundleidentifier
+package bundleidentifier
 
 import (
 	"testing"
@@ -11,7 +11,7 @@ import (
 func TestGetByIdentifier(t *testing.T) {
 	identifier := "test-identifier"
 	accountId := "test-account-id"
-	expectedResponse := &AppleAppBundleIdentifierData{
+	expectedResponse := &AppBundleIdentifierData{
 		Id:         "test-id",
 		Identifier: identifier,
 		TeamId:     "test-team-id",
@@ -23,27 +23,27 @@ func TestGetByIdentifier(t *testing.T) {
 	}
 	graphQLMock := newGetGraphQLMock(expectedResponse)
 
-	service := NewAppleAppBundleIdentifierService(graphQLMock)
+	service := NewAppBundleIdentifierService(graphQLMock)
 
 	result, err := service.GetByIdentifier(identifier, accountId)
 
 	actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
 	actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)
 
-	assert.Equal(t, getAppleTeamByIdentifierQuery, actualQuery)
+	assert.Equal(t, getQuery, actualQuery)
 	assert.Equal(t, expectedVariables, actualVariables)
 	assert.Equal(t, expectedResponse, result)
 	assert.Equal(t, nil, err)
 }
 
-func newGetGraphQLMock(data *AppleAppBundleIdentifierData) *graphql.GraphQLMock {
+func newGetGraphQLMock(data *AppBundleIdentifierData) *graphql.GraphQLMock {
 	mockResponse := getBundleIdentifiersResponse{
 		Account: getBundleIdentifiers{
 			ById: byId{
-				Data: []appleAppBundleIdentifierData{appleAppBundleIdentifierData{
+				Data: []appBundleIdentifierData{appBundleIdentifierData{
 					Id:         data.Id,
 					Identifier: data.Identifier,
-					AppleTeam: appleTeam{
+					Team: team{
 						Id: data.TeamId,
 					}},
 				},

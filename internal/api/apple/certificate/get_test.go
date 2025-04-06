@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/fintreal/eas-sdk-go/internal/graphql"
+	"github.com/fintreal/eas-sdk-go/internal/utils"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -32,9 +33,9 @@ func TestGetBySerialNumber(t *testing.T) {
 }
 
 func newGetGraphQLMock(data *CertificateData) *graphql.GraphQLMock {
-	mockResponse := getCertificatesResponse{
-		Account: getCertificates{
-			ById: byId{
+	mockResponse := utils.AccountResponse[getCertificatesResponse]{
+		Account: utils.Account[getCertificatesResponse]{
+			ById: getCertificatesResponse{
 				Data: []CertificateData{*data},
 			},
 		},
@@ -42,7 +43,7 @@ func newGetGraphQLMock(data *CertificateData) *graphql.GraphQLMock {
 
 	graphQLMock := graphql.NewGraphQLMock()
 	graphQLMock.On("Query", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
-		*args.Get(2).(*getCertificatesResponse) = mockResponse
+		*args.Get(2).(*utils.AccountResponse[getCertificatesResponse]) = mockResponse
 	}).Return(nil)
 	return graphQLMock
 }

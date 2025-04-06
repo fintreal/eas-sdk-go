@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/fintreal/eas-sdk-go/internal/graphql"
+	"github.com/fintreal/eas-sdk-go/internal/utils"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -37,23 +38,24 @@ func TestGetByIdentifier(t *testing.T) {
 }
 
 func newGetGraphQLMock(data *AppBundleIdentifierData) *graphql.GraphQLMock {
-	mockResponse := getBundleIdentifiersResponse{
-		Account: getBundleIdentifiers{
-			ById: byId{
-				Data: []appBundleIdentifierData{appBundleIdentifierData{
-					Id:         data.Id,
-					Identifier: data.Identifier,
-					Team: team{
-						Id: data.TeamId,
-					}},
-				},
+	mockData := appBundleIdentifierData{
+		Id:         data.Id,
+		Identifier: data.Identifier,
+		Team: team{
+			Id: data.TeamId,
+		},
+	}
+	mockResponse := utils.AccountResponse[appBundleIdentifierResponse]{
+		Account: utils.Account[appBundleIdentifierResponse]{
+			ById: appBundleIdentifierResponse{
+				Data: []appBundleIdentifierData{mockData},
 			},
 		},
 	}
 
 	graphQLMock := graphql.NewGraphQLMock()
 	graphQLMock.On("Query", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
-		*args.Get(2).(*getBundleIdentifiersResponse) = mockResponse
+		*args.Get(2).(*utils.AccountResponse[appBundleIdentifierResponse]) = mockResponse
 	}).Return(nil)
 	return graphQLMock
 }

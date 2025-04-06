@@ -1,17 +1,13 @@
 package provisioningprofile
 
-import "fmt"
+import (
+	"fmt"
 
-type byId struct {
-	Data []provisioningProfileData `json:"appleProvisioningProfiles"`
-}
-
-type getProvisioningProfiles struct {
-	ById byId `json:"byId"`
-}
+	"github.com/fintreal/eas-sdk-go/internal/utils"
+)
 
 type getProvisioningProfilesResponse struct {
-	Account getProvisioningProfiles `json:"account"`
+	Data []provisioningProfileData `json:"appleProvisioningProfiles"`
 }
 
 const getQuery = `
@@ -35,7 +31,7 @@ func (service *provisioningProfileService) Get(id string, accountId string) (*Pr
 		"accountId": accountId,
 	}
 
-	var response getProvisioningProfilesResponse
+	var response utils.AccountResponse[getProvisioningProfilesResponse]
 	err := service.graphql.Query(getQuery, variables, &response)
 	if err != nil {
 		return nil, err

@@ -1,17 +1,13 @@
 package bundleidentifier
 
-import "fmt"
+import (
+	"fmt"
 
-type byId struct {
+	"github.com/fintreal/eas-sdk-go/internal/utils"
+)
+
+type appBundleIdentifierResponse struct {
 	Data []appBundleIdentifierData `json:"appleAppIdentifiers"`
-}
-
-type getBundleIdentifiers struct {
-	ById byId `json:"byId"`
-}
-
-type getBundleIdentifiersResponse struct {
-	Account getBundleIdentifiers `json:"account"`
 }
 
 const getQuery = `
@@ -35,7 +31,7 @@ func (s *appBundleIdentifierService) GetByIdentifier(identifier string, accountI
 		"accountId":  accountId,
 	}
 
-	var response getBundleIdentifiersResponse
+	var response utils.AccountResponse[appBundleIdentifierResponse]
 
 	err := s.graphql.Query(getQuery, variables, &response)
 	if err != nil {

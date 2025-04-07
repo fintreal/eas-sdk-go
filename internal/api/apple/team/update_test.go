@@ -5,7 +5,6 @@ import (
 
 	"github.com/fintreal/eas-sdk-go/internal/graphql"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 )
 
 func UpdateCreate(t *testing.T) {
@@ -29,7 +28,14 @@ func UpdateCreate(t *testing.T) {
 		Type: expectedData.Type,
 	}
 
-	graphQLMock := newUpdateGraphQLMock(expectedData)
+	mockResponse := &teamData{
+		Id:         expectedData.Id,
+		Name:       expectedData.Name,
+		Identifier: expectedData.Identifier,
+		Type:       expectedData.Type,
+		Account:    account{Id: expectedData.AccountId},
+	}
+	graphQLMock := graphql.NewGraphQLMock(mockResponse)
 
 	service := NewTeamService(graphQLMock)
 
@@ -42,19 +48,4 @@ func UpdateCreate(t *testing.T) {
 	assert.Equal(t, expectedVariables, actualVariables)
 	assert.Equal(t, expectedData, actualData)
 	assert.Equal(t, nil, actualErr)
-}
-
-func newUpdateGraphQLMock(data *TeamData) *graphql.GraphQLMock {
-	mockData := &teamData{
-		Id:         data.Id,
-		Name:       data.Name,
-		Identifier: data.Identifier,
-		Type:       data.Type,
-		Account:    account{Id: data.AccountId},
-	}
-	graphQLMock := graphql.NewGraphQLMock()
-	graphQLMock.On("Query", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
-		*args.Get(2).(*updateTeamResponse) = updateTeamResponse{UpdateAppleTeam: updateTeam{Data: mockData}}
-	}).Return(nil)
-	return graphQLMock
 }

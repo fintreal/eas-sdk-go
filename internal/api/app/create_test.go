@@ -5,7 +5,6 @@ import (
 
 	"github.com/fintreal/eas-sdk-go/internal/graphql"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 )
 
 func TestCreate(t *testing.T) {
@@ -28,7 +27,8 @@ func TestCreate(t *testing.T) {
 		Slug:      expectedData.Slug,
 	}
 
-	graphQLMock := newCreateGraphQLMock(expectedData)
+	mockResponse := createAppResponse{CreateApp: createApp{Data: expectedData}}
+	graphQLMock := graphql.NewGraphQLMock(mockResponse)
 
 	service := NewAppService(graphQLMock)
 
@@ -41,12 +41,4 @@ func TestCreate(t *testing.T) {
 	assert.Equal(t, createAppMutation, actualQuery)
 	assert.Equal(t, expectedVariables, actualVariables)
 	assert.Equal(t, expectedData, data)
-}
-
-func newCreateGraphQLMock(data *AppData) *graphql.GraphQLMock {
-	graphQLMock := graphql.NewGraphQLMock()
-	graphQLMock.On("Query", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
-		*args.Get(2).(*createAppResponse) = createAppResponse{CreateApp: createApp{Data: data}}
-	}).Return(nil)
-	return graphQLMock
 }

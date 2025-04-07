@@ -6,7 +6,6 @@ import (
 	"github.com/fintreal/eas-sdk-go/internal/graphql"
 	"github.com/fintreal/eas-sdk-go/internal/utils"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 )
 
 func TestGetByIdentifier(t *testing.T) {
@@ -20,7 +19,15 @@ func TestGetByIdentifier(t *testing.T) {
 	}
 	expectedVariables := map[string]any{"accountId": accountId}
 
-	graphQLMock := newGetGraphQLMock(expectedResponse)
+	mockResponse := utils.AccountResponse[appStoreApiKeysResponse]{
+		Account: utils.Account[appStoreApiKeysResponse]{
+			ById: appStoreApiKeysResponse{
+				Data: []AppStoreApiKeyData{*expectedResponse},
+			},
+		},
+	}
+
+	graphQLMock := graphql.NewGraphQLMock(mockResponse)
 	service := NewAppStoreApiKeyService(graphQLMock)
 
 	actualResponse, actualErr := service.GetByIdentifier(identifier, accountId)
@@ -32,20 +39,4 @@ func TestGetByIdentifier(t *testing.T) {
 	assert.Equal(t, expectedVariables, actualVariables)
 	assert.Equal(t, expectedResponse, actualResponse)
 	assert.Equal(t, nil, actualErr)
-}
-
-func newGetGraphQLMock(data *AppStoreApiKeyData) *graphql.GraphQLMock {
-	mockResponse := utils.AccountResponse[appStoreApiKeysResponse]{
-		Account: utils.Account[appStoreApiKeysResponse]{
-			ById: appStoreApiKeysResponse{
-				Data: []AppStoreApiKeyData{*data},
-			},
-		},
-	}
-
-	graphQLMock := graphql.NewGraphQLMock()
-	graphQLMock.On("Query", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
-		*args.Get(2).(*utils.AccountResponse[appStoreApiKeysResponse]) = mockResponse
-	}).Return(nil)
-	return graphQLMock
 }

@@ -5,7 +5,6 @@ import (
 
 	"github.com/fintreal/eas-sdk-go/internal/graphql"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 )
 
 func TestGetByIdentifier(t *testing.T) {
@@ -22,7 +21,16 @@ func TestGetByIdentifier(t *testing.T) {
 		"accountId":  expectedData.AccountId,
 	}
 
-	graphQLMock := newGetGraphQLMock(expectedData)
+	mockData := &teamData{
+		Id:         expectedData.Id,
+		Name:       expectedData.Name,
+		Identifier: expectedData.Identifier,
+		Type:       expectedData.Type,
+		Account:    account{Id: expectedData.AccountId},
+	}
+	mockResponse := getTeamResponse{GetTeam: getTeam{Data: mockData}}
+
+	graphQLMock := graphql.NewGraphQLMock(mockResponse)
 
 	service := NewTeamService(graphQLMock)
 
@@ -35,19 +43,4 @@ func TestGetByIdentifier(t *testing.T) {
 	assert.Equal(t, expectedVariables, actualVariables)
 	assert.Equal(t, expectedData, actualData)
 	assert.Equal(t, nil, actualErr)
-}
-
-func newGetGraphQLMock(data *TeamData) *graphql.GraphQLMock {
-	mockData := &teamData{
-		Id:         data.Id,
-		Name:       data.Name,
-		Identifier: data.Identifier,
-		Type:       data.Type,
-		Account:    account{Id: data.AccountId},
-	}
-	graphQLMock := graphql.NewGraphQLMock()
-	graphQLMock.On("Query", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
-		*args.Get(2).(*getTeamResponse) = getTeamResponse{GetTeam: getTeam{Data: mockData}}
-	}).Return(nil)
-	return graphQLMock
 }

@@ -5,14 +5,13 @@ import (
 
 	"github.com/fintreal/eas-sdk-go/internal/graphql"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 )
 
 func TestDele(t *testing.T) {
 	id := "test-id"
 	expectedVariables := map[string]any{"id": id}
 
-	graphQLMock := newDeleteGraphQLMock()
+	graphQLMock := graphql.NewGraphQLMock[any](nil)
 
 	service := NewProvisioningProfileService(graphQLMock)
 
@@ -24,10 +23,4 @@ func TestDele(t *testing.T) {
 	assert.Equal(t, deleteQuery, actualQuery)
 	assert.Equal(t, expectedVariables, actualVariables)
 	assert.Equal(t, nil, actualErr)
-}
-
-func newDeleteGraphQLMock() *graphql.GraphQLMock {
-	graphQLMock := graphql.NewGraphQLMock()
-	graphQLMock.On("Query", mock.Anything, mock.Anything, mock.Anything).Return(nil)
-	return graphQLMock
 }

@@ -6,7 +6,6 @@ import (
 	"github.com/fintreal/eas-sdk-go/internal/graphql"
 	"github.com/fintreal/eas-sdk-go/internal/utils"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 )
 
 func TestGet(t *testing.T) {
@@ -21,7 +20,8 @@ func TestGet(t *testing.T) {
 
 	expectedVariables := map[string]any{"accountId": accountId}
 
-	graphQLMock := newGetGraphQLMock(expectedResponse)
+	graphQLMock := graphql.NewGraphQLMock(mockResponse(expectedResponse))
+
 	service := NewProvisioningProfileService(graphQLMock)
 	actualResponse, actualErr := service.Get(expectedResponse.Id, accountId)
 
@@ -34,26 +34,18 @@ func TestGet(t *testing.T) {
 	assert.Equal(t, nil, actualErr)
 }
 
-func newGetGraphQLMock(data *ProvisioningProfileData) *graphql.GraphQLMock {
+func mockResponse(data *ProvisioningProfileData) utils.AccountResponse[getProvisioningProfilesResponse] {
 	mockData := provisioningProfileData{
 		Id:                  data.Id,
 		Base64:              data.Base64,
 		AppBundleIdentifier: appleAppIdentifier{Id: data.AppBundleIdentifierId},
 	}
 
-	mockResponse := utils.AccountResponse[getProvisioningProfilesResponse]{
+	return utils.AccountResponse[getProvisioningProfilesResponse]{
 		Account: utils.Account[getProvisioningProfilesResponse]{
 			ById: getProvisioningProfilesResponse{
 				Data: []provisioningProfileData{mockData},
 			},
 		},
 	}
-
-	graphQLMock := graphql.NewGraphQLMock()
-	graphQLMock.On("Query", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
-		response := args.Get(2).(*utils.AccountResponse[getProvisioningProfilesResponse])
-		*response = mockResponse
-	}).Return(nil)
-
-	return graphQLMock
 }

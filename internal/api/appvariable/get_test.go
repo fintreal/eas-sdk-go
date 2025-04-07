@@ -5,7 +5,6 @@ import (
 
 	"github.com/fintreal/eas-sdk-go/internal/graphql"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 )
 
 var expectedAppId = "test-app-id"
@@ -18,10 +17,12 @@ var expectedData = &AppVariableData{
 	Environments: []string{"DEVELOPMENT"},
 }
 
+var mockResponse = getAppVariablesResponse{AppByAppId: getAppVariables{Data: []AppVariableData{*expectedData}}}
+
 func TestGetByName(t *testing.T) {
 	expectedVariables := map[string]any{"appId": expectedAppId}
 
-	graphQLMock := newGetGraphQLMock(expectedData)
+	graphQLMock := graphql.NewGraphQLMock(mockResponse)
 
 	service := NewAppVariableService(graphQLMock)
 
@@ -38,7 +39,7 @@ func TestGetByName(t *testing.T) {
 
 func TestGetById(t *testing.T) {
 	expectedVariables := map[string]any{"appId": expectedAppId}
-	graphQLMock := newGetGraphQLMock(expectedData)
+	graphQLMock := graphql.NewGraphQLMock(mockResponse)
 
 	appVariableService := NewAppVariableService(graphQLMock)
 
@@ -51,17 +52,4 @@ func TestGetById(t *testing.T) {
 	assert.Equal(t, expectedVariables, actualVariables)
 	assert.Equal(t, expectedData, actualData)
 	assert.Equal(t, nil, actualErr)
-
-}
-
-func newGetGraphQLMock(data *AppVariableData) *graphql.GraphQLMock {
-	graphQLMock := graphql.NewGraphQLMock()
-	graphQLMock.On("Query", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
-		*args.Get(2).(*getAppVariablesResponse) = getAppVariablesResponse{
-			AppByAppId: getAppVariables{
-				Data: []AppVariableData{*data},
-			},
-		}
-	}).Return(nil)
-	return graphQLMock
 }

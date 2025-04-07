@@ -6,7 +6,6 @@ import (
 	"github.com/fintreal/eas-sdk-go/internal/graphql"
 	"github.com/fintreal/eas-sdk-go/internal/utils"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 )
 
 func TestGetBySerialNumber(t *testing.T) {
@@ -19,7 +18,16 @@ func TestGetBySerialNumber(t *testing.T) {
 		// PrivateKey:   "test-private-key",
 	}
 	expectedVariables := map[string]any{"accountId": accountId}
-	graphQLMock := newGetGraphQLMock(expectedResponse)
+
+	mockResponse := utils.AccountResponse[getCertificatesResponse]{
+		Account: utils.Account[getCertificatesResponse]{
+			ById: getCertificatesResponse{
+				Data: []CertificateData{*expectedResponse},
+			},
+		},
+	}
+	graphQLMock := graphql.NewGraphQLMock(mockResponse)
+
 	service := NewCertificateService(graphQLMock)
 	actualResponse, actualErr := service.GetBySerialNumber(expectedResponse.SerialNumber, accountId)
 
@@ -30,20 +38,4 @@ func TestGetBySerialNumber(t *testing.T) {
 	assert.Equal(t, expectedVariables, actualVariables)
 	assert.Equal(t, expectedResponse, actualResponse)
 	assert.Equal(t, nil, actualErr)
-}
-
-func newGetGraphQLMock(data *CertificateData) *graphql.GraphQLMock {
-	mockResponse := utils.AccountResponse[getCertificatesResponse]{
-		Account: utils.Account[getCertificatesResponse]{
-			ById: getCertificatesResponse{
-				Data: []CertificateData{*data},
-			},
-		},
-	}
-
-	graphQLMock := graphql.NewGraphQLMock()
-	graphQLMock.On("Query", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
-		*args.Get(2).(*utils.AccountResponse[getCertificatesResponse]) = mockResponse
-	}).Return(nil)
-	return graphQLMock
 }

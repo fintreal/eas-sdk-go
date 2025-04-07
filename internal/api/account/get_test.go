@@ -19,7 +19,7 @@ func TestGetByName(t *testing.T) {
 
 	service := NewAccountService(graphQLMock)
 
-	acutalData, actualErr := service.GetByName(expectedData.Name)
+	actualData, actualErr := service.GetByName(expectedData.Name)
 
 	actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
 	actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)
@@ -27,5 +27,5 @@ func TestGetByName(t *testing.T) {
 	assert.Equal(t, nil, actualErr)
 	assert.Equal(t, getAccountByNameQuery, actualQuery)
 	assert.Equal(t, expectedVariables, actualVariables)
-	assert.Equal(t, expectedData, acutalData)
+	assert.Equal(t, expectedData, actualData)
 }

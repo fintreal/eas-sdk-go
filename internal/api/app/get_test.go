@@ -23,7 +23,7 @@ func TestGet(t *testing.T) {
 
 	service := NewAppService(graphQLMock)
 
-	acutalData, actualErr := service.Get(expectedData.Id)
+	actualData, actualErr := service.Get(expectedData.Id)
 
 	actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
 	actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)
@@ -31,5 +31,5 @@ func TestGet(t *testing.T) {
 	assert.Equal(t, nil, actualErr)
 	assert.Equal(t, getAppQuery, actualQuery)
 	assert.Equal(t, expectedVariables, actualVariables)
-	assert.Equal(t, expectedData, acutalData)
+	assert.Equal(t, expectedData, actualData)
 }

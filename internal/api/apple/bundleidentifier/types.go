@@ -6,19 +6,19 @@ type team struct {
 	Id string `json:"id"`
 }
 
-type appBundleIdentifierData struct {
+type data struct {
 	Id         string `json:"id"`
 	Identifier string `json:"bundleIdentifier"`
 	Team       team   `json:"appleTeam"`
 }
 
-type AppBundleIdentifierData struct {
+type Data struct {
 	Id         string
 	Identifier string
 	TeamId     string
 }
 
-type CreateAppBundleIdentifierData struct {
+type CreateData struct {
 	AccountId  string
 	Identifier string
 	TeamId     string
@@ -29,19 +29,19 @@ type GetByIdentifierData struct {
 	AccountId  string
 }
 
-type AppBundleIdentifierService interface {
-	Create(data CreateAppBundleIdentifierData) (*AppBundleIdentifierData, error)
-	GetByIdentifier(GetByIdentifierData) (*AppBundleIdentifierData, error)
+type Service interface {
+	Create(data CreateData) (*Data, error)
+	GetByIdentifier(GetByIdentifierData) (*Data, error)
 }
 
-type appBundleIdentifierService struct {
+type service struct {
 	graphql graphql.GraphQL
 }
 
-var _ AppBundleIdentifierService = (*appBundleIdentifierService)(nil)
+var _ Service = (*service)(nil)
 
-func NewAppBundleIdentifierService(graphql graphql.GraphQL) AppBundleIdentifierService {
-	return &appBundleIdentifierService{
+func NewService(graphql graphql.GraphQL) Service {
+	return &service{
 		graphql: graphql,
 	}
 }

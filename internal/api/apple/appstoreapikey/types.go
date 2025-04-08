@@ -2,30 +2,30 @@ package appstoreapikey
 
 import "github.com/fintreal/eas-sdk-go/internal/graphql"
 
-type AppStoreApiKeyData struct {
+type Data struct {
 	Id               string `json:"id"`
 	Name             string `json:"name"`
 	IssuerIdentifier string `json:"issuerIdentifier"`
 	Identifier       string `json:"keyIdentifier"`
 }
 
-type GeyByIdentifierAppStoreApiKeyData struct {
+type GeyByIdentifierData struct {
 	Identifier string
 	AccountId  string
 }
 
-type AppStoreApiKeyService interface {
-	GetByIdentifier(GeyByIdentifierAppStoreApiKeyData) (*AppStoreApiKeyData, error)
+type Service interface {
+	GetByIdentifier(GeyByIdentifierData) (*Data, error)
 }
 
-type appStoreApiKeyService struct {
+type service struct {
 	graphql graphql.GraphQL
 }
 
-var _ AppStoreApiKeyService = (*appStoreApiKeyService)(nil)
+var _ Service = (*service)(nil)
 
-func NewAppStoreApiKeyService(graphql graphql.GraphQL) AppStoreApiKeyService {
-	return &appStoreApiKeyService{
+func NewService(graphql graphql.GraphQL) Service {
+	return &service{
 		graphql: graphql,
 	}
 }

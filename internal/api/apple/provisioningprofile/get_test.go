@@ -8,14 +8,14 @@ import (
 )
 
 func TestGet(t *testing.T) {
-	input := &GetProvisioningProfileData{
+	input := &GetData{
 		Id:        "test-id",
 		AccountId: "test-account-id",
 	}
 
 	identifier := "test-identifier"
 
-	expectedData := &ProvisioningProfileData{
+	expectedData := &Data{
 		Id:                    input.Id,
 		AppBundleIdentifierId: identifier,
 		Base64:                "test-base64-string",
@@ -25,8 +25,8 @@ func TestGet(t *testing.T) {
 
 	mockResponse := getMockResponse(expectedData)
 
-	config := testutils.TestConfig[GetProvisioningProfileData, ProvisioningProfileData, utils.AccountResponse[getProvisioningProfilesResponse], ProvisioningProfileService]{
-		NewServiceFunction: NewProvisioningProfileService,
+	config := testutils.TestConfig[GetData, Data, utils.AccountResponse[getProvisioningProfilesResponse], Service]{
+		NewServiceFunction: NewService,
 		FunctionUnderTest:  "Get",
 		Input:              input,
 		MockResponse:       mockResponse,
@@ -37,17 +37,17 @@ func TestGet(t *testing.T) {
 	testutils.Test(t, config)
 }
 
-func getMockResponse(data *ProvisioningProfileData) utils.AccountResponse[getProvisioningProfilesResponse] {
-	mockData := provisioningProfileData{
-		Id:                  data.Id,
-		Base64:              data.Base64,
-		AppBundleIdentifier: appleAppIdentifier{Id: data.AppBundleIdentifierId},
+func getMockResponse(input *Data) utils.AccountResponse[getProvisioningProfilesResponse] {
+	mockData := data{
+		Id:                 input.Id,
+		Base64:             input.Base64,
+		AppleAppIdentifier: appleAppIdentifier{Id: input.AppBundleIdentifierId},
 	}
 
 	return utils.AccountResponse[getProvisioningProfilesResponse]{
 		Account: utils.Account[getProvisioningProfilesResponse]{
 			ById: getProvisioningProfilesResponse{
-				Data: []provisioningProfileData{mockData},
+				Data: []data{mockData},
 			},
 		},
 	}

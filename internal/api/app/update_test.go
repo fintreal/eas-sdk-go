@@ -7,7 +7,7 @@ import (
 )
 
 func TestUpdate(t *testing.T) {
-	expectedData := &AppData{
+	expectedData := &Data{
 		Id:   "test-id",
 		Name: "test-name",
 	}
@@ -17,18 +17,18 @@ func TestUpdate(t *testing.T) {
 		"name": expectedData.Name,
 	}
 
-	input := &UpdateAppData{
+	input := &UpdateData{
 		Id:   expectedData.Id,
 		Name: expectedData.Name,
 	}
 
-	mockResponse := updateAppResponse{UpdateApp: updateApp{Data: expectedData}}
-	config := testutils.TestConfig[UpdateAppData, AppData, updateAppResponse, AppService]{
-		NewServiceFunction: NewAppService,
+	mockResponse := updateResponse{UpdateApp: updateApp{Data: expectedData}}
+	config := testutils.TestConfig[UpdateData, Data, updateResponse, Service]{
+		NewServiceFunction: NewService,
 		FunctionUnderTest:  "Update",
 		Input:              input,
 		MockResponse:       mockResponse,
-		ExpectedQuery:      updateAppMutation,
+		ExpectedQuery:      updateQuery,
 		ExpectedVariables:  expectedVariables,
 		ExpectedData:       expectedData,
 	}

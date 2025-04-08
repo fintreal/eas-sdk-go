@@ -1,7 +1,7 @@
 package team
 
 type getTeam struct {
-	Data *teamData `json:"byAppleTeamIdentifier"`
+	Data *data `json:"byAppleTeamIdentifier"`
 }
 
 type getTeamResponse struct {
@@ -24,7 +24,7 @@ const getQuery = `
 	}
 `
 
-func (service *teamService) GetByIdentifier(getData GetByIdentifierData) (*TeamData, error) {
+func (service *service) GetByIdentifier(getData GetByIdentifierData) (*Data, error) {
 	variables := map[string]any{
 		"accountId":  getData.AccountId,
 		"identifier": getData.Identifier,
@@ -38,7 +38,7 @@ func (service *teamService) GetByIdentifier(getData GetByIdentifierData) (*TeamD
 		return nil, err
 	}
 
-	return &TeamData{
+	return &Data{
 		Id:         response.GetTeam.Data.Id,
 		Name:       response.GetTeam.Data.Name,
 		Identifier: response.GetTeam.Data.Identifier,

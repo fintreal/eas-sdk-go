@@ -6,43 +6,43 @@ type appleAppIdentifier struct {
 	Id string `json:"id"`
 }
 
-type provisioningProfileData struct {
-	Id                  string             `json:"id"`
-	Base64              string             `json:"provisioningProfile"`
-	AppBundleIdentifier appleAppIdentifier `json:"appleAppIdentifier"`
+type data struct {
+	Id                 string             `json:"id"`
+	Base64             string             `json:"provisioningProfile"`
+	AppleAppIdentifier appleAppIdentifier `json:"appleAppIdentifier"`
 }
 
-type ProvisioningProfileData struct {
+type Data struct {
 	Id                    string
 	Base64                string
 	AppBundleIdentifierId string
 }
 
-type CreateProvisioningProfileData struct {
+type CreateData struct {
 	Base64                string
 	AppBundleIdentifierId string
 	AccountId             string
 }
 
-type GetProvisioningProfileData struct {
+type GetData struct {
 	Id        string
 	AccountId string
 }
 
-type ProvisioningProfileService interface {
-	Get(GetProvisioningProfileData) (*ProvisioningProfileData, error)
-	Create(data CreateProvisioningProfileData) (*ProvisioningProfileData, error)
+type Service interface {
+	Get(GetData) (*Data, error)
+	Create(data CreateData) (*Data, error)
 	Delete(id string) (*any, error)
 }
 
-type provisioningProfileService struct {
+type service struct {
 	graphql graphql.GraphQL
 }
 
-var _ ProvisioningProfileService = (*provisioningProfileService)(nil)
+var _ Service = (*service)(nil)
 
-func NewProvisioningProfileService(graphql graphql.GraphQL) ProvisioningProfileService {
-	return &provisioningProfileService{
+func NewService(graphql graphql.GraphQL) Service {
+	return &service{
 		graphql: graphql,
 	}
 }

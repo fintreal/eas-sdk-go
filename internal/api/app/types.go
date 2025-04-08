@@ -2,37 +2,37 @@ package app
 
 import "github.com/fintreal/eas-sdk-go/internal/graphql"
 
-type AppData struct {
+type Data struct {
 	Id   string `json:"id"`
 	Name string `json:"name"`
 	Slug string `json:"slug"`
 }
 
-type CreateAppData struct {
+type CreateData struct {
 	Name      string
 	Slug      string
 	AccountId string
 }
 
-type UpdateAppData struct {
+type UpdateData struct {
 	Id   string
 	Name string
 }
 
-type AppService interface {
-	Create(data CreateAppData) (*AppData, error)
-	Update(data UpdateAppData) (*AppData, error)
-	Get(id string) (*AppData, error)
+type Service interface {
+	Create(data CreateData) (*Data, error)
+	Update(data UpdateData) (*Data, error)
+	Get(id string) (*Data, error)
 }
 
-type appService struct {
+type service struct {
 	graphql graphql.GraphQL
 }
 
-var _ AppService = (*appService)(nil)
+var _ Service = (*service)(nil)
 
-func NewAppService(graphql graphql.GraphQL) AppService {
-	return &appService{
+func NewService(graphql graphql.GraphQL) Service {
+	return &service{
 		graphql: graphql,
 	}
 }

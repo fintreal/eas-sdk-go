@@ -17,7 +17,7 @@ func TestAppEnvironmentVariableGet(t *testing.T) {
 
 	actualData, actualErr := utils.Client.AppVariable.Get(input)
 
-	expectedData := &appvariable.AppVariableData{
+	expectedData := &appvariable.Data{
 		Id:           utils.ImmutableAppVariableId,
 		Name:         "TEST_ENVIRONMENT_VARIABLE",
 		Value:        "VALUE",
@@ -37,7 +37,7 @@ func TestAppEnvironmentVariableGetByName(t *testing.T) {
 
 	actualData, actualErr := utils.Client.AppVariable.GetByName(input)
 
-	expectedData := &appvariable.AppVariableData{
+	expectedData := &appvariable.Data{
 		Id:           utils.ImmutableAppVariableId,
 		Name:         input.Name,
 		Value:        "VALUE",
@@ -50,7 +50,7 @@ func TestAppEnvironmentVariableGetByName(t *testing.T) {
 }
 
 func TestAppEnvironmentVariableUpdate(t *testing.T) {
-	updateData := appvariable.UpdateAppVariableData{
+	updateData := appvariable.UpdateData{
 		Id:           utils.MutableAppVariableId,
 		Name:         utils.GenerateRandomString(10),
 		Value:        utils.GenerateRandomString(10),
@@ -69,7 +69,7 @@ func TestAppEnvironmentVariableUpdate(t *testing.T) {
 }
 
 func TestAppEnvironmentVariableCreateAndDelete(t *testing.T) {
-	inputData := appvariable.CreateAppVariableData{
+	inputData := appvariable.CreateData{
 		AppId:        utils.ImmutableAppId,
 		Name:         utils.GenerateRandomString(10),
 		Value:        utils.GenerateRandomString(10),

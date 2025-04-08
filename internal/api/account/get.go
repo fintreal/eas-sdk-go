@@ -1,14 +1,14 @@
 package account
 
-type getAccount struct {
-	ByName *AccountData `json:"byName"`
+type account struct {
+	ByName *Data `json:"byName"`
 }
 
-type getAccountResponse struct {
-	Account getAccount `json:"account"`
+type getResponse struct {
+	Account account `json:"account"`
 }
 
-const getAccountByNameQuery = `
+const getByNameQuery = `
 	query ($name: String!) {
 		account {
 			byName(accountName: $name) {
@@ -21,12 +21,12 @@ const getAccountByNameQuery = `
 // Retrieves the currents user's organization account by it's name
 //
 // @name organization name
-func (service *accountService) GetByName(name string) (*AccountData, error) {
+func (service *accountService) GetByName(name string) (*Data, error) {
 	variables := map[string]any{"name": name}
 
-	var response getAccountResponse
+	var response getResponse
 
-	err := service.graphql.Query(getAccountByNameQuery, variables, &response)
+	err := service.graphql.Query(getByNameQuery, variables, &response)
 
 	return response.Account.ByName, err
 }

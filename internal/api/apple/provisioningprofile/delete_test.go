@@ -10,8 +10,8 @@ func TestDele(t *testing.T) {
 	id := "test-id"
 	expectedVariables := map[string]any{"id": id}
 
-	config := testutils.TestConfig[string, any, any, ProvisioningProfileService]{
-		NewServiceFunction: NewProvisioningProfileService,
+	config := testutils.TestConfig[string, any, any, Service]{
+		NewServiceFunction: NewService,
 		FunctionUnderTest:  "Delete",
 		Input:              &id,
 		MockResponse:       nil,

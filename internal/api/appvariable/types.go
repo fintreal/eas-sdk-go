@@ -4,7 +4,7 @@ import (
 	"github.com/fintreal/eas-sdk-go/internal/graphql"
 )
 
-type AppVariableData struct {
+type Data struct {
 	Id    string `json:"id"`
 	Name  string `json:"name"`
 	Value string `json:"value"`
@@ -14,17 +14,17 @@ type AppVariableData struct {
 	Environments []string `json:"environments"`
 }
 
-type GetByNameAppVariableData struct {
+type GetByNameData struct {
 	Name  string
 	AppId string
 }
 
-type GetAppVariableData struct {
+type GetData struct {
 	Id    string
 	AppId string
 }
 
-type CreateAppVariableData struct {
+type CreateData struct {
 	AppId        string
 	Name         string
 	Value        string
@@ -32,7 +32,7 @@ type CreateAppVariableData struct {
 	Environments []string
 }
 
-type UpdateAppVariableData struct {
+type UpdateData struct {
 	Id           string
 	Name         string
 	Value        string
@@ -40,20 +40,20 @@ type UpdateAppVariableData struct {
 	Environments []string
 }
 
-type AppVariableService interface {
-	Get(GetAppVariableData) (*AppVariableData, error)
-	GetByName(GetByNameAppVariableData) (*AppVariableData, error)
-	Create(CreateAppVariableData) (*AppVariableData, error)
-	Update(UpdateAppVariableData) (*AppVariableData, error)
+type Service interface {
+	Get(GetData) (*Data, error)
+	GetByName(GetByNameData) (*Data, error)
+	Create(CreateData) (*Data, error)
+	Update(UpdateData) (*Data, error)
 	Delete(string) (*any, error)
 }
 
-type appVariableService struct {
+type service struct {
 	graphql graphql.GraphQL
 }
 
-var _ AppVariableService = (*appVariableService)(nil)
+var _ Service = (*service)(nil)
 
-func NewAppVariableService(graphql graphql.GraphQL) AppVariableService {
-	return &appVariableService{graphql: graphql}
+func NewService(graphql graphql.GraphQL) Service {
+	return &service{graphql: graphql}
 }

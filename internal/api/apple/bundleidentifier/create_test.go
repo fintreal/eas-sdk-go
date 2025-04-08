@@ -9,7 +9,7 @@ import (
 func TestCreate(t *testing.T) {
 	identifier := "test-identifier"
 	accountId := "test-account-id"
-	expectedData := &AppBundleIdentifierData{
+	expectedData := &Data{
 		Id:         "test-id",
 		Identifier: identifier,
 		TeamId:     "test-team-id",
@@ -21,9 +21,9 @@ func TestCreate(t *testing.T) {
 		"teamId":     expectedData.TeamId,
 	}
 
-	mockResponse := createAppBundleIdentifierResponse{
+	mockResponse := createResponse{
 		CreateAppIdentifier: createAppBundleIdentifier{
-			Data: appBundleIdentifierData{
+			Data: data{
 				Id:         expectedData.Id,
 				Identifier: expectedData.Identifier,
 				Team: team{
@@ -33,14 +33,14 @@ func TestCreate(t *testing.T) {
 		},
 	}
 
-	input := &CreateAppBundleIdentifierData{
+	input := &CreateData{
 		AccountId:  accountId,
 		Identifier: identifier,
 		TeamId:     expectedData.TeamId,
 	}
 
-	config := testutils.TestConfig[CreateAppBundleIdentifierData, AppBundleIdentifierData, createAppBundleIdentifierResponse, AppBundleIdentifierService]{
-		NewServiceFunction: NewAppBundleIdentifierService,
+	config := testutils.TestConfig[CreateData, Data, createResponse, Service]{
+		NewServiceFunction: NewService,
 		FunctionUnderTest:  "Create",
 		Input:              input,
 		MockResponse:       mockResponse,

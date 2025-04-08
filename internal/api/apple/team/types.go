@@ -6,7 +6,7 @@ type account struct {
 	Id string `json:"id"`
 }
 
-type teamData struct {
+type data struct {
 	Id         string  `json:"id"`
 	Name       string  `json:"appleTeamName"`
 	Identifier string  `json:"appleTeamIdentifier"`
@@ -14,7 +14,7 @@ type teamData struct {
 	Account    account `json:"account"`
 }
 
-type TeamData struct {
+type Data struct {
 	Id         string
 	Name       string
 	Identifier string
@@ -22,14 +22,14 @@ type TeamData struct {
 	AccountId  string
 }
 
-type CreateTeamData struct {
+type CreateData struct {
 	Name       string
 	Identifier string
 	Type       string
 	AccountId  string
 }
 
-type UpdateTeamData struct {
+type UpdateData struct {
 	Id   string
 	Name string
 	Type string
@@ -40,20 +40,20 @@ type GetByIdentifierData struct {
 	AccountId  string
 }
 
-type TeamService interface {
-	Create(data CreateTeamData) (*TeamData, error)
-	Update(data UpdateTeamData) (*TeamData, error)
-	GetByIdentifier(GetByIdentifierData) (*TeamData, error)
+type Service interface {
+	Create(data CreateData) (*Data, error)
+	Update(data UpdateData) (*Data, error)
+	GetByIdentifier(GetByIdentifierData) (*Data, error)
 }
 
-type teamService struct {
+type service struct {
 	graphql graphql.GraphQL
 }
 
-var _ TeamService = (*teamService)(nil)
+var _ Service = (*service)(nil)
 
-func NewTeamService(graphql graphql.GraphQL) TeamService {
-	return &teamService{
+func NewService(graphql graphql.GraphQL) Service {
+	return &service{
 		graphql: graphql,
 	}
 }

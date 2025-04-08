@@ -1,6 +1,6 @@
 package appvariable
 
-const deleteAppVariableMutation = `
+const deleteQuery = `
 	mutation ($id: ID!) {
 		environmentVariable {
 			deleteEnvironmentVariable(id: $id) {
@@ -10,11 +10,11 @@ const deleteAppVariableMutation = `
 	}`
 
 // Deletes an App Environment Variable from EAS
-func (service *appVariableService) Delete(id string) (*any, error) {
+func (service *service) Delete(id string) (*any, error) {
 	variables := map[string]any{"id": id}
 
 	var response any
 
-	err := service.graphql.Query(deleteAppVariableMutation, variables, &response)
+	err := service.graphql.Query(deleteQuery, variables, &response)
 	return (*any)(nil), err
 }

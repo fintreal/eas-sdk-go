@@ -1,10 +1,10 @@
 package bundleidentifier
 
 type createAppBundleIdentifier struct {
-	Data appBundleIdentifierData `json:"createAppleAppIdentifier"`
+	Data data `json:"createAppleAppIdentifier"`
 }
 
-type createAppBundleIdentifierResponse struct {
+type createResponse struct {
 	CreateAppIdentifier createAppBundleIdentifier `json:"appleAppIdentifier"`
 }
 
@@ -24,20 +24,20 @@ const createQuery = `
 			}
 	}`
 
-func (s *appBundleIdentifierService) Create(data CreateAppBundleIdentifierData) (*AppBundleIdentifierData, error) {
+func (s *service) Create(data CreateData) (*Data, error) {
 	variables := map[string]any{
 		"accountId":  data.AccountId,
 		"identifier": data.Identifier,
 		"teamId":     data.TeamId,
 	}
 
-	var response createAppBundleIdentifierResponse
+	var response createResponse
 	err := s.graphql.Query(createQuery, variables, &response)
 	if err != nil {
 		return nil, err
 	}
 
-	return &AppBundleIdentifierData{
+	return &Data{
 		Id:         response.CreateAppIdentifier.Data.Id,
 		Identifier: response.CreateAppIdentifier.Data.Identifier,
 		TeamId:     response.CreateAppIdentifier.Data.Team.Id,

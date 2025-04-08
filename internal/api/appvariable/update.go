@@ -1,14 +1,14 @@
 package appvariable
 
-type updateAppVariable struct {
-	Data *AppVariableData `json:"updateEnvironmentVariable"`
+type updateEnvironmentVariable struct {
+	Data *Data `json:"updateEnvironmentVariable"`
 }
 
-type upddateAppVariableResponse struct {
-	UpdateAppVariable updateAppVariable `json:"environmentVariable"`
+type updateResponse struct {
+	UpdateAppVariable updateEnvironmentVariable `json:"environmentVariable"`
 }
 
-const updateAppVariableMutation = `
+const updateQuery = `
 	mutation ($id: ID!, $name: String!, $value: String!, $visibility: EnvironmentVariableVisibility!, $environments: [EnvironmentVariableEnvironment!]) {
 		environmentVariable {
 			updateEnvironmentVariable(
@@ -24,7 +24,7 @@ const updateAppVariableMutation = `
 	}`
 
 // Updates an App Environment Variable in EAS
-func (service *appVariableService) Update(data UpdateAppVariableData) (*AppVariableData, error) {
+func (service *service) Update(data UpdateData) (*Data, error) {
 	variables := map[string]any{
 		"id":           data.Id,
 		"name":         data.Name,
@@ -33,8 +33,8 @@ func (service *appVariableService) Update(data UpdateAppVariableData) (*AppVaria
 		"environments": data.Environments,
 	}
 
-	var response upddateAppVariableResponse
-	err := service.graphql.Query(updateAppVariableMutation, variables, &response)
+	var response updateResponse
+	err := service.graphql.Query(updateQuery, variables, &response)
 
 	if err != nil {
 		return nil, err

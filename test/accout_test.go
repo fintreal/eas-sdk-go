@@ -9,7 +9,7 @@ import (
 )
 
 func TestGetAccountByName(t *testing.T) {
-	expectedData := &account.AccountData{
+	expectedData := &account.Data{
 		Id:   utils.AccountId,
 		Name: "expo-eas-sdk-go",
 	}

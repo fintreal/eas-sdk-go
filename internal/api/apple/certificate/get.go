@@ -2,8 +2,8 @@ package certificate
 
 import "github.com/fintreal/eas-sdk-go/internal/utils"
 
-type getCertificatesResponse struct {
-	Data []CertificateData `json:"appleDistributionCertificates"`
+type getResponse struct {
+	Data []Data `json:"appleDistributionCertificates"`
 }
 
 const getQuery = `
@@ -18,13 +18,13 @@ const getQuery = `
 			}
 	}`
 
-func (service *certificateService) GetBySerialNumber(getData GetBySerialNumberCertificateData) (*CertificateData, error) {
+func (service *service) GetBySerialNumber(getData GetBySerialNumberData) (*Data, error) {
 	variables := map[string]any{
 		"accountId":    getData.AccountId,
 		"serialNumber": getData.SerialNumber,
 	}
 
-	var response utils.AccountResponse[getCertificatesResponse]
+	var response utils.AccountResponse[getResponse]
 
 	err := service.graphql.Query(getQuery, variables, &response)
 	if err != nil {
@@ -33,7 +33,7 @@ func (service *certificateService) GetBySerialNumber(getData GetBySerialNumberCe
 	return findBySerialNumber(response.Account.ById.Data, getData.SerialNumber)
 }
 
-func findBySerialNumber(certificates []CertificateData, serialNumber string) (*CertificateData, error) {
+func findBySerialNumber(certificates []Data, serialNumber string) (*Data, error) {
 	for _, certificate := range certificates {
 		if certificate.SerialNumber == serialNumber {
 			return &certificate, nil

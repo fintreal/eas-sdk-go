@@ -8,7 +8,7 @@ import (
 
 func TestCreate(t *testing.T) {
 	accountId := "test-account-id"
-	expectedData := &ProvisioningProfileData{
+	expectedData := &Data{
 		Id:                    "test-id",
 		AppBundleIdentifierId: "test-bundle-identifier-id",
 		Base64:                "test-base64-string",
@@ -19,24 +19,24 @@ func TestCreate(t *testing.T) {
 		"base64":               expectedData.Base64,
 	}
 
-	input := &CreateProvisioningProfileData{
+	input := &CreateData{
 		AccountId:             accountId,
 		AppBundleIdentifierId: expectedData.AppBundleIdentifierId,
 		Base64:                expectedData.Base64,
 	}
 
-	mockResponse := createProvisioningProfileResponse{
-		CreateProvisioningProfile: createProvisioningProfile{
-			Data: provisioningProfileData{
-				Id:                  expectedData.Id,
-				Base64:              expectedData.Base64,
-				AppBundleIdentifier: appleAppIdentifier{Id: expectedData.AppBundleIdentifierId},
+	mockResponse := createResponse{
+		AppleProvisioningProfile: appleProvisioningProfile{
+			Data: data{
+				Id:                 expectedData.Id,
+				Base64:             expectedData.Base64,
+				AppleAppIdentifier: appleAppIdentifier{Id: expectedData.AppBundleIdentifierId},
 			},
 		},
 	}
 
-	config := testutils.TestConfig[CreateProvisioningProfileData, ProvisioningProfileData, createProvisioningProfileResponse, ProvisioningProfileService]{
-		NewServiceFunction: NewProvisioningProfileService,
+	config := testutils.TestConfig[CreateData, Data, createResponse, Service]{
+		NewServiceFunction: NewService,
 		FunctionUnderTest:  "Create",
 		Input:              input,
 		MockResponse:       mockResponse,

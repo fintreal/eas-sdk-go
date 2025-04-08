@@ -13,7 +13,7 @@ func TestGetByIdentifier(t *testing.T) {
 		AccountId:  "test-account-id",
 	}
 
-	expectedData := &TeamData{
+	expectedData := &Data{
 		Id:         "test-id",
 		Name:       "test-name",
 		Identifier: input.Identifier,
@@ -26,7 +26,7 @@ func TestGetByIdentifier(t *testing.T) {
 		"accountId":  expectedData.AccountId,
 	}
 
-	mockData := &teamData{
+	mockData := &data{
 		Id:         expectedData.Id,
 		Name:       expectedData.Name,
 		Identifier: expectedData.Identifier,
@@ -37,7 +37,7 @@ func TestGetByIdentifier(t *testing.T) {
 
 	graphQLMock := graphql.NewGraphQLMock(mockResponse)
 
-	service := NewTeamService(graphQLMock)
+	service := NewService(graphQLMock)
 
 	actualData, actualErr := service.GetByIdentifier(input)
 

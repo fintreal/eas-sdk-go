@@ -1,7 +1,7 @@
 package team
 
 type createTeam struct {
-	Data *teamData `json:"createAppleTeam"`
+	Data *data `json:"createAppleTeam"`
 }
 
 type createTeamResponse struct {
@@ -30,7 +30,7 @@ const createQuery = `
 		}
 	}`
 
-func (service *teamService) Create(data CreateTeamData) (*TeamData, error) {
+func (service *service) Create(data CreateData) (*Data, error) {
 	variables := map[string]any{
 		"identifier": data.Identifier,
 		"name":       data.Name,
@@ -46,7 +46,7 @@ func (service *teamService) Create(data CreateTeamData) (*TeamData, error) {
 		return nil, err
 	}
 
-	return &TeamData{
+	return &Data{
 		Id:         response.CreateTeam.Data.Id,
 		Name:       response.CreateTeam.Data.Name,
 		Identifier: response.CreateTeam.Data.Identifier,

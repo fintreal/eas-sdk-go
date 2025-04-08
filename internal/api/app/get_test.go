@@ -7,18 +7,18 @@ import (
 )
 
 func TestGet(t *testing.T) {
-	expectedData := &AppData{
+	expectedData := &Data{
 		Id:   "test-id",
 		Name: "test-name",
 		Slug: "test-slug",
 	}
 
-	config := testutils.TestConfig[string, AppData, getAppResponse, AppService]{
-		NewServiceFunction: NewAppService,
+	config := testutils.TestConfig[string, Data, getResponse, Service]{
+		NewServiceFunction: NewService,
 		FunctionUnderTest:  "Get",
 		Input:              &expectedData.Id,
-		MockResponse:       getAppResponse{Data: expectedData},
-		ExpectedQuery:      getAppQuery,
+		MockResponse:       getResponse{Data: expectedData},
+		ExpectedQuery:      getQuery,
 		ExpectedVariables:  map[string]any{"id": expectedData.Id},
 		ExpectedData:       expectedData,
 	}

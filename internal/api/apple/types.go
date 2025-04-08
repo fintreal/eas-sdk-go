@@ -9,20 +9,20 @@ import (
 	"github.com/fintreal/eas-sdk-go/internal/graphql"
 )
 
-type AppleService struct {
-	Team                team.TeamService
-	Certificate         certificate.CertificateService
-	BundleIdentifier    bundleidentifier.AppBundleIdentifierService
-	ProvisioningProfile provisioningprofile.ProvisioningProfileService
-	AppStoreApiKey      appstoreapikey.AppStoreApiKeyService
+type Service struct {
+	Team                team.Service
+	Certificate         certificate.Service
+	BundleIdentifier    bundleidentifier.Service
+	ProvisioningProfile provisioningprofile.Service
+	AppStoreApiKey      appstoreapikey.Service
 }
 
-func NewAppleService(graphQL graphql.GraphQL) AppleService {
-	return AppleService{
-		Team:                team.NewTeamService(graphQL),
-		Certificate:         certificate.NewCertificateService(graphQL),
-		BundleIdentifier:    bundleidentifier.NewAppBundleIdentifierService(graphQL),
-		ProvisioningProfile: provisioningprofile.NewProvisioningProfileService(graphQL),
-		AppStoreApiKey:      appstoreapikey.NewAppStoreApiKeyService(graphQL),
+func NewService(graphQL graphql.GraphQL) Service {
+	return Service{
+		Team:                team.NewService(graphQL),
+		Certificate:         certificate.NewService(graphQL),
+		BundleIdentifier:    bundleidentifier.NewService(graphQL),
+		ProvisioningProfile: provisioningprofile.NewService(graphQL),
+		AppStoreApiKey:      appstoreapikey.NewService(graphQL),
 	}
 }

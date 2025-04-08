@@ -11,11 +11,11 @@ import (
 
 // EASClient capable of interacting with Expo EAS GraphQL API
 type EASClient struct {
-	Me          me.MeService
-	App         app.AppService
-	AppVariable appvariable.AppVariableService
+	Me          me.Service
+	App         app.Service
+	AppVariable appvariable.Service
 	Account     account.AccountService
-	Apple       apple.AppleService
+	Apple       apple.Service
 }
 
 // EASClient capable of interacting with Expo EAS GraphQL API
@@ -27,10 +27,10 @@ func NewEASClient(token string) *EASClient {
 	}
 	graphql := graphql.NewGraphQL(token)
 	return &EASClient{
-		Me:          me.NewMeService(graphql),
-		App:         app.NewAppService(graphql),
-		AppVariable: appvariable.NewAppVariableService(graphql),
+		Me:          me.NewService(graphql),
+		App:         app.NewService(graphql),
+		AppVariable: appvariable.NewService(graphql),
 		Account:     account.NewAccountService(graphql),
-		Apple:       apple.NewAppleService(graphql),
+		Apple:       apple.NewService(graphql),
 	}
 }

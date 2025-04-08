@@ -1,11 +1,11 @@
 package provisioningprofile
 
-type createProvisioningProfile struct {
-	Data provisioningProfileData `json:"createAppleProvisioningProfile"`
+type appleProvisioningProfile struct {
+	Data data `json:"createAppleProvisioningProfile"`
 }
 
-type createProvisioningProfileResponse struct {
-	CreateProvisioningProfile createProvisioningProfile `json:"appleProvisioningProfile"`
+type createResponse struct {
+	AppleProvisioningProfile appleProvisioningProfile `json:"appleProvisioningProfile"`
 }
 
 const createQuery = `
@@ -26,14 +26,14 @@ const createQuery = `
     }
 `
 
-func (service *provisioningProfileService) Create(data CreateProvisioningProfileData) (*ProvisioningProfileData, error) {
+func (service *service) Create(data CreateData) (*Data, error) {
 	variables := map[string]any{
 		"accountId":            data.AccountId,
 		"appleAppIdentifierId": data.AppBundleIdentifierId,
 		"base64":               data.Base64,
 	}
 
-	var response createProvisioningProfileResponse
+	var response createResponse
 
 	err := service.graphql.Query(createQuery, variables, &response)
 
@@ -41,9 +41,9 @@ func (service *provisioningProfileService) Create(data CreateProvisioningProfile
 		return nil, err
 	}
 
-	return &ProvisioningProfileData{
-		Id:                    response.CreateProvisioningProfile.Data.Id,
-		AppBundleIdentifierId: response.CreateProvisioningProfile.Data.AppBundleIdentifier.Id,
-		Base64:                response.CreateProvisioningProfile.Data.Base64,
+	return &Data{
+		Id:                    response.AppleProvisioningProfile.Data.Id,
+		AppBundleIdentifierId: response.AppleProvisioningProfile.Data.AppleAppIdentifier.Id,
+		Base64:                response.AppleProvisioningProfile.Data.Base64,
 	}, nil
 }

@@ -3,8 +3,7 @@ package appvariable
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/graphql"
-	"github.com/stretchr/testify/assert"
+	"github.com/fintreal/eas-sdk-go/internal/testutils"
 )
 
 func TestCreate(t *testing.T) {
@@ -25,7 +24,7 @@ func TestCreate(t *testing.T) {
 		"visibility":   expectedData.Visibility,
 	}
 
-	inputData := CreateAppVariableData{
+	input := &CreateAppVariableData{
 		AppId:        expectedAppId,
 		Name:         expectedData.Name,
 		Value:        expectedData.Value,
@@ -34,17 +33,15 @@ func TestCreate(t *testing.T) {
 	}
 
 	mockResponse := createAppVariableResponse{CreateAppVariable: createAppVariable{Data: expectedData}}
-	graphQLMock := graphql.NewGraphQLMock(mockResponse)
 
-	service := NewAppVariableService(graphQLMock)
-
-	actualData, actualErr := service.Create(inputData)
-
-	actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
-	actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)
-
-	assert.Equal(t, createAppVariableMutation, actualQuery)
-	assert.Equal(t, expectedVariables, actualVariables)
-	assert.Equal(t, expectedData, actualData)
-	assert.Equal(t, nil, actualErr)
+	config := testutils.TestConfig[CreateAppVariableData, AppVariableData, createAppVariableResponse, AppVariableService]{
+		NewServiceFunction: NewAppVariableService,
+		FunctionUnderTest:  "Create",
+		Input:              input,
+		MockResponse:       mockResponse,
+		ExpectedQuery:      createAppVariableMutation,
+		ExpectedVariables:  expectedVariables,
+		ExpectedData:       expectedData,
+	}
+	testutils.Test(t, config)
 }

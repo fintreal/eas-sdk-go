@@ -24,10 +24,10 @@ const getQuery = `
 	}
 `
 
-func (service *teamService) GetByIdentifier(identifier string, accountId string) (*TeamData, error) {
+func (service *teamService) GetByIdentifier(getData GetByIdentifierData) (*TeamData, error) {
 	variables := map[string]any{
-		"accountId":  accountId,
-		"identifier": identifier,
+		"accountId":  getData.AccountId,
+		"identifier": getData.Identifier,
 	}
 
 	var response getTeamResponse

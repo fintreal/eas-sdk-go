@@ -24,10 +24,15 @@ type CreateProvisioningProfileData struct {
 	AccountId             string
 }
 
+type GetProvisioningProfileData struct {
+	Id        string
+	AccountId string
+}
+
 type ProvisioningProfileService interface {
-	Get(id string, accountId string) (*ProvisioningProfileData, error)
+	Get(GetProvisioningProfileData) (*ProvisioningProfileData, error)
 	Create(data CreateProvisioningProfileData) (*ProvisioningProfileData, error)
-	Delete(id string) error
+	Delete(id string) (*any, error)
 }
 
 type provisioningProfileService struct {

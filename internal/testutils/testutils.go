@@ -10,7 +10,7 @@ import (
 )
 
 type TestConfig[Input, ExpectedData, MockResponse, Service any] struct {
-	Input              Input
+	Input              *Input
 	ExpectedQuery      string
 	ExpectedVariables  map[string]any
 	ExpectedData       *ExpectedData
@@ -35,14 +35,19 @@ func Test[Input, ExpectedData, MockResponse, Service any](t *testing.T, config T
 	assert.Equal(t, nil, actualError)
 }
 
-func callMethod[Input, Data any](service any, methodName string, input Input) (*Data, error) {
+func callMethod[Input, Data any](service any, methodName string, input *Input) (*Data, error) {
 	val := reflect.ValueOf(service)
 	method := val.MethodByName(methodName)
 	if !method.IsValid() {
 		panic(fmt.Sprintf("Method %s not found", method))
 	}
 
-	results := method.Call([]reflect.Value{reflect.ValueOf(input)})
+	var results []reflect.Value
+	if input == nil {
+		results = method.Call([]reflect.Value{})
+	} else {
+		results = method.Call([]reflect.Value{reflect.ValueOf(input).Elem()})
+	}
 
 	var resultPtr *Data
 	if results[0].IsValid() && !results[0].IsNil() {

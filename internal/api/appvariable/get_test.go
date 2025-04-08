@@ -3,8 +3,7 @@ package appvariable
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/graphql"
-	"github.com/stretchr/testify/assert"
+	"github.com/fintreal/eas-sdk-go/internal/testutils"
 )
 
 var expectedAppId = "test-app-id"
@@ -20,36 +19,39 @@ var expectedData = &AppVariableData{
 var mockResponse = getAppVariablesResponse{AppByAppId: getAppVariables{Data: []AppVariableData{*expectedData}}}
 
 func TestGetByName(t *testing.T) {
+	getData := &GetByNameAppVariableData{
+		AppId: expectedAppId,
+		Name:  expectedData.Name,
+	}
 	expectedVariables := map[string]any{"appId": expectedAppId}
 
-	graphQLMock := graphql.NewGraphQLMock(mockResponse)
-
-	service := NewAppVariableService(graphQLMock)
-
-	actualData, actualErr := service.GetByName(expectedData.Name, expectedAppId)
-
-	actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
-	actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)
-
-	assert.Equal(t, getAppVariableQuery, actualQuery)
-	assert.Equal(t, expectedVariables, actualVariables)
-	assert.Equal(t, expectedData, actualData)
-	assert.Equal(t, nil, actualErr)
+	config := testutils.TestConfig[GetByNameAppVariableData, AppVariableData, getAppVariablesResponse, AppVariableService]{
+		NewServiceFunction: NewAppVariableService,
+		FunctionUnderTest:  "GetByName",
+		Input:              getData,
+		MockResponse:       mockResponse,
+		ExpectedQuery:      getAppVariablesQuery,
+		ExpectedVariables:  expectedVariables,
+		ExpectedData:       expectedData,
+	}
+	testutils.Test(t, config)
 }
 
 func TestGetById(t *testing.T) {
+	getData := &GetAppVariableData{
+		AppId: expectedAppId,
+		Id:    expectedData.Id,
+	}
 	expectedVariables := map[string]any{"appId": expectedAppId}
-	graphQLMock := graphql.NewGraphQLMock(mockResponse)
 
-	appVariableService := NewAppVariableService(graphQLMock)
-
-	actualData, actualErr := appVariableService.Get(expectedData.Id, expectedAppId)
-
-	actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
-	actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)
-
-	assert.Equal(t, getAppVariableQuery, actualQuery)
-	assert.Equal(t, expectedVariables, actualVariables)
-	assert.Equal(t, expectedData, actualData)
-	assert.Equal(t, nil, actualErr)
+	config := testutils.TestConfig[GetAppVariableData, AppVariableData, getAppVariablesResponse, AppVariableService]{
+		NewServiceFunction: NewAppVariableService,
+		FunctionUnderTest:  "Get",
+		Input:              getData,
+		MockResponse:       mockResponse,
+		ExpectedQuery:      getAppVariablesQuery,
+		ExpectedVariables:  expectedVariables,
+		ExpectedData:       expectedData,
+	}
+	testutils.Test(t, config)
 }

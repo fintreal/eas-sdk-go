@@ -9,10 +9,11 @@ const deleteQuery = `
     }
 	}`
 
-func (service *provisioningProfileService) Delete(id string) error {
+func (service *provisioningProfileService) Delete(id string) (*any, error) {
 	variables := map[string]any{"id": id}
 
 	var response any
 
-	return service.graphql.Query(deleteQuery, variables, &response)
+	err := service.graphql.Query(deleteQuery, variables, &response)
+	return (*any)(nil), err
 }

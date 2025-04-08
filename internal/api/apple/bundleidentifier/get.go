@@ -25,10 +25,10 @@ const getQuery = `
 		}
 	}`
 
-func (s *appBundleIdentifierService) GetByIdentifier(identifier string, accountId string) (*AppBundleIdentifierData, error) {
+func (s *appBundleIdentifierService) GetByIdentifier(getData GetByIdentifierData) (*AppBundleIdentifierData, error) {
 	variables := map[string]any{
-		"identifier": identifier,
-		"accountId":  accountId,
+		"identifier": getData.Identifier,
+		"accountId":  getData.AccountId,
 	}
 
 	var response utils.AccountResponse[appBundleIdentifierResponse]
@@ -37,7 +37,7 @@ func (s *appBundleIdentifierService) GetByIdentifier(identifier string, accountI
 	if err != nil {
 		return nil, err
 	}
-	return findBundleIdentifierByIdentifier(response.Account.ById.Data, identifier)
+	return findBundleIdentifierByIdentifier(response.Account.ById.Data, getData.Identifier)
 }
 
 func findBundleIdentifierByIdentifier(identifiers []appBundleIdentifierData, identifier string) (*AppBundleIdentifierData, error) {

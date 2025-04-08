@@ -10,7 +10,7 @@ type getAppVariablesResponse struct {
 	AppByAppId getAppVariables `json:"appByAppId"`
 }
 
-const getAppVariableQuery = `
+const getAppVariablesQuery = `
 	query ($appId: String!) {
 		appByAppId(appId: $appId) {
 			environmentVariablesIncludingSensitive {
@@ -28,27 +28,27 @@ func (service *appVariableService) getAppEnvironmentVariables(appId string) ([]A
 
 	var response getAppVariablesResponse
 
-	err := service.graphql.Query(getAppVariableQuery, variables, &response)
+	err := service.graphql.Query(getAppVariablesQuery, variables, &response)
 	return response.AppByAppId.Data, err
 }
 
 // Retrieves an App Environment Variable from EAS by it's name and appId
-func (service *appVariableService) GetByName(name string, appId string) (*AppVariableData, error) {
-	data, err := service.getAppEnvironmentVariables(appId)
+func (service *appVariableService) GetByName(getByName GetByNameAppVariableData) (*AppVariableData, error) {
+	data, err := service.getAppEnvironmentVariables(getByName.AppId)
 	if err != nil {
 		return nil, err
 	}
-	return findByName(data, name)
+	return findByName(data, getByName.Name)
 }
 
 // Retrieves an App Environment Variable from EAS by it' id and appId
-func (service *appVariableService) Get(id string, appId string) (*AppVariableData, error) {
-	data, err := service.getAppEnvironmentVariables(appId)
+func (service *appVariableService) Get(getData GetAppVariableData) (*AppVariableData, error) {
+	data, err := service.getAppEnvironmentVariables(getData.AppId)
 	if err != nil {
 		return nil, err
 	}
 
-	return findById(data, id)
+	return findById(data, getData.Id)
 }
 
 func findByName(variables []AppVariableData, name string) (*AppVariableData, error) {

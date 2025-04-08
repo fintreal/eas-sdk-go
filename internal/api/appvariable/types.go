@@ -14,32 +14,38 @@ type AppVariableData struct {
 	Environments []string `json:"environments"`
 }
 
+type GetByNameAppVariableData struct {
+	Name  string
+	AppId string
+}
+
+type GetAppVariableData struct {
+	Id    string
+	AppId string
+}
+
 type CreateAppVariableData struct {
-	AppId string `json:"appId"`
-	Name  string `json:"name"`
-	Value string `json:"value"`
-	// PUBLIC, SENSITIVE, SECRET
-	Visibility string `json:"visibility"`
-	// DEVELOPMENT, PREVIEW, PRODUCTION
-	Environments []string `json:"environments"`
+	AppId        string
+	Name         string
+	Value        string
+	Visibility   string
+	Environments []string
 }
 
 type UpdateAppVariableData struct {
-	Id    string `json:"id"`
-	Name  string `json:"name"`
-	Value string `json:"value"`
-	// PUBLIC, SENSITIVE, SECRET
-	Visibility string `json:"visibility"`
-	// DEVELOPMENT, PREVIEW, PRODUCTION
-	Environments []string `json:"environments"`
+	Id           string
+	Name         string
+	Value        string
+	Visibility   string
+	Environments []string
 }
 
 type AppVariableService interface {
-	Get(id string, appId string) (*AppVariableData, error)
-	GetByName(name string, appId string) (*AppVariableData, error)
-	Create(createData CreateAppVariableData) (*AppVariableData, error)
-	Update(data UpdateAppVariableData) (*AppVariableData, error)
-	Delete(id string) error
+	Get(GetAppVariableData) (*AppVariableData, error)
+	GetByName(GetByNameAppVariableData) (*AppVariableData, error)
+	Create(CreateAppVariableData) (*AppVariableData, error)
+	Update(UpdateAppVariableData) (*AppVariableData, error)
+	Delete(string) (*any, error)
 }
 
 type appVariableService struct {

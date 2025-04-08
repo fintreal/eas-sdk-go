@@ -3,8 +3,7 @@ package team
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/graphql"
-	"github.com/stretchr/testify/assert"
+	"github.com/fintreal/eas-sdk-go/internal/testutils"
 )
 
 func TestCreate(t *testing.T) {
@@ -23,33 +22,33 @@ func TestCreate(t *testing.T) {
 		"type":       expectedData.Type,
 	}
 
-	inputData := CreateTeamData{
+	input := &CreateTeamData{
 		Name:       expectedData.Name,
 		Identifier: expectedData.Identifier,
 		Type:       expectedData.Type,
 		AccountId:  expectedData.AccountId,
 	}
 
-	mockData := &teamData{
-		Id:         expectedData.Id,
-		Name:       expectedData.Name,
-		Identifier: expectedData.Identifier,
-		Type:       expectedData.Type,
-		Account:    account{Id: expectedData.AccountId},
+	mockResponse := createTeamResponse{
+		CreateTeam: createTeam{
+			Data: &teamData{
+				Id:         expectedData.Id,
+				Name:       expectedData.Name,
+				Identifier: expectedData.Identifier,
+				Type:       expectedData.Type,
+				Account:    account{Id: expectedData.AccountId},
+			},
+		},
 	}
-	mockResponse := createTeamResponse{CreateTeam: createTeam{Data: mockData}}
 
-	graphQLMock := graphql.NewGraphQLMock(mockResponse)
-
-	service := NewTeamService(graphQLMock)
-
-	actualData, actualErr := service.Create(inputData)
-
-	actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
-	actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)
-
-	assert.Equal(t, createQuery, actualQuery)
-	assert.Equal(t, expectedVariables, actualVariables)
-	assert.Equal(t, expectedData, actualData)
-	assert.Equal(t, nil, actualErr)
+	config := testutils.TestConfig[CreateTeamData, TeamData, createTeamResponse, TeamService]{
+		NewServiceFunction: NewTeamService,
+		FunctionUnderTest:  "Create",
+		Input:              input,
+		MockResponse:       mockResponse,
+		ExpectedQuery:      createQuery,
+		ExpectedVariables:  expectedVariables,
+		ExpectedData:       expectedData,
+	}
+	testutils.Test(t, config)
 }

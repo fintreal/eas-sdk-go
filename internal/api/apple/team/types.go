@@ -35,10 +35,15 @@ type UpdateTeamData struct {
 	Type string
 }
 
+type GetByIdentifierData struct {
+	Identifier string
+	AccountId  string
+}
+
 type TeamService interface {
 	Create(data CreateTeamData) (*TeamData, error)
 	Update(data UpdateTeamData) (*TeamData, error)
-	GetByIdentifier(identifier string, accountId string) (*TeamData, error)
+	GetByIdentifier(GetByIdentifierData) (*TeamData, error)
 }
 
 type teamService struct {

@@ -24,9 +24,14 @@ type CreateAppBundleIdentifierData struct {
 	TeamId     string
 }
 
+type GetByIdentifierData struct {
+	Identifier string
+	AccountId  string
+}
+
 type AppBundleIdentifierService interface {
 	Create(data CreateAppBundleIdentifierData) (*AppBundleIdentifierData, error)
-	GetByIdentifier(identifier string, appleTeamId string) (*AppBundleIdentifierData, error)
+	GetByIdentifier(GetByIdentifierData) (*AppBundleIdentifierData, error)
 }
 
 type appBundleIdentifierService struct {

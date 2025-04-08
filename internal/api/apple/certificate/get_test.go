@@ -3,39 +3,53 @@ package certificate
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/graphql"
+	"github.com/fintreal/eas-sdk-go/internal/testutils"
 	"github.com/fintreal/eas-sdk-go/internal/utils"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestGetBySerialNumber(t *testing.T) {
-	accountId := "test-account-id"
-	expectedResponse := &CertificateData{
-		Id:           "test-id",
+	input := &GetBySerialNumberCertificateData{
+		AccountId:    "test-account-id",
 		SerialNumber: "test-serial-number",
-		// P12Base64:    "test-p12-base64",
-		// Password:     "test-password",
-		// PrivateKey:   "test-private-key",
 	}
-	expectedVariables := map[string]any{"accountId": accountId}
+	expectedData := &CertificateData{
+		Id:           "test-id",
+		SerialNumber: input.SerialNumber,
+	}
+	expectedVariables := map[string]any{
+		"accountId":    input.AccountId,
+		"serialNumber": input.SerialNumber,
+	}
 
 	mockResponse := utils.AccountResponse[getCertificatesResponse]{
 		Account: utils.Account[getCertificatesResponse]{
 			ById: getCertificatesResponse{
-				Data: []CertificateData{*expectedResponse},
+				Data: []CertificateData{*expectedData},
 			},
 		},
 	}
-	graphQLMock := graphql.NewGraphQLMock(mockResponse)
 
-	service := NewCertificateService(graphQLMock)
-	actualResponse, actualErr := service.GetBySerialNumber(expectedResponse.SerialNumber, accountId)
+	config := testutils.TestConfig[GetBySerialNumberCertificateData, CertificateData, utils.AccountResponse[getCertificatesResponse], CertificateService]{
+		NewServiceFunction: NewCertificateService,
+		FunctionUnderTest:  "GetBySerialNumber",
+		Input:              input,
+		MockResponse:       mockResponse,
+		ExpectedQuery:      getQuery,
+		ExpectedVariables:  expectedVariables,
+		ExpectedData:       expectedData,
+	}
+	testutils.Test(t, config)
 
-	actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
-	actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)
+	// graphQLMock := graphql.NewGraphQLMock(mockResponse)
 
-	assert.Equal(t, getQuery, actualQuery)
-	assert.Equal(t, expectedVariables, actualVariables)
-	assert.Equal(t, expectedResponse, actualResponse)
-	assert.Equal(t, nil, actualErr)
+	// service := NewCertificateService(graphQLMock)
+	// actualResponse, actualErr := service.GetBySerialNumber()
+
+	// actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
+	// actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)
+
+	// assert.Equal(t, getQuery, actualQuery)
+	// assert.Equal(t, expectedVariables, actualVariables)
+	// assert.Equal(t, expectedData, actualResponse)
+	// assert.Equal(t, nil, actualErr)
 }

@@ -3,8 +3,7 @@ package me
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/graphql"
-	"github.com/stretchr/testify/assert"
+	"github.com/fintreal/eas-sdk-go/internal/testutils"
 )
 
 func TestGet(t *testing.T) {
@@ -13,12 +12,14 @@ func TestGet(t *testing.T) {
 		DisplayName: "Test Display Name",
 	}
 	mockResponse := getMeResponse{Data: expectedData}
-	graphQLMock := graphql.NewGraphQLMock(mockResponse)
-
-	service := NewMeService(graphQLMock)
-
-	actualData, actualErr := service.Get()
-
-	assert.Equal(t, expectedData, actualData)
-	assert.Equal(t, nil, actualErr)
+	config := testutils.TestConfig[any, MeData, getMeResponse, MeService]{
+		NewServiceFunction: NewMeService,
+		FunctionUnderTest:  "Get",
+		Input:              nil,
+		MockResponse:       mockResponse,
+		ExpectedQuery:      meQuery,
+		ExpectedVariables:  map[string]any{},
+		ExpectedData:       expectedData,
+	}
+	testutils.Test(t, config)
 }

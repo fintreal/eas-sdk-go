@@ -26,9 +26,9 @@ const getQuery = `
 	}
 `
 
-func (service *provisioningProfileService) Get(id string, accountId string) (*ProvisioningProfileData, error) {
+func (service *provisioningProfileService) Get(getData GetProvisioningProfileData) (*ProvisioningProfileData, error) {
 	variables := map[string]any{
-		"accountId": accountId,
+		"accountId": getData.AccountId,
 	}
 
 	var response utils.AccountResponse[getProvisioningProfilesResponse]
@@ -36,7 +36,7 @@ func (service *provisioningProfileService) Get(id string, accountId string) (*Pr
 	if err != nil {
 		return nil, err
 	}
-	return findProvisioningProfileById(response.Account.ById.Data, id)
+	return findProvisioningProfileById(response.Account.ById.Data, getData.Id)
 }
 
 func findProvisioningProfileById(provisioningProfiles []provisioningProfileData, id string) (*ProvisioningProfileData, error) {

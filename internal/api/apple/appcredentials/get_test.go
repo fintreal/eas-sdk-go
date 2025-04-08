@@ -22,8 +22,8 @@ func TestGetByIdentifier(t *testing.T) {
 		"appId": input.AppId,
 	}
 	mockResponse := getResponse{
-		IosAppCredentials: GetIosAppCredentials{
-			Data: data{
+		AppByAppId: appByAppId{
+			Data: []data{{
 				Id: expectedData.Id,
 				App: objWithId{
 					Id: expectedData.AppId,
@@ -31,7 +31,7 @@ func TestGetByIdentifier(t *testing.T) {
 				AppIdentifier: objWithId{
 					Id: expectedData.AppIdentifierId,
 				},
-			},
+			}},
 		},
 	}
 

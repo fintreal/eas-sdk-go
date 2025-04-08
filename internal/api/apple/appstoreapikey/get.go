@@ -6,9 +6,11 @@ import (
 	"github.com/fintreal/eas-sdk-go/internal/utils"
 )
 
-type appStoreApiKeysResponse struct {
-	Data []AppStoreApiKeyData `json:"appStoreConnectApiKeys"`
+type getAccount struct {
+	Data []Data `json:"appStoreConnectApiKeys"`
 }
+
+type getResponse = utils.AccountResponse[getAccount]
 
 const getQuery = `
 	query ($accountId: String!) {
@@ -25,20 +27,20 @@ const getQuery = `
 	}
 `
 
-func (s *appStoreApiKeyService) GetByIdentifier(getData GeyByIdentifierAppStoreApiKeyData) (*AppStoreApiKeyData, error) {
+func (s *service) GetByIdentifier(getData GeyByIdentifierData) (*Data, error) {
 	variables := map[string]any{"accountId": getData.AccountId}
 
-	var response utils.AccountResponse[appStoreApiKeysResponse]
+	var response getResponse
 
 	err := s.graphql.Query(getQuery, variables, &response)
 	if err != nil {
 		return nil, err
 	}
 
-	return findAppStoreApiKeyByIdentifier(response.Account.ById.Data, getData.Identifier)
+	return findByIdentifier(response.Account.ById.Data, getData.Identifier)
 }
 
-func findAppStoreApiKeyByIdentifier(apiKeys []AppStoreApiKeyData, identifier string) (*AppStoreApiKeyData, error) {
+func findByIdentifier(apiKeys []Data, identifier string) (*Data, error) {
 	for _, apiKey := range apiKeys {
 		if apiKey.Identifier == identifier {
 			return &apiKey, nil

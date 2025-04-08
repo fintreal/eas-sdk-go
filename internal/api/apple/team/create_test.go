@@ -7,7 +7,7 @@ import (
 )
 
 func TestCreate(t *testing.T) {
-	expectedData := &TeamData{
+	expectedData := &Data{
 		Id:         "test-id",
 		Name:       "test-name",
 		Identifier: "test-identifier",
@@ -22,7 +22,7 @@ func TestCreate(t *testing.T) {
 		"type":       expectedData.Type,
 	}
 
-	input := &CreateTeamData{
+	input := &CreateData{
 		Name:       expectedData.Name,
 		Identifier: expectedData.Identifier,
 		Type:       expectedData.Type,
@@ -31,7 +31,7 @@ func TestCreate(t *testing.T) {
 
 	mockResponse := createTeamResponse{
 		CreateTeam: createTeam{
-			Data: &teamData{
+			Data: &data{
 				Id:         expectedData.Id,
 				Name:       expectedData.Name,
 				Identifier: expectedData.Identifier,
@@ -41,8 +41,8 @@ func TestCreate(t *testing.T) {
 		},
 	}
 
-	config := testutils.TestConfig[CreateTeamData, TeamData, createTeamResponse, TeamService]{
-		NewServiceFunction: NewTeamService,
+	config := testutils.TestConfig[CreateData, Data, createTeamResponse, Service]{
+		NewServiceFunction: NewService,
 		FunctionUnderTest:  "Create",
 		Input:              input,
 		MockResponse:       mockResponse,

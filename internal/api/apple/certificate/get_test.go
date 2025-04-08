@@ -8,11 +8,11 @@ import (
 )
 
 func TestGetBySerialNumber(t *testing.T) {
-	input := &GetBySerialNumberCertificateData{
+	input := &GetBySerialNumberData{
 		AccountId:    "test-account-id",
 		SerialNumber: "test-serial-number",
 	}
-	expectedData := &CertificateData{
+	expectedData := &Data{
 		Id:           "test-id",
 		SerialNumber: input.SerialNumber,
 	}
@@ -21,16 +21,16 @@ func TestGetBySerialNumber(t *testing.T) {
 		"serialNumber": input.SerialNumber,
 	}
 
-	mockResponse := utils.AccountResponse[getCertificatesResponse]{
-		Account: utils.Account[getCertificatesResponse]{
-			ById: getCertificatesResponse{
-				Data: []CertificateData{*expectedData},
+	mockResponse := utils.AccountResponse[getResponse]{
+		Account: utils.Account[getResponse]{
+			ById: getResponse{
+				Data: []Data{*expectedData},
 			},
 		},
 	}
 
-	config := testutils.TestConfig[GetBySerialNumberCertificateData, CertificateData, utils.AccountResponse[getCertificatesResponse], CertificateService]{
-		NewServiceFunction: NewCertificateService,
+	config := testutils.TestConfig[GetBySerialNumberData, Data, utils.AccountResponse[getResponse], Service]{
+		NewServiceFunction: NewService,
 		FunctionUnderTest:  "GetBySerialNumber",
 		Input:              input,
 		MockResponse:       mockResponse,

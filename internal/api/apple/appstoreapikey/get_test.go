@@ -8,11 +8,11 @@ import (
 )
 
 func TestGetByIdentifier(t *testing.T) {
-	getData := &GeyByIdentifierAppStoreApiKeyData{
+	getData := &GeyByIdentifierData{
 		Identifier: "test-identifier",
 		AccountId:  "test-account-id",
 	}
-	expectedData := &AppStoreApiKeyData{
+	expectedData := &Data{
 		Id:               "test-id",
 		Name:             "test-name",
 		IssuerIdentifier: "test-issuer-identifier",
@@ -20,16 +20,16 @@ func TestGetByIdentifier(t *testing.T) {
 	}
 	expectedVariables := map[string]any{"accountId": getData.AccountId}
 
-	mockResponse := utils.AccountResponse[appStoreApiKeysResponse]{
-		Account: utils.Account[appStoreApiKeysResponse]{
-			ById: appStoreApiKeysResponse{
-				Data: []AppStoreApiKeyData{*expectedData},
+	mockResponse := getResponse{
+		Account: utils.Account[getAccount]{
+			ById: getAccount{
+				Data: []Data{*expectedData},
 			},
 		},
 	}
 
-	config := testutils.TestConfig[GeyByIdentifierAppStoreApiKeyData, AppStoreApiKeyData, utils.AccountResponse[appStoreApiKeysResponse], AppStoreApiKeyService]{
-		NewServiceFunction: NewAppStoreApiKeyService,
+	config := testutils.TestConfig[GeyByIdentifierData, Data, utils.AccountResponse[getAccount], Service]{
+		NewServiceFunction: NewService,
 		FunctionUnderTest:  "GetByIdentifier",
 		Input:              getData,
 		MockResponse:       mockResponse,

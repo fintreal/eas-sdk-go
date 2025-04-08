@@ -7,7 +7,7 @@ import (
 )
 
 func TestUpdate(t *testing.T) {
-	expectedData := &TeamData{
+	expectedData := &Data{
 		Id:         "test-id",
 		Name:       "test-name",
 		Identifier: "test-identifier",
@@ -21,7 +21,7 @@ func TestUpdate(t *testing.T) {
 		"type": expectedData.Type,
 	}
 
-	input := &UpdateTeamData{
+	input := &UpdateData{
 		Id:   expectedData.Id,
 		Name: expectedData.Name,
 		Type: expectedData.Type,
@@ -29,7 +29,7 @@ func TestUpdate(t *testing.T) {
 
 	mockResponse := updateTeamResponse{
 		UpdateAppleTeam: updateTeam{
-			Data: &teamData{
+			Data: &data{
 				Id:         expectedData.Id,
 				Name:       expectedData.Name,
 				Identifier: expectedData.Identifier,
@@ -39,8 +39,8 @@ func TestUpdate(t *testing.T) {
 		},
 	}
 
-	config := testutils.TestConfig[UpdateTeamData, TeamData, updateTeamResponse, TeamService]{
-		NewServiceFunction: NewTeamService,
+	config := testutils.TestConfig[UpdateData, Data, updateTeamResponse, Service]{
+		NewServiceFunction: NewService,
 		FunctionUnderTest:  "Update",
 		Input:              input,
 		MockResponse:       mockResponse,

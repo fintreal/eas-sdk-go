@@ -1,7 +1,7 @@
 package team
 
 type updateTeam struct {
-	Data *teamData `json:"updateAppleTeam"`
+	Data *data `json:"updateAppleTeam"`
 }
 
 type updateTeamResponse struct {
@@ -26,7 +26,7 @@ const updateQuery = `
 		}
 	}`
 
-func (service *teamService) Update(data UpdateTeamData) (*TeamData, error) {
+func (service *service) Update(data UpdateData) (*Data, error) {
 	variables := map[string]any{
 		"id":   data.Id,
 		"name": data.Name,
@@ -41,7 +41,7 @@ func (service *teamService) Update(data UpdateTeamData) (*TeamData, error) {
 		return nil, err
 	}
 
-	return &TeamData{
+	return &Data{
 		Id:         response.UpdateAppleTeam.Data.Id,
 		Name:       response.UpdateAppleTeam.Data.Name,
 		Identifier: response.UpdateAppleTeam.Data.Identifier,

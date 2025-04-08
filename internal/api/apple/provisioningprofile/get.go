@@ -7,7 +7,7 @@ import (
 )
 
 type getProvisioningProfilesResponse struct {
-	Data []provisioningProfileData `json:"appleProvisioningProfiles"`
+	Data []data `json:"appleProvisioningProfiles"`
 }
 
 const getQuery = `
@@ -26,7 +26,7 @@ const getQuery = `
 	}
 `
 
-func (service *provisioningProfileService) Get(getData GetProvisioningProfileData) (*ProvisioningProfileData, error) {
+func (service *service) Get(getData GetData) (*Data, error) {
 	variables := map[string]any{
 		"accountId": getData.AccountId,
 	}
@@ -39,12 +39,12 @@ func (service *provisioningProfileService) Get(getData GetProvisioningProfileDat
 	return findProvisioningProfileById(response.Account.ById.Data, getData.Id)
 }
 
-func findProvisioningProfileById(provisioningProfiles []provisioningProfileData, id string) (*ProvisioningProfileData, error) {
+func findProvisioningProfileById(provisioningProfiles []data, id string) (*Data, error) {
 	for _, provisioningProfile := range provisioningProfiles {
 		if provisioningProfile.Id == id {
-			return &ProvisioningProfileData{
+			return &Data{
 				Id:                    provisioningProfile.Id,
-				AppBundleIdentifierId: provisioningProfile.AppBundleIdentifier.Id,
+				AppBundleIdentifierId: provisioningProfile.AppleAppIdentifier.Id,
 				Base64:                provisioningProfile.Base64,
 			}, nil
 		}

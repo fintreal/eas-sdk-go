@@ -6,8 +6,8 @@ import (
 	"github.com/fintreal/eas-sdk-go/internal/utils"
 )
 
-type appBundleIdentifierResponse struct {
-	Data []appBundleIdentifierData `json:"appleAppIdentifiers"`
+type getResponse struct {
+	Data []data `json:"appleAppIdentifiers"`
 }
 
 const getQuery = `
@@ -25,13 +25,13 @@ const getQuery = `
 		}
 	}`
 
-func (s *appBundleIdentifierService) GetByIdentifier(getData GetByIdentifierData) (*AppBundleIdentifierData, error) {
+func (s *service) GetByIdentifier(getData GetByIdentifierData) (*Data, error) {
 	variables := map[string]any{
 		"identifier": getData.Identifier,
 		"accountId":  getData.AccountId,
 	}
 
-	var response utils.AccountResponse[appBundleIdentifierResponse]
+	var response utils.AccountResponse[getResponse]
 
 	err := s.graphql.Query(getQuery, variables, &response)
 	if err != nil {
@@ -40,10 +40,10 @@ func (s *appBundleIdentifierService) GetByIdentifier(getData GetByIdentifierData
 	return findBundleIdentifierByIdentifier(response.Account.ById.Data, getData.Identifier)
 }
 
-func findBundleIdentifierByIdentifier(identifiers []appBundleIdentifierData, identifier string) (*AppBundleIdentifierData, error) {
+func findBundleIdentifierByIdentifier(identifiers []data, identifier string) (*Data, error) {
 	for _, bundleIdentifier := range identifiers {
 		if bundleIdentifier.Identifier == identifier {
-			return &AppBundleIdentifierData{
+			return &Data{
 				Id:         bundleIdentifier.Id,
 				Identifier: bundleIdentifier.Identifier,
 				TeamId:     bundleIdentifier.Team.Id,

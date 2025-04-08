@@ -9,7 +9,7 @@ const deleteQuery = `
     }
 	}`
 
-func (service *provisioningProfileService) Delete(id string) (*any, error) {
+func (service *service) Delete(id string) (*any, error) {
 	variables := map[string]any{"id": id}
 
 	var response any

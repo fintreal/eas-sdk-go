@@ -14,7 +14,7 @@ func TestGetByIdentifier(t *testing.T) {
 		Identifier: identifier,
 		AccountId:  accountId,
 	}
-	expectedData := &AppBundleIdentifierData{
+	expectedData := &Data{
 		Id:         "test-id",
 		Identifier: identifier,
 		TeamId:     "test-team-id",
@@ -26,8 +26,8 @@ func TestGetByIdentifier(t *testing.T) {
 	}
 	mockResponse := getMockResponse(expectedData)
 
-	config := testutils.TestConfig[GetByIdentifierData, AppBundleIdentifierData, utils.AccountResponse[appBundleIdentifierResponse], AppBundleIdentifierService]{
-		NewServiceFunction: NewAppBundleIdentifierService,
+	config := testutils.TestConfig[GetByIdentifierData, Data, utils.AccountResponse[getResponse], Service]{
+		NewServiceFunction: NewService,
 		FunctionUnderTest:  "GetByIdentifier",
 		Input:              input,
 		MockResponse:       mockResponse,
@@ -38,18 +38,18 @@ func TestGetByIdentifier(t *testing.T) {
 	testutils.Test(t, config)
 }
 
-func getMockResponse(data *AppBundleIdentifierData) utils.AccountResponse[appBundleIdentifierResponse] {
-	mockData := appBundleIdentifierData{
-		Id:         data.Id,
-		Identifier: data.Identifier,
+func getMockResponse(input *Data) utils.AccountResponse[getResponse] {
+	mockData := data{
+		Id:         input.Id,
+		Identifier: input.Identifier,
 		Team: team{
-			Id: data.TeamId,
+			Id: input.TeamId,
 		},
 	}
-	return utils.AccountResponse[appBundleIdentifierResponse]{
-		Account: utils.Account[appBundleIdentifierResponse]{
-			ById: appBundleIdentifierResponse{
-				Data: []appBundleIdentifierData{mockData},
+	return utils.AccountResponse[getResponse]{
+		Account: utils.Account[getResponse]{
+			ById: getResponse{
+				Data: []data{mockData},
 			},
 		},
 	}

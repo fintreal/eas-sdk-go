@@ -8,7 +8,7 @@ import (
 
 func TestCreate(t *testing.T) {
 	accountId := "test-account-id"
-	expectedData := &AppData{
+	expectedData := &Data{
 		Id:   "test-id",
 		Name: "test-name",
 		Slug: "test-slug",
@@ -18,20 +18,20 @@ func TestCreate(t *testing.T) {
 		"name":      expectedData.Name,
 		"slug":      expectedData.Slug,
 	}
-	input := &CreateAppData{
+	input := &CreateData{
 		AccountId: accountId,
 		Name:      expectedData.Name,
 		Slug:      expectedData.Slug,
 	}
 
-	mockResponse := createAppResponse{CreateApp: createApp{Data: expectedData}}
+	mockResponse := createResponse{CreateApp: createApp{Data: expectedData}}
 
-	config := testutils.TestConfig[CreateAppData, AppData, createAppResponse, AppService]{
-		NewServiceFunction: NewAppService,
+	config := testutils.TestConfig[CreateData, Data, createResponse, Service]{
+		NewServiceFunction: NewService,
 		FunctionUnderTest:  "Create",
 		Input:              input,
 		MockResponse:       mockResponse,
-		ExpectedQuery:      createAppMutation,
+		ExpectedQuery:      createQuery,
 		ExpectedVariables:  expectedVariables,
 		ExpectedData:       expectedData,
 	}

@@ -1,10 +1,10 @@
 package app
 
-type getAppResponse struct {
-	Data *AppData `json:"appByAppId"`
+type getResponse struct {
+	Data *Data `json:"appByAppId"`
 }
 
-const getAppQuery = `
+const getQuery = `
 	query App ($id: String!) {
     	appByAppId(appId: $id) {
         	id
@@ -14,11 +14,11 @@ const getAppQuery = `
 	}`
 
 // Retrieves an App from EAS by it's id
-func (service *appService) Get(id string) (*AppData, error) {
+func (service *service) Get(id string) (*Data, error) {
 	variables := map[string]any{"id": id}
 
-	var response getAppResponse
-	err := service.graphql.Query(getAppQuery, variables, &response)
+	var response getResponse
+	err := service.graphql.Query(getQuery, variables, &response)
 
 	return response.Data, err
 }

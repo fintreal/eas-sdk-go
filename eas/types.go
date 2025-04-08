@@ -15,9 +15,9 @@ import (
 type MeData = me.Data
 type AccountData = account.Data
 
-type AppData = app.AppData
-type CreateAppData = app.CreateAppData
-type UpdateAppData = app.UpdateAppData
+type AppData = app.Data
+type CreateAppData = app.CreateData
+type UpdateAppData = app.UpdateData
 
 type AppVariableData = appvariable.AppVariableData
 type CreateAppVariableData = appvariable.CreateAppVariableData

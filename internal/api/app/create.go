@@ -1,14 +1,14 @@
 package app
 
 type createApp struct {
-	Data *AppData `json:"createApp"`
+	Data *Data `json:"createApp"`
 }
 
-type createAppResponse struct {
+type createResponse struct {
 	CreateApp createApp `json:"app"`
 }
 
-const createAppMutation = `
+const createQuery = `
 	mutation ($accountId: ID!, $name: String!, $slug: String!) {
 		app {
 			createApp(
@@ -26,15 +26,15 @@ const createAppMutation = `
 	}`
 
 // Creates an App in EAS
-func (service *appService) Create(data CreateAppData) (*AppData, error) {
+func (service *service) Create(data CreateData) (*Data, error) {
 	variables := map[string]any{
 		"accountId": data.AccountId,
 		"name":      data.Name,
 		"slug":      data.Slug,
 	}
 
-	var response createAppResponse
-	err := service.graphql.Query(createAppMutation, variables, &response)
+	var response createResponse
+	err := service.graphql.Query(createQuery, variables, &response)
 
 	if err != nil {
 		return nil, err

@@ -9,7 +9,7 @@ import (
 )
 
 func TestAppGet(t *testing.T) {
-	expectedData := &app.AppData{
+	expectedData := &app.Data{
 		Id:   utils.ImmutableAppId,
 		Name: "Test App",
 		Slug: "test-app",
@@ -22,7 +22,7 @@ func TestAppGet(t *testing.T) {
 }
 
 func TestAppCreate(t *testing.T) {
-	inputData := app.CreateAppData{
+	inputData := app.CreateData{
 		AccountId: utils.AccountId,
 		Name:      utils.GenerateRandomString(10),
 		Slug:      utils.GenerateRandomString(10),
@@ -37,13 +37,13 @@ func TestAppCreate(t *testing.T) {
 }
 
 func TestAppUpdate(t *testing.T) {
-	expectedData := &app.AppData{
+	expectedData := &app.Data{
 		Id:   utils.MutableAppId,
 		Name: utils.GenerateRandomString(10),
 		Slug: "test-app-update",
 	}
 
-	updateData := app.UpdateAppData{
+	updateData := app.UpdateData{
 		Id:   expectedData.Id,
 		Name: expectedData.Name,
 	}

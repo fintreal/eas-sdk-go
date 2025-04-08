@@ -6,7 +6,7 @@ import (
 	"github.com/fintreal/eas-sdk-go/internal/testutils"
 )
 
-func TestGet2(t *testing.T) {
+func TestGet(t *testing.T) {
 	expectedData := &AppData{
 		Id:   "test-id",
 		Name: "test-name",

@@ -18,9 +18,10 @@ const getQuery = `
 			}
 	}`
 
-func (service *certificateService) GetBySerialNumber(serialNumber string, accountId string) (*CertificateData, error) {
+func (service *certificateService) GetBySerialNumber(getData GetBySerialNumberCertificateData) (*CertificateData, error) {
 	variables := map[string]any{
-		"accountId": accountId,
+		"accountId":    getData.AccountId,
+		"serialNumber": getData.SerialNumber,
 	}
 
 	var response utils.AccountResponse[getCertificatesResponse]
@@ -29,7 +30,7 @@ func (service *certificateService) GetBySerialNumber(serialNumber string, accoun
 	if err != nil {
 		return nil, err
 	}
-	return findBySerialNumber(response.Account.ById.Data, serialNumber)
+	return findBySerialNumber(response.Account.ById.Data, getData.SerialNumber)
 }
 
 func findBySerialNumber(certificates []CertificateData, serialNumber string) (*CertificateData, error) {

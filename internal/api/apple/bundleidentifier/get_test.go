@@ -3,15 +3,18 @@ package bundleidentifier
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/graphql"
+	"github.com/fintreal/eas-sdk-go/internal/testutils"
 	"github.com/fintreal/eas-sdk-go/internal/utils"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestGetByIdentifier(t *testing.T) {
 	identifier := "test-identifier"
 	accountId := "test-account-id"
-	expectedResponse := &AppBundleIdentifierData{
+	input := &GetByIdentifierData{
+		Identifier: identifier,
+		AccountId:  accountId,
+	}
+	expectedData := &AppBundleIdentifierData{
 		Id:         "test-id",
 		Identifier: identifier,
 		TeamId:     "test-team-id",
@@ -21,22 +24,21 @@ func TestGetByIdentifier(t *testing.T) {
 		"identifier": identifier,
 		"accountId":  accountId,
 	}
-	graphQLMock := graphql.NewGraphQLMock(mockResponse(expectedResponse))
+	mockResponse := getMockResponse(expectedData)
 
-	service := NewAppBundleIdentifierService(graphQLMock)
-
-	result, err := service.GetByIdentifier(identifier, accountId)
-
-	actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
-	actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)
-
-	assert.Equal(t, getQuery, actualQuery)
-	assert.Equal(t, expectedVariables, actualVariables)
-	assert.Equal(t, expectedResponse, result)
-	assert.Equal(t, nil, err)
+	config := testutils.TestConfig[GetByIdentifierData, AppBundleIdentifierData, utils.AccountResponse[appBundleIdentifierResponse], AppBundleIdentifierService]{
+		NewServiceFunction: NewAppBundleIdentifierService,
+		FunctionUnderTest:  "GetByIdentifier",
+		Input:              input,
+		MockResponse:       mockResponse,
+		ExpectedQuery:      getQuery,
+		ExpectedVariables:  expectedVariables,
+		ExpectedData:       expectedData,
+	}
+	testutils.Test(t, config)
 }
 
-func mockResponse(data *AppBundleIdentifierData) utils.AccountResponse[appBundleIdentifierResponse] {
+func getMockResponse(data *AppBundleIdentifierData) utils.AccountResponse[appBundleIdentifierResponse] {
 	mockData := appBundleIdentifierData{
 		Id:         data.Id,
 		Identifier: data.Identifier,

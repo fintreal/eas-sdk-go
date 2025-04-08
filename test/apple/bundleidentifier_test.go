@@ -9,13 +9,18 @@ import (
 )
 
 func TestGetAppleAppBundleIdentifierByIdentifier(t *testing.T) {
-	expectedData := &eas.AppleAppBundleIdentifierData{
-		Id:         "41ea486c-676a-4723-97b8-e0f80c53845f",
+	input := eas.GetByIdentifierAppleBundleIdentifierData{
 		Identifier: "my.test.app.identifier",
-		TeamId:     utils.ImmutableAppleTeamId,
+		AccountId:  utils.AccountId,
 	}
 
-	actualData, actualErr := utils.Client.Apple.BundleIdentifier.GetByIdentifier(expectedData.Identifier, utils.AccountId)
+	actualData, actualErr := utils.Client.Apple.BundleIdentifier.GetByIdentifier(input)
+
+	expectedData := &eas.AppleAppBundleIdentifierData{
+		Id:         "41ea486c-676a-4723-97b8-e0f80c53845f",
+		Identifier: input.Identifier,
+		TeamId:     utils.ImmutableAppleTeamId,
+	}
 
 	assert.Equal(t, expectedData, actualData)
 	assert.Equal(t, nil, actualErr)

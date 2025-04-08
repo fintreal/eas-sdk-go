@@ -9,11 +9,17 @@ import (
 )
 
 func TestGetAppleCertificate(t *testing.T) {
+	input := eas.GetBySerialNumberAppleCertificateData{
+		SerialNumber: "3D986E25FF1B48C2417853A07AA15C55",
+		AccountId:    utils.AccountId,
+	}
+
+	actualData, actualErr := utils.Client.Apple.Certificate.GetBySerialNumber(input)
+
 	expectedData := &eas.AppleCertificateData{
 		Id:           "702635c5-3aa1-477c-83b6-bb66a1644aad",
-		SerialNumber: "3D986E25FF1B48C2417853A07AA15C55",
+		SerialNumber: input.SerialNumber,
 	}
-	actualData, actualErr := utils.Client.Apple.Certificate.GetBySerialNumber(expectedData.SerialNumber, utils.AccountId)
 	assert.Equal(t, expectedData, actualData)
 	assert.NoError(t, actualErr)
 }

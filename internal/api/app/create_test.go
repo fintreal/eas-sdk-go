@@ -3,8 +3,7 @@ package app
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/graphql"
-	"github.com/stretchr/testify/assert"
+	"github.com/fintreal/eas-sdk-go/internal/testutils"
 )
 
 func TestCreate(t *testing.T) {
@@ -14,31 +13,27 @@ func TestCreate(t *testing.T) {
 		Name: "test-name",
 		Slug: "test-slug",
 	}
-
 	expectedVariables := map[string]any{
 		"accountId": accountId,
 		"name":      expectedData.Name,
 		"slug":      expectedData.Slug,
 	}
-
-	inputData := CreateAppData{
+	input := &CreateAppData{
 		AccountId: accountId,
 		Name:      expectedData.Name,
 		Slug:      expectedData.Slug,
 	}
 
 	mockResponse := createAppResponse{CreateApp: createApp{Data: expectedData}}
-	graphQLMock := graphql.NewGraphQLMock(mockResponse)
 
-	service := NewAppService(graphQLMock)
-
-	data, err := service.Create(inputData)
-
-	actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
-	actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)
-
-	assert.Equal(t, nil, err)
-	assert.Equal(t, createAppMutation, actualQuery)
-	assert.Equal(t, expectedVariables, actualVariables)
-	assert.Equal(t, expectedData, data)
+	config := testutils.TestConfig[CreateAppData, AppData, createAppResponse, AppService]{
+		NewServiceFunction: NewAppService,
+		FunctionUnderTest:  "Create",
+		Input:              input,
+		MockResponse:       mockResponse,
+		ExpectedQuery:      createAppMutation,
+		ExpectedVariables:  expectedVariables,
+		ExpectedData:       expectedData,
+	}
+	testutils.Test(t, config)
 }

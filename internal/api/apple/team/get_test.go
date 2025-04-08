@@ -8,12 +8,17 @@ import (
 )
 
 func TestGetByIdentifier(t *testing.T) {
+	input := GetByIdentifierData{
+		Identifier: "test-identifier",
+		AccountId:  "test-account-id",
+	}
+
 	expectedData := &TeamData{
 		Id:         "test-id",
 		Name:       "test-name",
-		Identifier: "test-identifier",
+		Identifier: input.Identifier,
 		Type:       "test-type",
-		AccountId:  "test-account-id",
+		AccountId:  input.AccountId,
 	}
 
 	expectedVariables := map[string]any{
@@ -34,7 +39,7 @@ func TestGetByIdentifier(t *testing.T) {
 
 	service := NewTeamService(graphQLMock)
 
-	actualData, actualErr := service.GetByIdentifier(expectedData.Identifier, expectedData.AccountId)
+	actualData, actualErr := service.GetByIdentifier(input)
 
 	actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
 	actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)

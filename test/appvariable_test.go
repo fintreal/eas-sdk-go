@@ -3,12 +3,20 @@ package test
 import (
 	"testing"
 
+	"github.com/fintreal/eas-sdk-go/eas"
 	"github.com/fintreal/eas-sdk-go/internal/api/appvariable"
 	"github.com/fintreal/eas-sdk-go/test/utils"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestAppEnvironmentVariableGet(t *testing.T) {
+	input := eas.GetAppVariableData{
+		Id:    utils.ImmutableAppVariableId,
+		AppId: utils.ImmutableAppId,
+	}
+
+	actualData, actualErr := utils.Client.AppVariable.Get(input)
+
 	expectedData := &appvariable.AppVariableData{
 		Id:           utils.ImmutableAppVariableId,
 		Name:         "TEST_ENVIRONMENT_VARIABLE",
@@ -16,23 +24,26 @@ func TestAppEnvironmentVariableGet(t *testing.T) {
 		Visibility:   "PUBLIC",
 		Environments: []string{"PREVIEW"},
 	}
-
-	actualData, actualErr := utils.Client.AppVariable.Get(expectedData.Id, utils.ImmutableAppId)
 
 	assert.Equal(t, expectedData, actualData)
 	assert.Equal(t, nil, actualErr)
 }
 
 func TestAppEnvironmentVariableGetByName(t *testing.T) {
+	input := eas.GetByNameAppVariableData{
+		Name:  "TEST_ENVIRONMENT_VARIABLE",
+		AppId: utils.ImmutableAppId,
+	}
+
+	actualData, actualErr := utils.Client.AppVariable.GetByName(input)
+
 	expectedData := &appvariable.AppVariableData{
 		Id:           utils.ImmutableAppVariableId,
-		Name:         "TEST_ENVIRONMENT_VARIABLE",
+		Name:         input.Name,
 		Value:        "VALUE",
 		Visibility:   "PUBLIC",
 		Environments: []string{"PREVIEW"},
 	}
-
-	actualData, actualErr := utils.Client.AppVariable.GetByName(expectedData.Name, utils.ImmutableAppId)
 
 	assert.Equal(t, expectedData, actualData)
 	assert.Equal(t, nil, actualErr)
@@ -74,8 +85,7 @@ func TestAppEnvironmentVariableCreateAndDelete(t *testing.T) {
 	assert.Equal(t, inputData.Environments, actualData.Environments)
 	assert.Equal(t, nil, actualErr)
 
-	// Delete
-	actualErr = utils.Client.AppVariable.Delete(actualData.Id)
+	_, actualErr = utils.Client.AppVariable.Delete(actualData.Id)
 
 	assert.Equal(t, nil, actualErr)
 }

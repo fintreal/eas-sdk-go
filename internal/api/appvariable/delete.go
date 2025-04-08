@@ -10,10 +10,11 @@ const deleteAppVariableMutation = `
 	}`
 
 // Deletes an App Environment Variable from EAS
-func (service *appVariableService) Delete(id string) error {
+func (service *appVariableService) Delete(id string) (*any, error) {
 	variables := map[string]any{"id": id}
 
 	var response any
 
-	return service.graphql.Query(deleteAppVariableMutation, variables, &response)
+	err := service.graphql.Query(deleteAppVariableMutation, variables, &response)
+	return (*any)(nil), err
 }

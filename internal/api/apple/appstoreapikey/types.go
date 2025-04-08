@@ -9,8 +9,13 @@ type AppStoreApiKeyData struct {
 	Identifier       string `json:"keyIdentifier"`
 }
 
+type GeyByIdentifierAppStoreApiKeyData struct {
+	Identifier string
+	AccountId  string
+}
+
 type AppStoreApiKeyService interface {
-	GetByIdentifier(identifier string, accountId string) (*AppStoreApiKeyData, error)
+	GetByIdentifier(GeyByIdentifierAppStoreApiKeyData) (*AppStoreApiKeyData, error)
 }
 
 type appStoreApiKeyService struct {

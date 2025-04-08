@@ -9,6 +9,13 @@ import (
 )
 
 func TestGetAppleTeamByIdentifier(t *testing.T) {
+	input := &eas.GetByIdentifierAppleTeamData{
+		Identifier: "TEST_IDENTIFIER",
+		AccountId:  utils.AccountId,
+	}
+
+	actualData, actualErr := utils.Client.Apple.Team.GetByIdentifier(*input)
+
 	expectedData := &eas.AppleTeamData{
 		Id:         utils.ImmutableAppleTeamId,
 		AccountId:  utils.AccountId,
@@ -16,8 +23,6 @@ func TestGetAppleTeamByIdentifier(t *testing.T) {
 		Name:       "TEST_NAME",
 		Type:       "COMPANY_OR_ORGANIZATION",
 	}
-
-	actualData, actualErr := utils.Client.Apple.Team.GetByIdentifier(expectedData.Identifier, expectedData.AccountId)
 
 	assert.Equal(t, expectedData, actualData)
 	assert.Equal(t, nil, actualErr)

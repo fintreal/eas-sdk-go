@@ -25,8 +25,8 @@ const getQuery = `
 	}
 `
 
-func (s *appStoreApiKeyService) GetByIdentifier(identifier string, accountId string) (*AppStoreApiKeyData, error) {
-	variables := map[string]any{"accountId": accountId}
+func (s *appStoreApiKeyService) GetByIdentifier(getData GeyByIdentifierAppStoreApiKeyData) (*AppStoreApiKeyData, error) {
+	variables := map[string]any{"accountId": getData.AccountId}
 
 	var response utils.AccountResponse[appStoreApiKeysResponse]
 
@@ -35,7 +35,7 @@ func (s *appStoreApiKeyService) GetByIdentifier(identifier string, accountId str
 		return nil, err
 	}
 
-	return findAppStoreApiKeyByIdentifier(response.Account.ById.Data, identifier)
+	return findAppStoreApiKeyByIdentifier(response.Account.ById.Data, getData.Identifier)
 }
 
 func findAppStoreApiKeyByIdentifier(apiKeys []AppStoreApiKeyData, identifier string) (*AppStoreApiKeyData, error) {

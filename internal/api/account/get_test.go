@@ -3,8 +3,7 @@ package account
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/graphql"
-	"github.com/stretchr/testify/assert"
+	"github.com/fintreal/eas-sdk-go/internal/testutils"
 )
 
 func TestGetByName(t *testing.T) {
@@ -15,17 +14,15 @@ func TestGetByName(t *testing.T) {
 	expectedVariables := map[string]any{"name": expectedData.Name}
 
 	mockResponse := getAccountResponse{Account: getAccount{ByName: expectedData}}
-	graphQLMock := graphql.NewGraphQLMock(mockResponse)
 
-	service := NewAccountService(graphQLMock)
-
-	actualData, actualErr := service.GetByName(expectedData.Name)
-
-	actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
-	actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)
-
-	assert.Equal(t, nil, actualErr)
-	assert.Equal(t, getAccountByNameQuery, actualQuery)
-	assert.Equal(t, expectedVariables, actualVariables)
-	assert.Equal(t, expectedData, actualData)
+	config := testutils.TestConfig[string, AccountData, getAccountResponse, AccountService]{
+		NewServiceFunction: NewAccountService,
+		FunctionUnderTest:  "GetByName",
+		Input:              &expectedData.Name,
+		MockResponse:       mockResponse,
+		ExpectedQuery:      getAccountByNameQuery,
+		ExpectedVariables:  expectedVariables,
+		ExpectedData:       expectedData,
+	}
+	testutils.Test(t, config)
 }

@@ -9,13 +9,18 @@ import (
 )
 
 func TestGetProvisioningProfile(t *testing.T) {
+	input := eas.GetProvisioningProfileData{
+		Id:        "8690db1b-c475-43d0-aa3f-67e103c96426",
+		AccountId: utils.AccountId,
+	}
+
+	actualData, actualErr := utils.Client.Apple.ProvisioningProfile.Get(input)
+
 	expectedData := &eas.ProvisioningProfileData{
-		Id:                    "8690db1b-c475-43d0-aa3f-67e103c96426",
+		Id:                    input.Id,
 		Base64:                utils.ImmutableProvisioningProfileBase64,
 		AppBundleIdentifierId: "554fe9ea-dadd-49ec-8300-1940661f352b",
 	}
-
-	actualData, actualErr := utils.Client.Apple.ProvisioningProfile.Get(expectedData.Id, utils.AccountId)
 	assert.Equal(t, expectedData, actualData)
 	assert.NoError(t, actualErr)
 }
@@ -35,6 +40,6 @@ func TestCreateAndDeleteProvisioningProfile(t *testing.T) {
 	assert.Equal(t, expectedAppBundleIdentifierId, actualData.AppBundleIdentifierId)
 	assert.NoError(t, actualErr)
 
-	actualErr = utils.Client.Apple.ProvisioningProfile.Delete(actualData.Id)
+	_, actualErr = utils.Client.Apple.ProvisioningProfile.Delete(actualData.Id)
 	assert.NoError(t, actualErr)
 }

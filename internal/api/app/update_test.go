@@ -3,8 +3,7 @@ package app
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/graphql"
-	"github.com/stretchr/testify/assert"
+	"github.com/fintreal/eas-sdk-go/internal/testutils"
 )
 
 func TestUpdate(t *testing.T) {
@@ -18,23 +17,20 @@ func TestUpdate(t *testing.T) {
 		"name": expectedData.Name,
 	}
 
-	inputData := UpdateAppData{
+	input := &UpdateAppData{
 		Id:   expectedData.Id,
 		Name: expectedData.Name,
 	}
 
 	mockResponse := updateAppResponse{UpdateApp: updateApp{Data: expectedData}}
-	graphQLMock := graphql.NewGraphQLMock(mockResponse)
-
-	service := NewAppService(graphQLMock)
-
-	data, err := service.Update(inputData)
-
-	actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
-	actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)
-
-	assert.Equal(t, nil, err)
-	assert.Equal(t, updateAppMutation, actualQuery)
-	assert.Equal(t, expectedVariables, actualVariables)
-	assert.Equal(t, expectedData, data)
+	config := testutils.TestConfig[UpdateAppData, AppData, updateAppResponse, AppService]{
+		NewServiceFunction: NewAppService,
+		FunctionUnderTest:  "Update",
+		Input:              input,
+		MockResponse:       mockResponse,
+		ExpectedQuery:      updateAppMutation,
+		ExpectedVariables:  expectedVariables,
+		ExpectedData:       expectedData,
+	}
+	testutils.Test(t, config)
 }

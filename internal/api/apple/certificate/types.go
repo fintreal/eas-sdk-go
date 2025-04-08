@@ -10,8 +10,13 @@ type CertificateData struct {
 	// PrivateKey   string `json:"certificatePrivateSigningKey"`
 }
 
+type GetBySerialNumberCertificateData struct {
+	SerialNumber string
+	AccountId    string
+}
+
 type CertificateService interface {
-	GetBySerialNumber(serialNumber string, accountId string) (*CertificateData, error)
+	GetBySerialNumber(GetBySerialNumberCertificateData) (*CertificateData, error)
 }
 
 type certificateService struct {

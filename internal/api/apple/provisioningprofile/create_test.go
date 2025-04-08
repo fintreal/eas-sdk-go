@@ -3,49 +3,46 @@ package provisioningprofile
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/graphql"
-	"github.com/stretchr/testify/assert"
+	"github.com/fintreal/eas-sdk-go/internal/testutils"
 )
 
 func TestCreate(t *testing.T) {
 	accountId := "test-account-id"
-	expectedResponse := &ProvisioningProfileData{
+	expectedData := &ProvisioningProfileData{
 		Id:                    "test-id",
 		AppBundleIdentifierId: "test-bundle-identifier-id",
 		Base64:                "test-base64-string",
 	}
 	expectedVariables := map[string]any{
 		"accountId":            accountId,
-		"appleAppIdentifierId": expectedResponse.AppBundleIdentifierId,
-		"base64":               expectedResponse.Base64,
+		"appleAppIdentifierId": expectedData.AppBundleIdentifierId,
+		"base64":               expectedData.Base64,
 	}
 
-	input := CreateProvisioningProfileData{
+	input := &CreateProvisioningProfileData{
 		AccountId:             accountId,
-		AppBundleIdentifierId: expectedResponse.AppBundleIdentifierId,
-		Base64:                expectedResponse.Base64,
+		AppBundleIdentifierId: expectedData.AppBundleIdentifierId,
+		Base64:                expectedData.Base64,
 	}
 
 	mockResponse := createProvisioningProfileResponse{
 		CreateProvisioningProfile: createProvisioningProfile{
 			Data: provisioningProfileData{
-				Id:                  expectedResponse.Id,
-				Base64:              expectedResponse.Base64,
-				AppBundleIdentifier: appleAppIdentifier{Id: expectedResponse.AppBundleIdentifierId},
+				Id:                  expectedData.Id,
+				Base64:              expectedData.Base64,
+				AppBundleIdentifier: appleAppIdentifier{Id: expectedData.AppBundleIdentifierId},
 			},
 		},
 	}
 
-	graphQLMock := graphql.NewGraphQLMock(mockResponse)
-
-	service := NewProvisioningProfileService(graphQLMock)
-	actualResponse, actualErr := service.Create(input)
-
-	actualQuery := graphQLMock.Calls[0].Arguments.Get(0).(string)
-	actualVariables := graphQLMock.Calls[0].Arguments.Get(1).(map[string]any)
-
-	assert.Equal(t, createQuery, actualQuery)
-	assert.Equal(t, expectedVariables, actualVariables)
-	assert.Equal(t, expectedResponse, actualResponse)
-	assert.Equal(t, nil, actualErr)
+	config := testutils.TestConfig[CreateProvisioningProfileData, ProvisioningProfileData, createProvisioningProfileResponse, ProvisioningProfileService]{
+		NewServiceFunction: NewProvisioningProfileService,
+		FunctionUnderTest:  "Create",
+		Input:              input,
+		MockResponse:       mockResponse,
+		ExpectedQuery:      createQuery,
+		ExpectedVariables:  expectedVariables,
+		ExpectedData:       expectedData,
+	}
+	testutils.Test(t, config)
 }

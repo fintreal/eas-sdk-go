@@ -15,7 +15,7 @@ func (service *service) Delete(id string) (*any, error) {
 		"id": id,
 	}
 
-	var response getResponse
+	var response any
 
 	err := service.graphql.Query(deleteQuery, variables, &response)
 

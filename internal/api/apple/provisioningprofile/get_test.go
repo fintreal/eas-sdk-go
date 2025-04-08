@@ -3,7 +3,6 @@ package provisioningprofile
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/testutils"
 	"github.com/fintreal/eas-sdk-go/internal/utils"
 )
 
@@ -25,7 +24,7 @@ func TestGet(t *testing.T) {
 
 	mockResponse := getMockResponse(expectedData)
 
-	config := testutils.TestConfig[GetData, Data, utils.AccountResponse[getProvisioningProfilesResponse], Service]{
+	config := utils.TestConfig[GetData, Data, utils.AccountResponse[getProvisioningProfilesResponse], Service]{
 		NewServiceFunction: NewService,
 		FunctionUnderTest:  "Get",
 		Input:              input,
@@ -34,7 +33,7 @@ func TestGet(t *testing.T) {
 		ExpectedVariables:  expectedVariables,
 		ExpectedData:       expectedData,
 	}
-	testutils.Test(t, config)
+	utils.Test(t, config)
 }
 
 func getMockResponse(input *Data) utils.AccountResponse[getProvisioningProfilesResponse] {

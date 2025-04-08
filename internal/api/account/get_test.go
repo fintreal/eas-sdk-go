@@ -3,7 +3,7 @@ package account
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/testutils"
+	"github.com/fintreal/eas-sdk-go/internal/utils"
 )
 
 func TestGetByName(t *testing.T) {
@@ -15,7 +15,7 @@ func TestGetByName(t *testing.T) {
 
 	mockResponse := getResponse{Account: account{ByName: expectedData}}
 
-	config := testutils.TestConfig[string, Data, getResponse, AccountService]{
+	config := utils.TestConfig[string, Data, getResponse, AccountService]{
 		NewServiceFunction: NewAccountService,
 		FunctionUnderTest:  "GetByName",
 		Input:              &expectedData.Name,
@@ -24,5 +24,5 @@ func TestGetByName(t *testing.T) {
 		ExpectedVariables:  expectedVariables,
 		ExpectedData:       expectedData,
 	}
-	testutils.Test(t, config)
+	utils.Test(t, config)
 }

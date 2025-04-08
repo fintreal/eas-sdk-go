@@ -3,7 +3,7 @@ package bundleidentifier
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/testutils"
+	"github.com/fintreal/eas-sdk-go/internal/utils"
 )
 
 func TestCreate(t *testing.T) {
@@ -39,7 +39,7 @@ func TestCreate(t *testing.T) {
 		TeamId:     expectedData.TeamId,
 	}
 
-	config := testutils.TestConfig[CreateData, Data, createResponse, Service]{
+	config := utils.TestConfig[CreateData, Data, createResponse, Service]{
 		NewServiceFunction: NewService,
 		FunctionUnderTest:  "Create",
 		Input:              input,
@@ -48,5 +48,5 @@ func TestCreate(t *testing.T) {
 		ExpectedVariables:  expectedVariables,
 		ExpectedData:       expectedData,
 	}
-	testutils.Test(t, config)
+	utils.Test(t, config)
 }

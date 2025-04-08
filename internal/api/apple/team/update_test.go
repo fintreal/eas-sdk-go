@@ -3,7 +3,7 @@ package team
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/testutils"
+	"github.com/fintreal/eas-sdk-go/internal/utils"
 )
 
 func TestUpdate(t *testing.T) {
@@ -39,7 +39,7 @@ func TestUpdate(t *testing.T) {
 		},
 	}
 
-	config := testutils.TestConfig[UpdateData, Data, updateTeamResponse, Service]{
+	config := utils.TestConfig[UpdateData, Data, updateTeamResponse, Service]{
 		NewServiceFunction: NewService,
 		FunctionUnderTest:  "Update",
 		Input:              input,
@@ -48,5 +48,5 @@ func TestUpdate(t *testing.T) {
 		ExpectedVariables:  expectedVariables,
 		ExpectedData:       expectedData,
 	}
-	testutils.Test(t, config)
+	utils.Test(t, config)
 }

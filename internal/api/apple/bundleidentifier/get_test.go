@@ -3,7 +3,6 @@ package bundleidentifier
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/testutils"
 	"github.com/fintreal/eas-sdk-go/internal/utils"
 )
 
@@ -26,7 +25,7 @@ func TestGetByIdentifier(t *testing.T) {
 	}
 	mockResponse := getMockResponse(expectedData)
 
-	config := testutils.TestConfig[GetByIdentifierData, Data, utils.AccountResponse[getResponse], Service]{
+	config := utils.TestConfig[GetByIdentifierData, Data, utils.AccountResponse[getResponse], Service]{
 		NewServiceFunction: NewService,
 		FunctionUnderTest:  "GetByIdentifier",
 		Input:              input,
@@ -35,7 +34,7 @@ func TestGetByIdentifier(t *testing.T) {
 		ExpectedVariables:  expectedVariables,
 		ExpectedData:       expectedData,
 	}
-	testutils.Test(t, config)
+	utils.Test(t, config)
 }
 
 func getMockResponse(input *Data) utils.AccountResponse[getResponse] {

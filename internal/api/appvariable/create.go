@@ -1,14 +1,14 @@
 package appvariable
 
-type createAppVariable struct {
-	Data *AppVariableData `json:"createEnvironmentVariableForApp"`
+type createEnvironmentVariable struct {
+	Data *Data `json:"createEnvironmentVariableForApp"`
 }
 
-type createAppVariableResponse struct {
-	CreateAppVariable createAppVariable `json:"environmentVariable"`
+type createResponse struct {
+	EnvironmentVariable createEnvironmentVariable `json:"environmentVariable"`
 }
 
-const createAppVariableMutation = `
+const createQuery = `
 	mutation ($appId: ID!, $name: String!, $value: String!, $visibility: EnvironmentVariableVisibility!, $environments: [EnvironmentVariableEnvironment!]) {
 		environmentVariable {
 			createEnvironmentVariableForApp(
@@ -33,7 +33,7 @@ const createAppVariableMutation = `
 	}`
 
 // Creates an App Environment Variable in EAS
-func (service *appVariableService) Create(data CreateAppVariableData) (*AppVariableData, error) {
+func (service *service) Create(data CreateData) (*Data, error) {
 	variables := map[string]any{
 		"appId":        data.AppId,
 		"name":         data.Name,
@@ -42,12 +42,12 @@ func (service *appVariableService) Create(data CreateAppVariableData) (*AppVaria
 		"environments": data.Environments,
 	}
 
-	var response createAppVariableResponse
-	err := service.graphql.Query(createAppVariableMutation, variables, &response)
+	var response createResponse
+	err := service.graphql.Query(createQuery, variables, &response)
 
 	if err != nil {
 		return nil, err
 	}
 
-	return response.CreateAppVariable.Data, err
+	return response.EnvironmentVariable.Data, err
 }

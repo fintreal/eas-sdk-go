@@ -13,7 +13,7 @@ import (
 type EASClient struct {
 	Me          me.Service
 	App         app.Service
-	AppVariable appvariable.AppVariableService
+	AppVariable appvariable.Service
 	Account     account.AccountService
 	Apple       apple.AppleService
 }
@@ -29,7 +29,7 @@ func NewEASClient(token string) *EASClient {
 	return &EASClient{
 		Me:          me.NewService(graphql),
 		App:         app.NewService(graphql),
-		AppVariable: appvariable.NewAppVariableService(graphql),
+		AppVariable: appvariable.NewService(graphql),
 		Account:     account.NewAccountService(graphql),
 		Apple:       apple.NewAppleService(graphql),
 	}

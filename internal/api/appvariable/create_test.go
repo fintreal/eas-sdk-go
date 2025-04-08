@@ -8,7 +8,7 @@ import (
 
 func TestCreate(t *testing.T) {
 	expectedAppId := "test-app-id"
-	expectedData := &AppVariableData{
+	expectedData := &Data{
 		Id:           "test-id",
 		Name:         "test-name",
 		Value:        "test-value",
@@ -24,7 +24,7 @@ func TestCreate(t *testing.T) {
 		"visibility":   expectedData.Visibility,
 	}
 
-	input := &CreateAppVariableData{
+	input := &CreateData{
 		AppId:        expectedAppId,
 		Name:         expectedData.Name,
 		Value:        expectedData.Value,
@@ -32,14 +32,14 @@ func TestCreate(t *testing.T) {
 		Environments: expectedData.Environments,
 	}
 
-	mockResponse := createAppVariableResponse{CreateAppVariable: createAppVariable{Data: expectedData}}
+	mockResponse := createResponse{EnvironmentVariable: createEnvironmentVariable{Data: expectedData}}
 
-	config := testutils.TestConfig[CreateAppVariableData, AppVariableData, createAppVariableResponse, AppVariableService]{
-		NewServiceFunction: NewAppVariableService,
+	config := testutils.TestConfig[CreateData, Data, createResponse, Service]{
+		NewServiceFunction: NewService,
 		FunctionUnderTest:  "Create",
 		Input:              input,
 		MockResponse:       mockResponse,
-		ExpectedQuery:      createAppVariableMutation,
+		ExpectedQuery:      createQuery,
 		ExpectedVariables:  expectedVariables,
 		ExpectedData:       expectedData,
 	}

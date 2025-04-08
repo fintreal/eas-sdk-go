@@ -8,7 +8,7 @@ import (
 
 var expectedAppId = "test-app-id"
 
-var expectedData = &AppVariableData{
+var expectedData = &Data{
 	Id:           "test-id",
 	Name:         "test-name",
 	Value:        "test-value",
@@ -16,21 +16,21 @@ var expectedData = &AppVariableData{
 	Environments: []string{"DEVELOPMENT"},
 }
 
-var mockResponse = getAppVariablesResponse{AppByAppId: getAppVariables{Data: []AppVariableData{*expectedData}}}
+var mockResponse = getResponse{AppByAppId: appById{Data: []Data{*expectedData}}}
 
 func TestGetByName(t *testing.T) {
-	getData := &GetByNameAppVariableData{
+	getData := &GetByNameData{
 		AppId: expectedAppId,
 		Name:  expectedData.Name,
 	}
 	expectedVariables := map[string]any{"appId": expectedAppId}
 
-	config := testutils.TestConfig[GetByNameAppVariableData, AppVariableData, getAppVariablesResponse, AppVariableService]{
-		NewServiceFunction: NewAppVariableService,
+	config := testutils.TestConfig[GetByNameData, Data, getResponse, Service]{
+		NewServiceFunction: NewService,
 		FunctionUnderTest:  "GetByName",
 		Input:              getData,
 		MockResponse:       mockResponse,
-		ExpectedQuery:      getAppVariablesQuery,
+		ExpectedQuery:      getQuery,
 		ExpectedVariables:  expectedVariables,
 		ExpectedData:       expectedData,
 	}
@@ -38,18 +38,18 @@ func TestGetByName(t *testing.T) {
 }
 
 func TestGetById(t *testing.T) {
-	getData := &GetAppVariableData{
+	getData := &GetData{
 		AppId: expectedAppId,
 		Id:    expectedData.Id,
 	}
 	expectedVariables := map[string]any{"appId": expectedAppId}
 
-	config := testutils.TestConfig[GetAppVariableData, AppVariableData, getAppVariablesResponse, AppVariableService]{
-		NewServiceFunction: NewAppVariableService,
+	config := testutils.TestConfig[GetData, Data, getResponse, Service]{
+		NewServiceFunction: NewService,
 		FunctionUnderTest:  "Get",
 		Input:              getData,
 		MockResponse:       mockResponse,
-		ExpectedQuery:      getAppVariablesQuery,
+		ExpectedQuery:      getQuery,
 		ExpectedVariables:  expectedVariables,
 		ExpectedData:       expectedData,
 	}

@@ -19,11 +19,11 @@ type AppData = app.Data
 type CreateAppData = app.CreateData
 type UpdateAppData = app.UpdateData
 
-type AppVariableData = appvariable.AppVariableData
-type CreateAppVariableData = appvariable.CreateAppVariableData
-type UpdateAppVariableData = appvariable.UpdateAppVariableData
-type GetAppVariableData = appvariable.GetAppVariableData
-type GetByNameAppVariableData = appvariable.GetByNameAppVariableData
+type AppVariableData = appvariable.Data
+type CreateAppVariableData = appvariable.CreateData
+type UpdateAppVariableData = appvariable.UpdateData
+type GetAppVariableData = appvariable.GetData
+type GetByNameAppVariableData = appvariable.GetByNameData
 
 type AppleTeamData = team.TeamData
 type CreateAppleTeamData = team.CreateTeamData

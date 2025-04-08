@@ -1,4 +1,4 @@
-package provisioningprofile
+package appcredentials
 
 import (
 	"testing"

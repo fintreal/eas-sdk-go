@@ -4,23 +4,23 @@ import (
 	"github.com/fintreal/eas-sdk-go/internal/graphql"
 )
 
-type MeData struct {
+type Data struct {
 	Id          string `json:"id"`
 	DisplayName string `json:"displayName"`
 }
 
-type MeService interface {
-	Get() (*MeData, error)
+type Service interface {
+	Get() (*Data, error)
 }
 
-type meService struct {
+type service struct {
 	graphql graphql.GraphQL
 }
 
-var _ MeService = (*meService)(nil)
+var _ Service = (*service)(nil)
 
-func NewMeService(graphql graphql.GraphQL) MeService {
-	return &meService{
+func NewService(graphql graphql.GraphQL) Service {
+	return &service{
 		graphql: graphql,
 	}
 }

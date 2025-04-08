@@ -9,7 +9,7 @@ import (
 )
 
 func TestGetMe(t *testing.T) {
-	expectedData := &me.MeData{
+	expectedData := &me.Data{
 		Id:          utils.MeId,
 		DisplayName: "integration-test",
 	}

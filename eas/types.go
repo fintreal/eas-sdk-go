@@ -12,8 +12,8 @@ import (
 	"github.com/fintreal/eas-sdk-go/internal/api/me"
 )
 
-type MeData = me.MeData
-type AccountData = account.AccountData
+type MeData = me.Data
+type AccountData = account.Data
 
 type AppData = app.AppData
 type CreateAppData = app.CreateAppData

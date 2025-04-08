@@ -7,20 +7,20 @@ import (
 )
 
 func TestGetByName(t *testing.T) {
-	expectedData := &AccountData{
+	expectedData := &Data{
 		Id:   "test-account-id",
 		Name: "test-account-name",
 	}
 	expectedVariables := map[string]any{"name": expectedData.Name}
 
-	mockResponse := getAccountResponse{Account: getAccount{ByName: expectedData}}
+	mockResponse := getResponse{Account: account{ByName: expectedData}}
 
-	config := testutils.TestConfig[string, AccountData, getAccountResponse, AccountService]{
+	config := testutils.TestConfig[string, Data, getResponse, AccountService]{
 		NewServiceFunction: NewAccountService,
 		FunctionUnderTest:  "GetByName",
 		Input:              &expectedData.Name,
 		MockResponse:       mockResponse,
-		ExpectedQuery:      getAccountByNameQuery,
+		ExpectedQuery:      getByNameQuery,
 		ExpectedVariables:  expectedVariables,
 		ExpectedData:       expectedData,
 	}

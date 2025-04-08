@@ -2,13 +2,13 @@ package account
 
 import "github.com/fintreal/eas-sdk-go/internal/graphql"
 
-type AccountData struct {
+type Data struct {
 	Id   string `json:"id"`
 	Name string `json:"name"`
 }
 
 type AccountService interface {
-	GetByName(name string) (*AccountData, error)
+	GetByName(name string) (*Data, error)
 }
 
 type accountService struct {

@@ -1,10 +1,10 @@
 package me
 
-type getMeResponse struct {
-	Data *MeData `json:"meActor"`
+type getResponse struct {
+	Data *Data `json:"meActor"`
 }
 
-const meQuery = `
+const getQuery = `
 	query {
 		meActor {
 			displayName
@@ -13,10 +13,10 @@ const meQuery = `
 	}`
 
 // Retrieves the current user name and id from EAS
-func (service *meService) Get() (*MeData, error) {
+func (service *service) Get() (*Data, error) {
 	variables := map[string]any{}
 
-	var response getMeResponse
-	err := service.graphql.Query(meQuery, variables, &response)
+	var response getResponse
+	err := service.graphql.Query(getQuery, variables, &response)
 	return response.Data, err
 }

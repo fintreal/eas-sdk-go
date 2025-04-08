@@ -3,7 +3,6 @@ package certificate
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/testutils"
 	"github.com/fintreal/eas-sdk-go/internal/utils"
 )
 
@@ -29,7 +28,7 @@ func TestGetBySerialNumber(t *testing.T) {
 		},
 	}
 
-	config := testutils.TestConfig[GetBySerialNumberData, Data, utils.AccountResponse[getResponse], Service]{
+	config := utils.TestConfig[GetBySerialNumberData, Data, utils.AccountResponse[getResponse], Service]{
 		NewServiceFunction: NewService,
 		FunctionUnderTest:  "GetBySerialNumber",
 		Input:              input,
@@ -38,7 +37,7 @@ func TestGetBySerialNumber(t *testing.T) {
 		ExpectedVariables:  expectedVariables,
 		ExpectedData:       expectedData,
 	}
-	testutils.Test(t, config)
+	utils.Test(t, config)
 
 	// graphQLMock := graphql.NewGraphQLMock(mockResponse)
 

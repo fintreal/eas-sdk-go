@@ -3,7 +3,7 @@ package appvariable
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/testutils"
+	"github.com/fintreal/eas-sdk-go/internal/utils"
 )
 
 var expectedAppId = "test-app-id"
@@ -25,7 +25,7 @@ func TestGetByName(t *testing.T) {
 	}
 	expectedVariables := map[string]any{"appId": expectedAppId}
 
-	config := testutils.TestConfig[GetByNameData, Data, getResponse, Service]{
+	config := utils.TestConfig[GetByNameData, Data, getResponse, Service]{
 		NewServiceFunction: NewService,
 		FunctionUnderTest:  "GetByName",
 		Input:              getData,
@@ -34,7 +34,7 @@ func TestGetByName(t *testing.T) {
 		ExpectedVariables:  expectedVariables,
 		ExpectedData:       expectedData,
 	}
-	testutils.Test(t, config)
+	utils.Test(t, config)
 }
 
 func TestGetById(t *testing.T) {
@@ -44,7 +44,7 @@ func TestGetById(t *testing.T) {
 	}
 	expectedVariables := map[string]any{"appId": expectedAppId}
 
-	config := testutils.TestConfig[GetData, Data, getResponse, Service]{
+	config := utils.TestConfig[GetData, Data, getResponse, Service]{
 		NewServiceFunction: NewService,
 		FunctionUnderTest:  "Get",
 		Input:              getData,
@@ -53,5 +53,5 @@ func TestGetById(t *testing.T) {
 		ExpectedVariables:  expectedVariables,
 		ExpectedData:       expectedData,
 	}
-	testutils.Test(t, config)
+	utils.Test(t, config)
 }

@@ -3,14 +3,14 @@ package appvariable
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/testutils"
+	"github.com/fintreal/eas-sdk-go/internal/utils"
 )
 
 func TestDelete(t *testing.T) {
 	id := "test-id"
 	expectedVariables := map[string]any{"id": id}
 
-	config := testutils.TestConfig[string, any, any, Service]{
+	config := utils.TestConfig[string, any, any, Service]{
 		NewServiceFunction: NewService,
 		FunctionUnderTest:  "Delete",
 		Input:              &id,
@@ -19,5 +19,5 @@ func TestDelete(t *testing.T) {
 		ExpectedVariables:  expectedVariables,
 		ExpectedData:       nil,
 	}
-	testutils.Test(t, config)
+	utils.Test(t, config)
 }

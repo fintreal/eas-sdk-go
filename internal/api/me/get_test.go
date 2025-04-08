@@ -3,7 +3,7 @@ package me
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/testutils"
+	"github.com/fintreal/eas-sdk-go/internal/utils"
 )
 
 func TestGet(t *testing.T) {
@@ -12,7 +12,7 @@ func TestGet(t *testing.T) {
 		DisplayName: "Test Display Name",
 	}
 	mockResponse := getResponse{Data: expectedData}
-	config := testutils.TestConfig[any, Data, getResponse, Service]{
+	config := utils.TestConfig[any, Data, getResponse, Service]{
 		NewServiceFunction: NewService,
 		FunctionUnderTest:  "Get",
 		Input:              nil,
@@ -21,5 +21,5 @@ func TestGet(t *testing.T) {
 		ExpectedVariables:  map[string]any{},
 		ExpectedData:       expectedData,
 	}
-	testutils.Test(t, config)
+	utils.Test(t, config)
 }

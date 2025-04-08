@@ -3,7 +3,6 @@ package appstoreapikey
 import (
 	"testing"
 
-	"github.com/fintreal/eas-sdk-go/internal/testutils"
 	"github.com/fintreal/eas-sdk-go/internal/utils"
 )
 
@@ -28,7 +27,7 @@ func TestGetByIdentifier(t *testing.T) {
 		},
 	}
 
-	config := testutils.TestConfig[GeyByIdentifierData, Data, utils.AccountResponse[getAccount], Service]{
+	config := utils.TestConfig[GeyByIdentifierData, Data, utils.AccountResponse[getAccount], Service]{
 		NewServiceFunction: NewService,
 		FunctionUnderTest:  "GetByIdentifier",
 		Input:              getData,
@@ -37,5 +36,5 @@ func TestGetByIdentifier(t *testing.T) {
 		ExpectedVariables:  expectedVariables,
 		ExpectedData:       expectedData,
 	}
-	testutils.Test(t, config)
+	utils.Test(t, config)
 }

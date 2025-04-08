@@ -22,17 +22,24 @@ type UpdateAppData = app.UpdateAppData
 type AppVariableData = appvariable.AppVariableData
 type CreateAppVariableData = appvariable.CreateAppVariableData
 type UpdateAppVariableData = appvariable.UpdateAppVariableData
+type GetAppVariableData = appvariable.GetAppVariableData
+type GetByNameAppVariableData = appvariable.GetByNameAppVariableData
 
 type AppleTeamData = team.TeamData
 type CreateAppleTeamData = team.CreateTeamData
 type UpdateAppleTeamData = team.UpdateTeamData
+type GetByIdentifierAppleTeamData = team.GetByIdentifierData
 
 type AppleAppBundleIdentifierData = bundleidentifier.AppBundleIdentifierData
 type CreateAppleAppBundleIdentifierData = bundleidentifier.CreateAppBundleIdentifierData
+type GetByIdentifierAppleBundleIdentifierData = bundleidentifier.GetByIdentifierData
 
 type AppleCertificateData = certificate.CertificateData
+type GetBySerialNumberAppleCertificateData = certificate.GetBySerialNumberCertificateData
 
 type ProvisioningProfileData = provisioningprofile.ProvisioningProfileData
 type CreateProvisioningProfileData = provisioningprofile.CreateProvisioningProfileData
+type GetProvisioningProfileData = provisioningprofile.GetProvisioningProfileData
 
 type AppStoreApiKeyData = appstoreapikey.AppStoreApiKeyData
+type GetByIdentifierAppStoreApiKeyData = appstoreapikey.GeyByIdentifierAppStoreApiKeyData

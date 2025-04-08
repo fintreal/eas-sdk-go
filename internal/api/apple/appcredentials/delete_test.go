@@ -6,7 +6,7 @@ import (
 	"github.com/fintreal/eas-sdk-go/internal/utils"
 )
 
-func TestDele(t *testing.T) {
+func TestDelete(t *testing.T) {
 	id := "test-id"
 	expectedVariables := map[string]any{"id": id}
 

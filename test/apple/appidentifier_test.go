@@ -1,7 +1,6 @@
 package appletest
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/fintreal/eas-sdk-go/eas"
@@ -35,8 +34,6 @@ func TestCreateAppleAppIdentifier(t *testing.T) {
 	}
 
 	actualData, actualErr := utils.Client.Apple.AppIdentifier.Create(input)
-
-	fmt.Printf("%+v %+v", actualData, actualErr)
 
 	assert.Equal(t, expectedIdentifier, actualData.Identifier)
 	assert.Equal(t, nil, actualErr)

@@ -36,6 +36,8 @@ var ImmutableProvisioningProfileId = "8690db1b-c475-43d0-aa3f-67e103c96426"
 var ImmutableAppIdentifierId = "ce3f1747-2362-45c8-b55d-c392e0b6e94b"
 var ImmutableAppIdentifierName = "immutable.app.identifier"
 
+var ImmutableAppStoreApiKeyId = "564e9d75-ff77-4860-92ee-7c0ab2066c82"
+
 var MutableAppIdentifierId = "63b653a7-7472-4804-9da4-39b474c52167"
 var MutableAppIdentifierName = "mutable.app.identifier"
 

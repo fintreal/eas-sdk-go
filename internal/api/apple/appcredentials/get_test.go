@@ -8,6 +8,8 @@ import (
 )
 
 func TestGetByIdentifier(t *testing.T) {
+	pushKeyId := "test-push-key-id"
+	appStoreApiKeyId := "test-app-store-api-key-id"
 	input := &GetData{
 		Id:    "test-id",
 		AppId: "test-app-id",
@@ -23,6 +25,8 @@ func TestGetByIdentifier(t *testing.T) {
 		Id:               input.Id,
 		AppIdentifierId:  "test-app-identifier-id",
 		AppId:            input.AppId,
+		PushKeyId:        &pushKeyId,
+		AppStoreApiKeyId: &appStoreApiKeyId,
 		BuildCredentials: []appbuildcredentials.Data{buildCredential},
 	}
 
@@ -39,6 +43,12 @@ func TestGetByIdentifier(t *testing.T) {
 				},
 				AppIdentifier: objWithId{
 					Id: expectedData.AppIdentifierId,
+				},
+				PushKey: &objWithId{
+					Id: pushKeyId,
+				},
+				AppStoreApiKey: &objWithId{
+					Id: appStoreApiKeyId,
 				},
 				BuildCredentials: []buildCredentials{{
 					Id:               buildCredential.Id,

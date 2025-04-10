@@ -16,9 +16,10 @@ func TestGetAppCredentials(t *testing.T) {
 	actualData, actualErr := utils.Client.Apple.AppCredentials.Get(input)
 
 	expectedData := &eas.AppCredentialsData{
-		Id:              input.Id,
-		AppId:           input.AppId,
-		AppIdentifierId: "90289e95-99c2-4b21-88cc-8d84b6ab7477",
+		Id:               input.Id,
+		AppId:            input.AppId,
+		AppIdentifierId:  "90289e95-99c2-4b21-88cc-8d84b6ab7477",
+		AppStoreApiKeyId: &utils.ImmutableAppStoreApiKeyId,
 		BuildCredentials: []eas.AppBuildCredentialsData{
 			{
 				Id:                    "6ed2748a-f54c-4da1-8187-16593ef195cd",

@@ -21,6 +21,8 @@ type data struct {
 	Id               string             `json:"id"`
 	App              objWithId          `json:"app"`
 	AppIdentifier    objWithId          `json:"appleAppIdentifier"`
+	AppStoreApiKey   *objWithId         `json:"appStoreConnectApiKeyForSubmissions"`
+	PushKey          *objWithId         `json:"pushKey"`
 	BuildCredentials []buildCredentials `json:"iosAppBuildCredentialsArray"`
 }
 
@@ -28,6 +30,8 @@ type Data struct {
 	Id               string
 	AppIdentifierId  string
 	AppId            string
+	AppStoreApiKeyId *string
+	PushKeyId        *string
 	BuildCredentials []appbuildcredentials.Data
 }
 
@@ -37,8 +41,10 @@ type GetData struct {
 }
 
 type CreateData struct {
-	AppIdentifierId string
-	AppId           string
+	AppIdentifierId  string
+	AppId            string
+	AppStoreApiKeyId *string
+	PushKeyId        *string
 }
 
 type Service interface {

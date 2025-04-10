@@ -1,7 +1,5 @@
 package appcredentials
 
-import "github.com/fintreal/eas-sdk-go/internal/api/apple/appbuildcredentials"
-
 type createIosAppCredentials struct {
 	Data data `json:"createIosAppCredentials"`
 }
@@ -11,18 +9,24 @@ type createResponse struct {
 }
 
 const createQuery = `
-mutation ($appId: ID!, $appIdentifierId: ID!) {
+	mutation ($appId: ID!, $appIdentifierId: ID!, $appStoreApiKeyId: ID $pushKeyId: ID) {
   iosAppCredentials {
     createIosAppCredentials(
       appId: $appId
       appleAppIdentifierId: $appIdentifierId
-      iosAppCredentialsInput: {  }
+      iosAppCredentialsInput: { appStoreConnectApiKeyForSubmissionsId: $appStoreApiKeyId, pushKeyId: $pushKeyId }
     ) {
       id
       app {
         id
       }
       appleAppIdentifier {
+        id
+      }
+      appStoreConnectApiKeyForSubmissions {
+        id
+      }
+      pushKey {
         id
       }
       iosAppBuildCredentialsArray {
@@ -43,10 +47,12 @@ mutation ($appId: ID!, $appIdentifierId: ID!) {
 }
 `
 
-func (service *service) Create(data CreateData) (*Data, error) {
+func (service *service) Create(input CreateData) (*Data, error) {
 	variables := map[string]any{
-		"appId":           data.AppId,
-		"appIdentifierId": data.AppIdentifierId,
+		"appId":            input.AppId,
+		"appIdentifierId":  input.AppIdentifierId,
+		"appStoreApiKeyId": input.AppStoreApiKeyId,
+		"pushKeyId":        input.PushKeyId,
 	}
 
 	var response createResponse
@@ -57,23 +63,7 @@ func (service *service) Create(data CreateData) (*Data, error) {
 		return nil, err
 	}
 
-	buildCredentials := []appbuildcredentials.Data{}
+	data := mapData(response.IosAppCredentials.Data)
 
-	for _, b := range response.IosAppCredentials.Data.BuildCredentials {
-		buildCredential := appbuildcredentials.Data{
-			Id:                    b.Id,
-			DistributionType:      b.DistributionType,
-			AppCredentialsId:      b.AppCredentials.Id,
-			ProvisioningProfileId: b.ProvisioningProfile.Id,
-			CertificateId:         b.Certificate.Id,
-		}
-		buildCredentials = append(buildCredentials, buildCredential)
-	}
-
-	return &Data{
-		Id:               response.IosAppCredentials.Data.Id,
-		AppId:            response.IosAppCredentials.Data.App.Id,
-		AppIdentifierId:  response.IosAppCredentials.Data.AppIdentifier.Id,
-		BuildCredentials: buildCredentials,
-	}, nil
+	return &data, nil
 }

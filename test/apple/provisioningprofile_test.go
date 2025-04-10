@@ -10,7 +10,7 @@ import (
 
 func TestGetProvisioningProfile(t *testing.T) {
 	input := eas.GetProvisioningProfileData{
-		Id:        "8690db1b-c475-43d0-aa3f-67e103c96426",
+		Id:        utils.ImmutableProvisioningProfileId,
 		AccountId: utils.AccountId,
 	}
 

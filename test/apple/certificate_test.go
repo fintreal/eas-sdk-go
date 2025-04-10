@@ -17,7 +17,7 @@ func TestGetAppleCertificate(t *testing.T) {
 	actualData, actualErr := utils.Client.Apple.Certificate.GetBySerialNumber(input)
 
 	expectedData := &eas.AppleCertificateData{
-		Id:           "702635c5-3aa1-477c-83b6-bb66a1644aad",
+		Id:           utils.ImmutableCertificateId,
 		SerialNumber: input.SerialNumber,
 	}
 	assert.Equal(t, expectedData, actualData)

@@ -9,7 +9,7 @@ type createResponse struct {
 }
 
 const createQuery = `
-	mutation ($certificateId: ID!, $distributionType: IosDistributionType!, $provisioningProfileId: ID!, $iosAppCredentialsId: ID!) {
+	mutation ($certificateId: ID!, $distributionType: IosDistributionType!, $provisioningProfileId: ID!, $appCredentialsId: ID!) {
     iosAppBuildCredentials {
       createIosAppBuildCredentials(
         iosAppBuildCredentialsInput: {
@@ -17,7 +17,7 @@ const createQuery = `
             iosDistributionType: $distributionType
             provisioningProfileId: $provisioningProfileId
         }
-        iosAppCredentialsId: $iosAppCredentialsId
+        iosAppCredentialsId: $appCredentialsId
       ) {
         id
         iosDistributionType

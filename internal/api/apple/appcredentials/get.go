@@ -21,6 +21,10 @@ const getQuery = `
         app {
           id
         }
+      	iosAppBuildCredentialsArray {
+      		id
+      		iosDistributionType
+      	}
       }
     }
 	}
@@ -47,9 +51,10 @@ func findById(data []data, id string) (*Data, error) {
 	for _, d := range data {
 		if d.Id == id {
 			return &Data{
-				Id:              d.Id,
-				AppId:           d.App.Id,
-				AppIdentifierId: d.AppIdentifier.Id,
+				Id:               d.Id,
+				AppId:            d.App.Id,
+				AppIdentifierId:  d.AppIdentifier.Id,
+				BuildCredentials: d.BuildCredentials,
 			}, nil
 		}
 	}

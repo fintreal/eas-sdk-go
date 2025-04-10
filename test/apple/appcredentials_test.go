@@ -19,6 +19,16 @@ func TestGetAppCredentials(t *testing.T) {
 		Id:              input.Id,
 		AppId:           input.AppId,
 		AppIdentifierId: "90289e95-99c2-4b21-88cc-8d84b6ab7477",
+		BuildCredentials: []eas.AppCredentialsBuildCredentials{
+			{
+				Id:               "6ed2748a-f54c-4da1-8187-16593ef195cd",
+				DistributionType: "APP_STORE",
+			},
+			{
+				Id:               "bc23563b-b905-481b-941e-8ae412b994b3",
+				DistributionType: "DEVELOPMENT",
+			},
+		},
 	}
 
 	assert.Equal(t, expectedData, actualData)

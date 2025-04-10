@@ -23,6 +23,10 @@ mutation ($appId: ID!, $appIdentifierId: ID!) {
       appleAppIdentifier {
         id
       }
+      iosAppBuildCredentialsArray {
+      	id
+      	iosDistributionType
+      }
     }
   }
 }
@@ -43,8 +47,9 @@ func (service *service) Create(data CreateData) (*Data, error) {
 	}
 
 	return &Data{
-		Id:              response.IosAppCredentials.Data.Id,
-		AppId:           response.IosAppCredentials.Data.App.Id,
-		AppIdentifierId: response.IosAppCredentials.Data.AppIdentifier.Id,
+		Id:               response.IosAppCredentials.Data.Id,
+		AppId:            response.IosAppCredentials.Data.App.Id,
+		AppIdentifierId:  response.IosAppCredentials.Data.AppIdentifier.Id,
+		BuildCredentials: response.IosAppCredentials.Data.BuildCredentials,
 	}, nil
 }

@@ -1,4 +1,4 @@
-package bundleidentifier
+package appidentifier
 
 import (
 	"testing"
@@ -12,31 +12,20 @@ func TestCreate(t *testing.T) {
 	expectedData := &Data{
 		Id:         "test-id",
 		Identifier: identifier,
-		TeamId:     "test-team-id",
 	}
 
 	expectedVariables := map[string]any{
 		"identifier": identifier,
 		"accountId":  accountId,
-		"teamId":     expectedData.TeamId,
 	}
 
 	mockResponse := createResponse{
-		CreateAppIdentifier: createAppBundleIdentifier{
-			Data: data{
-				Id:         expectedData.Id,
-				Identifier: expectedData.Identifier,
-				Team: team{
-					Id: expectedData.TeamId,
-				},
-			},
-		},
+		CreateAppIdentifier: createAppBundleIdentifier{Data: *expectedData},
 	}
 
 	input := &CreateData{
 		AccountId:  accountId,
 		Identifier: identifier,
-		TeamId:     expectedData.TeamId,
 	}
 
 	config := utils.TestConfig[CreateData, Data, createResponse, Service]{

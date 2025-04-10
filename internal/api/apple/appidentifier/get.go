@@ -1,4 +1,4 @@
-package bundleidentifier
+package appidentifier
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 )
 
 type getResponse struct {
-	Data []data `json:"appleAppIdentifiers"`
+	Data []Data `json:"appleAppIdentifiers"`
 }
 
 const getQuery = `
@@ -17,9 +17,6 @@ const getQuery = `
 				appleAppIdentifiers(bundleIdentifier: $identifier) {
 					bundleIdentifier
 					id
-					appleTeam {
-							id
-					}
 				}
 			}
 		}
@@ -40,14 +37,10 @@ func (s *service) GetByIdentifier(getData GetByIdentifierData) (*Data, error) {
 	return findBundleIdentifierByIdentifier(response.Account.ById.Data, getData.Identifier)
 }
 
-func findBundleIdentifierByIdentifier(identifiers []data, identifier string) (*Data, error) {
+func findBundleIdentifierByIdentifier(identifiers []Data, identifier string) (*Data, error) {
 	for _, bundleIdentifier := range identifiers {
 		if bundleIdentifier.Identifier == identifier {
-			return &Data{
-				Id:         bundleIdentifier.Id,
-				Identifier: bundleIdentifier.Identifier,
-				TeamId:     bundleIdentifier.Team.Id,
-			}, nil
+			return &bundleIdentifier, nil
 		}
 	}
 	return nil, fmt.Errorf("couldn't find bundle identifier with identifier %s", identifier)

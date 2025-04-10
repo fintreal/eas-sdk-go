@@ -5,8 +5,8 @@ import (
 	"github.com/fintreal/eas-sdk-go/internal/api/app"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/appbuildcredentials"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/appcredentials"
+	"github.com/fintreal/eas-sdk-go/internal/api/apple/appidentifier"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/appstoreapikey"
-	"github.com/fintreal/eas-sdk-go/internal/api/apple/bundleidentifier"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/certificate"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/provisioningprofile"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/team"
@@ -32,9 +32,9 @@ type CreateAppleTeamData = team.CreateData
 type UpdateAppleTeamData = team.UpdateData
 type GetByIdentifierAppleTeamData = team.GetByIdentifierData
 
-type AppleAppBundleIdentifierData = bundleidentifier.Data
-type CreateAppleAppBundleIdentifierData = bundleidentifier.CreateData
-type GetByIdentifierAppleBundleIdentifierData = bundleidentifier.GetByIdentifierData
+type AppleAppIdentifierData = appidentifier.Data
+type CreateAppleAppIdentifierData = appidentifier.CreateData
+type GetByIdentifierAppleAppIdentifierData = appidentifier.GetByIdentifierData
 
 type AppleCertificateData = certificate.Data
 type GetBySerialNumberAppleCertificateData = certificate.GetBySerialNumberData

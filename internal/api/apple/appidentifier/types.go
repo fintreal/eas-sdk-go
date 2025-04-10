@@ -1,27 +1,15 @@
-package bundleidentifier
+package appidentifier
 
 import "github.com/fintreal/eas-sdk-go/internal/graphql"
 
-type team struct {
-	Id string `json:"id"`
-}
-
-type data struct {
+type Data struct {
 	Id         string `json:"id"`
 	Identifier string `json:"bundleIdentifier"`
-	Team       team   `json:"appleTeam"`
-}
-
-type Data struct {
-	Id         string
-	Identifier string
-	TeamId     string
 }
 
 type CreateData struct {
 	AccountId  string
 	Identifier string
-	TeamId     string
 }
 
 type GetByIdentifierData struct {

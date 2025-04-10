@@ -1,4 +1,4 @@
-package bundleidentifier
+package appidentifier
 
 import (
 	"testing"
@@ -16,7 +16,6 @@ func TestGetByIdentifier(t *testing.T) {
 	expectedData := &Data{
 		Id:         "test-id",
 		Identifier: identifier,
-		TeamId:     "test-team-id",
 	}
 
 	expectedVariables := map[string]any{
@@ -38,17 +37,14 @@ func TestGetByIdentifier(t *testing.T) {
 }
 
 func getMockResponse(input *Data) utils.AccountResponse[getResponse] {
-	mockData := data{
+	mockData := Data{
 		Id:         input.Id,
 		Identifier: input.Identifier,
-		Team: team{
-			Id: input.TeamId,
-		},
 	}
 	return utils.AccountResponse[getResponse]{
 		Account: utils.Account[getResponse]{
 			ById: getResponse{
-				Data: []data{mockData},
+				Data: []Data{mockData},
 			},
 		},
 	}

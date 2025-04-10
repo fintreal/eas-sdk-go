@@ -25,8 +25,9 @@ type Data struct {
 }
 
 type GetData struct {
-	Id    string
-	AppId string
+	Id               string
+	AppId            string
+	AppCredentialsId string
 }
 
 type CreateData struct {

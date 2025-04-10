@@ -1,11 +1,13 @@
 package appcredentials
 
-type GetIosAppCredentials struct {
-	Data data `json:"getIosAppCredentials"`
+import "fmt"
+
+type appByAppId struct {
+	Data []data `json:"iosAppCredentials"`
 }
 
 type getResponse struct {
-	IosAppCredentials GetIosAppCredentials `json:"iosAppCredentials"`
+	AppByAppId appByAppId `json:"appByAppId"`
 }
 
 const getQuery = `
@@ -16,9 +18,11 @@ const getQuery = `
         appleAppIdentifier {
           id
         }
+        app {
+          id
+        }
       }
-      id
-  	}
+    }
 	}
 `
 
@@ -36,9 +40,18 @@ func (service *service) Get(data GetData) (*Data, error) {
 		return nil, err
 	}
 
-	return &Data{
-		Id:              response.IosAppCredentials.Data.Id,
-		AppId:           response.IosAppCredentials.Data.App.Id,
-		AppIdentifierId: response.IosAppCredentials.Data.AppIdentifier.Id,
-	}, nil
+	return findById(response.AppByAppId.Data, data.Id)
+}
+
+func findById(data []data, id string) (*Data, error) {
+	for _, d := range data {
+		if d.Id == id {
+			return &Data{
+				Id:              d.Id,
+				AppId:           d.App.Id,
+				AppIdentifierId: d.AppIdentifier.Id,
+			}, nil
+		}
+	}
+	return nil, fmt.Errorf("couldn't find app credentials with id %s", id)
 }

@@ -3,6 +3,8 @@ package eas
 import (
 	"github.com/fintreal/eas-sdk-go/internal/api/account"
 	"github.com/fintreal/eas-sdk-go/internal/api/app"
+	"github.com/fintreal/eas-sdk-go/internal/api/apple/appbuildcredentials"
+	"github.com/fintreal/eas-sdk-go/internal/api/apple/appcredentials"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/appstoreapikey"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/bundleidentifier"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/certificate"
@@ -43,3 +45,11 @@ type GetProvisioningProfileData = provisioningprofile.GetData
 
 type AppStoreApiKeyData = appstoreapikey.Data
 type GetByIdentifierAppStoreApiKeyData = appstoreapikey.GeyByIdentifierData
+
+type AppCredentialsData = appcredentials.Data
+type CreateAppCredentialsData = appcredentials.CreateData
+type GetAppCredentialsData = appcredentials.GetData
+
+type AppBuildCredentialsData = appbuildcredentials.Data
+type CreateAppBuildCredentialsData = appbuildcredentials.CreateData
+type GetAppBuildCredentialsData = appbuildcredentials.GetData

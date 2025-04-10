@@ -10,14 +10,14 @@ import (
 
 func TestGetAppleAppBundleIdentifierByIdentifier(t *testing.T) {
 	input := eas.GetByIdentifierAppleBundleIdentifierData{
-		Identifier: "my.test.app.identifier",
+		Identifier: utils.ImmutableAppIdentifierName,
 		AccountId:  utils.AccountId,
 	}
 
 	actualData, actualErr := utils.Client.Apple.BundleIdentifier.GetByIdentifier(input)
 
 	expectedData := &eas.AppleAppBundleIdentifierData{
-		Id:         "41ea486c-676a-4723-97b8-e0f80c53845f",
+		Id:         utils.ImmutableAppIdentifierId,
 		Identifier: input.Identifier,
 		TeamId:     utils.ImmutableAppleTeamId,
 	}

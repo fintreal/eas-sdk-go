@@ -25,6 +25,20 @@ var MutableAppVariableId = "2d90f56c-aead-41d8-8a76-dcbcb92415ac"
 var ImmutableAppleTeamId = "cf4830de-3c1b-4594-ad73-20ca9ac901b7"
 var MutableAppleTeamId = "cc513f5d-366d-42d6-aa40-e8132c3c78a3"
 
+var ImmutableAppCredentialsId = "11f2b3f8-ddad-4626-8984-2b96efb28d3c"
+
+var MutableAppCredentialsId = "c51879e7-cc4c-4f9c-b22d-41b571d6f0f0"
+
+var ImmutableCertificateId = "702635c5-3aa1-477c-83b6-bb66a1644aad"
+
+var ImmutableProvisioningProfileId = "8690db1b-c475-43d0-aa3f-67e103c96426"
+
+var ImmutableAppIdentifierId = "ce3f1747-2362-45c8-b55d-c392e0b6e94b"
+var ImmutableAppIdentifierName = "immutable.app.identifier"
+
+var MutableAppIdentifierId = "63b653a7-7472-4804-9da4-39b474c52167"
+var MutableAppIdentifierName = "mutable.app.identifier"
+
 const charset = "abcdefghijklmnopqrstuvwxyz"
 
 func GenerateRandomString(length int) string {

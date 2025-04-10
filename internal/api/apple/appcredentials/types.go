@@ -1,6 +1,7 @@
 package appcredentials
 
 import (
+	"github.com/fintreal/eas-sdk-go/internal/api/apple/appbuildcredentials"
 	"github.com/fintreal/eas-sdk-go/internal/graphql"
 )
 
@@ -8,23 +9,26 @@ type objWithId struct {
 	Id string `json:"id"`
 }
 
-type BuildCredentials struct {
-	Id               string `json:"id"`
-	DistributionType string `json:"iosDistributionType"`
+type buildCredentials struct {
+	Id                  string    `json:"id"`
+	DistributionType    string    `json:"iosDistributionType"`
+	ProvisioningProfile objWithId `json:"provisioningProfile"`
+	Certificate         objWithId `json:"distributionCertificate"`
+	AppCredentials      objWithId `json:"iosAppCredentials"`
 }
 
 type data struct {
 	Id               string             `json:"id"`
 	App              objWithId          `json:"app"`
 	AppIdentifier    objWithId          `json:"appleAppIdentifier"`
-	BuildCredentials []BuildCredentials `json:"iosAppBuildCredentialsArray"`
+	BuildCredentials []buildCredentials `json:"iosAppBuildCredentialsArray"`
 }
 
 type Data struct {
 	Id               string
 	AppIdentifierId  string
 	AppId            string
-	BuildCredentials []BuildCredentials
+	BuildCredentials []appbuildcredentials.Data
 }
 
 type GetData struct {

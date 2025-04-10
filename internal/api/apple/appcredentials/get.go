@@ -1,6 +1,10 @@
 package appcredentials
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/fintreal/eas-sdk-go/internal/api/apple/appbuildcredentials"
+)
 
 type appByAppId struct {
 	Data []data `json:"iosAppCredentials"`
@@ -24,6 +28,15 @@ const getQuery = `
       	iosAppBuildCredentialsArray {
       		id
       		iosDistributionType
+          provisioningProfile {
+            id
+          }
+          distributionCertificate {
+             id
+          }
+          iosAppCredentials {
+            id
+          }
       	}
       }
     }
@@ -50,11 +63,23 @@ func (service *service) Get(data GetData) (*Data, error) {
 func findById(data []data, id string) (*Data, error) {
 	for _, d := range data {
 		if d.Id == id {
+			buildCredentials := []appbuildcredentials.Data{}
+			for _, b := range d.BuildCredentials {
+				buildCredential := appbuildcredentials.Data{
+					Id:                    b.Id,
+					AppCredentialsId:      b.AppCredentials.Id,
+					CertificateId:         b.Certificate.Id,
+					DistributionType:      b.DistributionType,
+					ProvisioningProfileId: b.ProvisioningProfile.Id,
+				}
+				buildCredentials = append(buildCredentials, buildCredential)
+			}
+
 			return &Data{
 				Id:               d.Id,
 				AppId:            d.App.Id,
 				AppIdentifierId:  d.AppIdentifier.Id,
-				BuildCredentials: d.BuildCredentials,
+				BuildCredentials: buildCredentials,
 			}, nil
 		}
 	}

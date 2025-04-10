@@ -19,14 +19,20 @@ func TestGetAppCredentials(t *testing.T) {
 		Id:              input.Id,
 		AppId:           input.AppId,
 		AppIdentifierId: "90289e95-99c2-4b21-88cc-8d84b6ab7477",
-		BuildCredentials: []eas.AppCredentialsBuildCredentials{
+		BuildCredentials: []eas.AppBuildCredentialsData{
 			{
-				Id:               "6ed2748a-f54c-4da1-8187-16593ef195cd",
-				DistributionType: "APP_STORE",
+				Id:                    "6ed2748a-f54c-4da1-8187-16593ef195cd",
+				DistributionType:      "APP_STORE",
+				CertificateId:         "702635c5-3aa1-477c-83b6-bb66a1644aad",
+				ProvisioningProfileId: "72157c17-10db-4851-8633-afd5a08384ce",
+				AppCredentialsId:      "11f2b3f8-ddad-4626-8984-2b96efb28d3c",
 			},
 			{
-				Id:               "bc23563b-b905-481b-941e-8ae412b994b3",
-				DistributionType: "DEVELOPMENT",
+				Id:                    "bc23563b-b905-481b-941e-8ae412b994b3",
+				DistributionType:      "DEVELOPMENT",
+				CertificateId:         "702635c5-3aa1-477c-83b6-bb66a1644aad",
+				ProvisioningProfileId: "72157c17-10db-4851-8633-afd5a08384ce",
+				AppCredentialsId:      "11f2b3f8-ddad-4626-8984-2b96efb28d3c",
 			},
 		},
 	}

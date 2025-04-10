@@ -3,6 +3,7 @@ package appcredentials
 import (
 	"testing"
 
+	"github.com/fintreal/eas-sdk-go/internal/api/apple/appbuildcredentials"
 	"github.com/fintreal/eas-sdk-go/internal/utils"
 )
 
@@ -11,7 +12,7 @@ func TestCreate(t *testing.T) {
 		Id:               "test-id",
 		AppIdentifierId:  "test-app-identifier-id",
 		AppId:            "test-app-id",
-		BuildCredentials: []BuildCredentials{},
+		BuildCredentials: []appbuildcredentials.Data{},
 	}
 
 	expectedVariables := map[string]any{
@@ -29,7 +30,7 @@ func TestCreate(t *testing.T) {
 				AppIdentifier: objWithId{
 					Id: expectedData.AppIdentifierId,
 				},
-				BuildCredentials: expectedData.BuildCredentials,
+				BuildCredentials: []buildCredentials{},
 			},
 		},
 	}

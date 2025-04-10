@@ -3,6 +3,7 @@ package appcredentials
 import (
 	"testing"
 
+	"github.com/fintreal/eas-sdk-go/internal/api/apple/appbuildcredentials"
 	"github.com/fintreal/eas-sdk-go/internal/utils"
 )
 
@@ -11,14 +12,18 @@ func TestGetByIdentifier(t *testing.T) {
 		Id:    "test-id",
 		AppId: "test-app-id",
 	}
+	buildCredential := appbuildcredentials.Data{
+		Id:                    "test-build-credential-id",
+		DistributionType:      "test-distribution-type",
+		CertificateId:         "test-certificate-id",
+		ProvisioningProfileId: "test-provisioning-profile-id",
+		AppCredentialsId:      input.Id,
+	}
 	expectedData := &Data{
-		Id:              input.Id,
-		AppIdentifierId: "test-app-identifier-id",
-		AppId:           input.AppId,
-		BuildCredentials: []BuildCredentials{{
-			Id:               "test-build-credential-id",
-			DistributionType: "test-distribution-type",
-		}},
+		Id:               input.Id,
+		AppIdentifierId:  "test-app-identifier-id",
+		AppId:            input.AppId,
+		BuildCredentials: []appbuildcredentials.Data{buildCredential},
 	}
 
 	expectedVariables := map[string]any{
@@ -35,7 +40,19 @@ func TestGetByIdentifier(t *testing.T) {
 				AppIdentifier: objWithId{
 					Id: expectedData.AppIdentifierId,
 				},
-				BuildCredentials: expectedData.BuildCredentials,
+				BuildCredentials: []buildCredentials{{
+					Id:               buildCredential.Id,
+					DistributionType: buildCredential.DistributionType,
+					AppCredentials: objWithId{
+						Id: buildCredential.AppCredentialsId,
+					},
+					Certificate: objWithId{
+						Id: buildCredential.CertificateId,
+					},
+					ProvisioningProfile: objWithId{
+						Id: buildCredential.ProvisioningProfileId,
+					},
+				}},
 			}},
 		},
 	}

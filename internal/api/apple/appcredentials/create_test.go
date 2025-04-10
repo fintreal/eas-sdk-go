@@ -8,9 +8,10 @@ import (
 
 func TestCreate(t *testing.T) {
 	expectedData := &Data{
-		Id:              "test-id",
-		AppIdentifierId: "test-app-identifier-id",
-		AppId:           "test-app-id",
+		Id:               "test-id",
+		AppIdentifierId:  "test-app-identifier-id",
+		AppId:            "test-app-id",
+		BuildCredentials: []BuildCredentials{},
 	}
 
 	expectedVariables := map[string]any{
@@ -28,6 +29,7 @@ func TestCreate(t *testing.T) {
 				AppIdentifier: objWithId{
 					Id: expectedData.AppIdentifierId,
 				},
+				BuildCredentials: expectedData.BuildCredentials,
 			},
 		},
 	}

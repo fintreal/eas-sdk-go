@@ -15,6 +15,10 @@ func TestGetByIdentifier(t *testing.T) {
 		Id:              input.Id,
 		AppIdentifierId: "test-app-identifier-id",
 		AppId:           input.AppId,
+		BuildCredentials: []BuildCredentials{{
+			Id:               "test-build-credential-id",
+			DistributionType: "test-distribution-type",
+		}},
 	}
 
 	expectedVariables := map[string]any{
@@ -31,6 +35,7 @@ func TestGetByIdentifier(t *testing.T) {
 				AppIdentifier: objWithId{
 					Id: expectedData.AppIdentifierId,
 				},
+				BuildCredentials: expectedData.BuildCredentials,
 			}},
 		},
 	}

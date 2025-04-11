@@ -7,7 +7,7 @@ import (
 	"github.com/fintreal/eas-sdk-go/internal/utils"
 )
 
-func TestCreate(t *testing.T) {
+func TestUpdate(t *testing.T) {
 	pushKeyId := "test-push-key-id"
 	appStoreApiKeyId := "test-app-store-api-key-id"
 	expectedData := &Data{
@@ -20,14 +20,13 @@ func TestCreate(t *testing.T) {
 	}
 
 	expectedVariables := map[string]any{
-		"appId":            expectedData.AppId,
-		"appIdentifierId":  expectedData.AppIdentifierId,
+		"id":               expectedData.Id,
 		"appStoreApiKeyId": expectedData.AppStoreApiKeyId,
 		"pushKeyId":        expectedData.PushKeyId,
 	}
 
-	mockResponse := createResponse{
-		IosAppCredentials: createIosAppCredentials{
+	mockResponse := updateResponse{
+		IosAppCredentials: updateIosAppCredentials{
 			Data: data{
 				Id: expectedData.Id,
 				App: objWithId{
@@ -47,19 +46,18 @@ func TestCreate(t *testing.T) {
 		},
 	}
 
-	input := &CreateData{
-		AppId:            expectedData.AppId,
-		AppIdentifierId:  expectedData.AppIdentifierId,
+	input := &UpdateData{
+		Id:               expectedData.Id,
 		AppStoreApiKeyId: &appStoreApiKeyId,
 		PushKeyId:        &pushKeyId,
 	}
 
-	config := utils.TestConfig[CreateData, Data, createResponse, Service]{
+	config := utils.TestConfig[UpdateData, Data, updateResponse, Service]{
 		NewServiceFunction: NewService,
-		FunctionUnderTest:  "Create",
+		FunctionUnderTest:  "Update",
 		Input:              input,
 		MockResponse:       mockResponse,
-		ExpectedQuery:      createQuery,
+		ExpectedQuery:      updateQuery,
 		ExpectedVariables:  expectedVariables,
 		ExpectedData:       expectedData,
 	}

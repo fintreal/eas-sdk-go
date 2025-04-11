@@ -48,6 +48,7 @@ type GetByIdentifierAppStoreApiKeyData = appstoreapikey.GeyByIdentifierData
 
 type AppCredentialsData = appcredentials.Data
 type CreateAppCredentialsData = appcredentials.CreateData
+type UpdateAppCredentialsData = appcredentials.UpdateData
 type GetAppCredentialsData = appcredentials.GetData
 
 type AppBuildCredentialsData = appbuildcredentials.Data

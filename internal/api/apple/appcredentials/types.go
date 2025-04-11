@@ -47,9 +47,16 @@ type CreateData struct {
 	PushKeyId        *string
 }
 
+type UpdateData struct {
+	Id               string
+	AppStoreApiKeyId *string
+	PushKeyId        *string
+}
+
 type Service interface {
 	Get(GetData) (*Data, error)
 	Create(CreateData) (*Data, error)
+	Update(UpdateData) (*Data, error)
 	Delete(string) (*any, error)
 }
 

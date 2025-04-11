@@ -42,7 +42,7 @@ func TestGetAppCredentials(t *testing.T) {
 	assert.Equal(t, nil, actualErr)
 }
 
-func TestCreateAndDeleteAppCredentials(t *testing.T) {
+func TestCreateUpdateAndDeleteAppCredentials(t *testing.T) {
 	input := eas.CreateAppCredentialsData{
 		AppId:           utils.ImmutableAppId,
 		AppIdentifierId: utils.MutableAppIdentifierId,
@@ -51,6 +51,22 @@ func TestCreateAndDeleteAppCredentials(t *testing.T) {
 	actualData, actualErr := utils.Client.Apple.AppCredentials.Create(input)
 	assert.Equal(t, input.AppId, actualData.AppId)
 	assert.Equal(t, input.AppIdentifierId, actualData.AppIdentifierId)
+	assert.Nil(t, actualData.AppStoreApiKeyId)
+	assert.Nil(t, actualData.PushKeyId)
+	assert.Equal(t, nil, actualErr)
+
+	updateInput := eas.UpdateAppCredentialsData{
+		Id:               actualData.Id,
+		AppStoreApiKeyId: &utils.ImmutableAppStoreApiKeyId,
+		PushKeyId:        nil,
+	}
+
+	actualData, actualErr = utils.Client.Apple.AppCredentials.Update(updateInput)
+
+	assert.Equal(t, input.AppId, actualData.AppId)
+	assert.Equal(t, input.AppIdentifierId, actualData.AppIdentifierId)
+	assert.Equal(t, utils.ImmutableAppStoreApiKeyId, *actualData.AppStoreApiKeyId)
+	assert.Nil(t, actualData.PushKeyId)
 	assert.Equal(t, nil, actualErr)
 
 	_, actualErr = utils.Client.Apple.AppCredentials.Delete(actualData.Id)

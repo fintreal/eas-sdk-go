@@ -17,30 +17,16 @@ const createQuery = `
       iosAppCredentialsInput: { appStoreConnectApiKeyForSubmissionsId: $appStoreApiKeyId, pushKeyId: $pushKeyId }
     ) {
       id
-      app {
-        id
-      }
-      appleAppIdentifier {
-        id
-      }
-      appStoreConnectApiKeyForSubmissions {
-        id
-      }
-      pushKey {
-        id
-      }
+      app { id }
+      appleAppIdentifier { id }
+      appStoreConnectApiKeyForSubmissions { id }
+      pushKey { id }
       iosAppBuildCredentialsArray {
       	id
       	iosDistributionType
-        provisioningProfile {
-          id
-        }
-        distributionCertificate {
-          id
-        }
-        iosAppCredentials {
-          id
-        }
+        provisioningProfile { id }
+        distributionCertificate { id }
+        iosAppCredentials { id }
       }
     }
   }

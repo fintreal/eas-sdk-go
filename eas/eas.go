@@ -2,6 +2,7 @@ package eas
 
 import (
 	"github.com/fintreal/eas-sdk-go/internal/api/account"
+	"github.com/fintreal/eas-sdk-go/internal/api/android"
 	"github.com/fintreal/eas-sdk-go/internal/api/app"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple"
 	"github.com/fintreal/eas-sdk-go/internal/api/appvariable"
@@ -16,6 +17,7 @@ type EASClient struct {
 	AppVariable appvariable.Service
 	Account     account.AccountService
 	Apple       apple.Service
+	Android     android.Service
 }
 
 // EASClient capable of interacting with Expo EAS GraphQL API
@@ -32,5 +34,6 @@ func NewEASClient(token string) *EASClient {
 		AppVariable: appvariable.NewService(graphql),
 		Account:     account.NewAccountService(graphql),
 		Apple:       apple.NewService(graphql),
+		Android:     android.NewService(graphql),
 	}
 }

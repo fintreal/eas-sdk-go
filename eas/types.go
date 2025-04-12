@@ -2,6 +2,7 @@ package eas
 
 import (
 	"github.com/fintreal/eas-sdk-go/internal/api/account"
+	"github.com/fintreal/eas-sdk-go/internal/api/android/googleserviceaccountkey"
 	"github.com/fintreal/eas-sdk-go/internal/api/app"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/appbuildcredentials"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/appcredentials"
@@ -54,3 +55,6 @@ type GetAppCredentialsData = appcredentials.GetData
 type AppBuildCredentialsData = appbuildcredentials.Data
 type CreateAppBuildCredentialsData = appbuildcredentials.CreateData
 type GetAppBuildCredentialsData = appbuildcredentials.GetData
+
+type GetByProjectIdentifierGoogleServiceAccountKeyData = googleserviceaccountkey.GetByProjectIdentifierData
+type GoogleServiceAccountKeyData = googleserviceaccountkey.Data

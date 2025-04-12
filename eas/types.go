@@ -10,6 +10,7 @@ import (
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/appstoreapikey"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/certificate"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/provisioningprofile"
+	"github.com/fintreal/eas-sdk-go/internal/api/apple/pushkey"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/team"
 	"github.com/fintreal/eas-sdk-go/internal/api/appvariable"
 	"github.com/fintreal/eas-sdk-go/internal/api/me"
@@ -58,3 +59,6 @@ type GetAppBuildCredentialsData = appbuildcredentials.GetData
 
 type GetByProjectIdentifierGoogleServiceAccountKeyData = googleserviceaccountkey.GetByProjectIdentifierData
 type GoogleServiceAccountKeyData = googleserviceaccountkey.Data
+
+type GetByIdentifierPushKeyData = pushkey.GeyByIdentifierData
+type PushKeyData = pushkey.Data

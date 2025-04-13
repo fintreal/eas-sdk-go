@@ -2,10 +2,11 @@ package eas
 
 import (
 	"github.com/fintreal/eas-sdk-go/internal/api/account"
+	androidappbuildcredentials "github.com/fintreal/eas-sdk-go/internal/api/android/appbuildcredentials"
 	androidappcredentials "github.com/fintreal/eas-sdk-go/internal/api/android/appcredentials"
 	"github.com/fintreal/eas-sdk-go/internal/api/android/googleserviceaccountkey"
 	"github.com/fintreal/eas-sdk-go/internal/api/app"
-	"github.com/fintreal/eas-sdk-go/internal/api/apple/appbuildcredentials"
+	appleappbuildcredentials "github.com/fintreal/eas-sdk-go/internal/api/apple/appbuildcredentials"
 	appleappcredentials "github.com/fintreal/eas-sdk-go/internal/api/apple/appcredentials"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/appidentifier"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/appstoreapikey"
@@ -54,9 +55,9 @@ type CreateAppCredentialsData = appleappcredentials.CreateData
 type UpdateAppCredentialsData = appleappcredentials.UpdateData
 type GetAppCredentialsData = appleappcredentials.GetData
 
-type AppBuildCredentialsData = appbuildcredentials.Data
-type CreateAppBuildCredentialsData = appbuildcredentials.CreateData
-type GetAppBuildCredentialsData = appbuildcredentials.GetData
+type AppBuildCredentialsData = appleappbuildcredentials.Data
+type CreateAppBuildCredentialsData = appleappbuildcredentials.CreateData
+type GetAppBuildCredentialsData = appleappbuildcredentials.GetData
 
 type GetByProjectIdentifierGoogleServiceAccountKeyData = googleserviceaccountkey.GetByProjectIdentifierData
 type GoogleServiceAccountKeyData = googleserviceaccountkey.Data
@@ -67,3 +68,7 @@ type PushKeyData = pushkey.Data
 type AndroidAppCredentialsData = androidappcredentials.Data
 type CreateAndroidAppCredentialsData = androidappcredentials.CreateData
 type GetAndroidAppCredentialsData = androidappcredentials.GetData
+
+type AndroidAppBuildCredentialsData = androidappbuildcredentials.Data
+type GetAndroidAppBuildCredentialsData = androidappbuildcredentials.GetData
+type CreateAndroidAppBuildCredentialsData = androidappbuildcredentials.CreateData

@@ -13,31 +13,22 @@ func TestGet(t *testing.T) {
 		AppCredentialsId: "test-app-credentials-id",
 	}
 	expectedData := &Data{
-		Id:                    input.Id,
-		DistributionType:      "APP_STORE",
-		CertificateId:         "test-certificate-id",
-		ProvisioningProfileId: "test-provisoning-profile-id",
-		AppCredentialsId:      input.AppCredentialsId,
+		Id:               input.Id,
+		KeystoreId:       "test-keystore-id",
+		AppCredentialsId: input.AppCredentialsId,
+		Name:             "test-name",
 	}
 
 	expectedVariables := map[string]any{"appId": input.AppId}
 
 	mockResponse := getResponse{
 		AppByAppId: appByAppId{
-			IosAppCredentials: []iosAppCredentials{{
+			AndroidAppCredentials: []androidAppCredentials{{
 				Id: expectedData.AppCredentialsId,
 				Data: []data{{
-					Id:               expectedData.Id,
-					DistributionType: expectedData.DistributionType,
-					ProvisioningProfile: objWithId{
-						Id: expectedData.ProvisioningProfileId,
-					},
-					Certificate: objWithId{
-						Id: expectedData.CertificateId,
-					},
-					AppCredentials: objWithId{
-						Id: expectedData.AppCredentialsId,
-					},
+					Id:       expectedData.Id,
+					Keystore: objWithId{Id: expectedData.KeystoreId},
+					Name:     expectedData.Name,
 				}},
 			}},
 		},

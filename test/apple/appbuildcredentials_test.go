@@ -12,7 +12,7 @@ func TestGetAppBuildCredentials(t *testing.T) {
 	input := eas.GetAppBuildCredentialsData{
 		Id:               "6ed2748a-f54c-4da1-8187-16593ef195cd",
 		AppId:            utils.ImmutableAppId,
-		AppCredentialsId: utils.ImmutableAppCredentialsId,
+		AppCredentialsId: utils.ImmutableAppleAppCredentialsId,
 	}
 	actualData, actualErr := utils.Client.Apple.AppBuildCredentials.Get(input)
 
@@ -21,7 +21,7 @@ func TestGetAppBuildCredentials(t *testing.T) {
 		DistributionType:      "APP_STORE",
 		CertificateId:         utils.ImmutableCertificateId,
 		ProvisioningProfileId: "72157c17-10db-4851-8633-afd5a08384ce", // TODO refactor
-		AppCredentialsId:      utils.ImmutableAppCredentialsId,
+		AppCredentialsId:      utils.ImmutableAppleAppCredentialsId,
 	}
 
 	assert.Equal(t, expectedData, actualData)

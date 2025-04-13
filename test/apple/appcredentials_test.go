@@ -10,7 +10,7 @@ import (
 
 func TestGetAppCredentials(t *testing.T) {
 	input := eas.GetAppCredentialsData{
-		Id:    utils.ImmutableAppCredentialsId,
+		Id:    utils.ImmutableAppleAppCredentialsId,
 		AppId: utils.ImmutableAppId,
 	}
 	actualData, actualErr := utils.Client.Apple.AppCredentials.Get(input)

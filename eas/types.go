@@ -2,10 +2,11 @@ package eas
 
 import (
 	"github.com/fintreal/eas-sdk-go/internal/api/account"
+	androidappcredentials "github.com/fintreal/eas-sdk-go/internal/api/android/appcredentials"
 	"github.com/fintreal/eas-sdk-go/internal/api/android/googleserviceaccountkey"
 	"github.com/fintreal/eas-sdk-go/internal/api/app"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/appbuildcredentials"
-	"github.com/fintreal/eas-sdk-go/internal/api/apple/appcredentials"
+	appleappcredentials "github.com/fintreal/eas-sdk-go/internal/api/apple/appcredentials"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/appidentifier"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/appstoreapikey"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/certificate"
@@ -48,10 +49,10 @@ type GetProvisioningProfileData = provisioningprofile.GetData
 type AppStoreApiKeyData = appstoreapikey.Data
 type GetByIdentifierAppStoreApiKeyData = appstoreapikey.GeyByIdentifierData
 
-type AppCredentialsData = appcredentials.Data
-type CreateAppCredentialsData = appcredentials.CreateData
-type UpdateAppCredentialsData = appcredentials.UpdateData
-type GetAppCredentialsData = appcredentials.GetData
+type AppCredentialsData = appleappcredentials.Data
+type CreateAppCredentialsData = appleappcredentials.CreateData
+type UpdateAppCredentialsData = appleappcredentials.UpdateData
+type GetAppCredentialsData = appleappcredentials.GetData
 
 type AppBuildCredentialsData = appbuildcredentials.Data
 type CreateAppBuildCredentialsData = appbuildcredentials.CreateData
@@ -62,3 +63,7 @@ type GoogleServiceAccountKeyData = googleserviceaccountkey.Data
 
 type GetByIdentifierPushKeyData = pushkey.GeyByIdentifierData
 type PushKeyData = pushkey.Data
+
+type AndroidAppCredentialsData = androidappcredentials.Data
+type CreateAndroidAppCredentialsData = androidappcredentials.CreateData
+type GetAndroidAppCredentialsData = androidappcredentials.GetData

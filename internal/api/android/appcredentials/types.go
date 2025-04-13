@@ -1,16 +1,26 @@
 package appcredentials
 
-import "github.com/fintreal/eas-sdk-go/internal/graphql"
+import (
+	"github.com/fintreal/eas-sdk-go/internal/api/android/appbuildcredentials"
+	"github.com/fintreal/eas-sdk-go/internal/graphql"
+)
 
 type objWithId struct {
 	Id string `json:"id"`
 }
 
+type buildCredentialsData struct {
+	Id       string    `json:"id"`
+	Name     string    `json:"name"`
+	Keystore objWithId `json:"androidKeystore"`
+}
+
 type data struct {
-	Id                      string    `json:"id"`
-	Identifier              string    `json:"applicationIdentifier"`
-	App                     objWithId `json:"app"`
-	GoogleServiceAccountKey objWithId `json:"googleServiceAccountKeyForSubmissions"`
+	Id                      string                 `json:"id"`
+	Identifier              string                 `json:"applicationIdentifier"`
+	App                     objWithId              `json:"app"`
+	GoogleServiceAccountKey objWithId              `json:"googleServiceAccountKeyForSubmissions"`
+	BuildCredentials        []buildCredentialsData `json:"androidAppBuildCredentialsArray"`
 }
 
 type Data struct {
@@ -18,6 +28,7 @@ type Data struct {
 	AppId                     string
 	Identifier                string
 	GoogleServiceAccountKeyId string
+	BuildCredentials          []appbuildcredentials.Data
 }
 
 type GetData struct {

@@ -20,16 +20,21 @@ const createQuery = `
         applicationIdentifier
         googleServiceAccountKeyForSubmissions { id }
         app { id }
+				androidAppBuildCredentialsArray {
+					name
+					id
+					androidKeystore { id }
+				}
       }
     }
 	}
 `
 
-func (service *service) Create(data CreateData) (*Data, error) {
+func (service *service) Create(input CreateData) (*Data, error) {
 	variables := map[string]any{
-		"appId":                     data.AppId,
-		"identifier":                data.Identifier,
-		"googleServiceAccountKeyId": data.GoogleServiceAccountKeyId,
+		"appId":                     input.AppId,
+		"identifier":                input.Identifier,
+		"googleServiceAccountKeyId": input.GoogleServiceAccountKeyId,
 	}
 
 	var response createResponse
@@ -39,10 +44,8 @@ func (service *service) Create(data CreateData) (*Data, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &Data{
-		Id:                        response.AndroidAppCredentials.Data.Id,
-		AppId:                     response.AndroidAppCredentials.Data.App.Id,
-		Identifier:                response.AndroidAppCredentials.Data.Identifier,
-		GoogleServiceAccountKeyId: response.AndroidAppCredentials.Data.GoogleServiceAccountKey.Id,
-	}, nil
+
+	data := mapData(response.AndroidAppCredentials.Data)
+
+	return &data, nil
 }

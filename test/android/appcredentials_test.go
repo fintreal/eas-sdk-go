@@ -20,6 +20,12 @@ func TestGetAppCredentials(t *testing.T) {
 		AppId:                     input.AppId,
 		Identifier:                "my.test.app.identifier",
 		GoogleServiceAccountKeyId: "36b45ce5-1cf3-4e29-a04d-88fb3c4b5683",
+		BuildCredentials: []eas.AndroidAppBuildCredentialsData{{
+			AppCredentialsId: input.Id,
+			Id:               utils.ImmutableAndroidAppBuildCredentialsId,
+			Name:             "Default",
+			KeystoreId:       utils.ImmutableKeystoreId,
+		}},
 	}
 
 	assert.Equal(t, expectedData, actualData)

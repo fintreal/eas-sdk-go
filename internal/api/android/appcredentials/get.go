@@ -18,6 +18,11 @@ const getQuery = `
         applicationIdentifier
         googleServiceAccountKeyForSubmissions { id }
         id
+				androidAppBuildCredentialsArray {
+					name
+					id
+					androidKeystore { id }
+				}
       }
     }
 	}
@@ -42,13 +47,8 @@ func (service *service) Get(data GetData) (*Data, error) {
 func findById(data []data, id string) (*Data, error) {
 	for _, d := range data {
 		if d.Id == id {
-			data := &Data{
-				Id:                        d.Id,
-				AppId:                     d.App.Id,
-				Identifier:                d.Identifier,
-				GoogleServiceAccountKeyId: d.GoogleServiceAccountKey.Id,
-			}
-			return data, nil
+			data := mapData(d)
+			return &data, nil
 		}
 	}
 	return nil, fmt.Errorf("couldn't find app credentials with id %s", id)

@@ -3,6 +3,7 @@ package appcredentials
 import (
 	"testing"
 
+	"github.com/fintreal/eas-sdk-go/internal/api/android/appbuildcredentials"
 	"github.com/fintreal/eas-sdk-go/internal/utils"
 )
 
@@ -12,6 +13,7 @@ func TestCreate(t *testing.T) {
 		AppId:                     "test-app-id",
 		Identifier:                "test-identifier",
 		GoogleServiceAccountKeyId: "test-google-service-account-key-id",
+		BuildCredentials:          []appbuildcredentials.Data{},
 	}
 
 	expectedVariables := map[string]any{

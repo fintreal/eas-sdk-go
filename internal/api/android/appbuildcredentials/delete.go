@@ -2,8 +2,8 @@ package appbuildcredentials
 
 const deleteQuery = `
 	mutation ($id: ID!) {
-    androidAppCredentials {
-      deleteAndroidAppCredentials(id: $id) { id }
+    androidAppBuildCredentials {
+      deleteAndroidAppBuildCredentials(id: $id) { id }
     }
 	}
 `

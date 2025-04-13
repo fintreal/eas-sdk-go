@@ -36,10 +36,6 @@ func (service *service) Get(data GetData) (*Data, error) {
 		return nil, err
 	}
 
-	if len(response.AppByAppId.Data) == 0 {
-		return nil, nil
-	}
-
 	return findById(response.AppByAppId.Data, data.Id)
 }
 

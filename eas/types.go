@@ -2,10 +2,10 @@ package eas
 
 import (
 	"github.com/fintreal/eas-sdk-go/internal/api/account"
+	androidappcredentials "github.com/fintreal/eas-sdk-go/internal/api/android/appcredentials"
 	"github.com/fintreal/eas-sdk-go/internal/api/android/googleserviceaccountkey"
 	"github.com/fintreal/eas-sdk-go/internal/api/app"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/appbuildcredentials"
-	androidappcredentials "github.com/fintreal/eas-sdk-go/internal/api/apple/appcredentials"
 	appleappcredentials "github.com/fintreal/eas-sdk-go/internal/api/apple/appcredentials"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/appidentifier"
 	"github.com/fintreal/eas-sdk-go/internal/api/apple/appstoreapikey"

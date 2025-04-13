@@ -6,7 +6,7 @@ import (
 	"github.com/fintreal/eas-sdk-go/internal/utils"
 )
 
-func TestCre(t *testing.T) {
+func TestCreate(t *testing.T) {
 	expectedData := &Data{
 		Id:               "test-id",
 		Name:             "test-name",

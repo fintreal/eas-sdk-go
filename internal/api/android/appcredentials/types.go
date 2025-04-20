@@ -9,6 +9,11 @@ type objWithId struct {
 	Id string `json:"id"`
 }
 
+type fcmKey struct {
+	Id      string `json:"id"`
+	KeyJson string `json:"keyJson"`
+}
+
 type buildCredentialsData struct {
 	Id       string    `json:"id"`
 	Name     string    `json:"name"`
@@ -20,6 +25,7 @@ type data struct {
 	Identifier              string                 `json:"applicationIdentifier"`
 	App                     objWithId              `json:"app"`
 	GoogleServiceAccountKey objWithId              `json:"googleServiceAccountKeyForSubmissions"`
+	FCMKey                  *fcmKey                `json:"googleServiceAccountKeyForFcmV1"`
 	BuildCredentials        []buildCredentialsData `json:"androidAppBuildCredentialsArray"`
 }
 
@@ -28,6 +34,8 @@ type Data struct {
 	AppId                     string
 	Identifier                string
 	GoogleServiceAccountKeyId string
+	FCMKey                    *string
+	FCMKeyId                  *string
 	BuildCredentials          []appbuildcredentials.Data
 }
 

@@ -29,6 +29,7 @@ jobs:
     env:
       EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
       IMMUTABLE_PROVISIONING_PROFILE_BASE64: ${{ secrets.IMMUTABLE_PROVISIONING_PROFILE_BASE64 }}
+      FCM_KEY: ${{ secrets.FCM_KEY }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

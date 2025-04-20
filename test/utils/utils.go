@@ -10,6 +10,7 @@ import (
 var Token = os.Getenv("EXPO_TOKEN")
 var Client = eas.NewEASClient(Token)
 var ImmutableProvisioningProfileBase64 = os.Getenv("IMMUTABLE_PROVISIONING_PROFILE_BASE64")
+var FCMKey = os.Getenv("FCM_KEY")
 
 // TEST IDs
 

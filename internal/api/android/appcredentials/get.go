@@ -14,10 +14,14 @@ const getQuery = `
 	query ($appId: String!) {
     appByAppId(appId: $appId) {
       androidAppCredentials {
+			  id
         app { id }
         applicationIdentifier
         googleServiceAccountKeyForSubmissions { id }
-        id
+				googleServiceAccountKeyForFcmV1 {
+          id
+          keyJson
+        }
 				androidAppBuildCredentialsArray {
 					name
 					id

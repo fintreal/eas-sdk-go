@@ -13,11 +13,16 @@ func mapData(data data) Data {
 		}
 		buildCredentials = append(buildCredentials, buildCredential)
 	}
-	return Data{
+	output := Data{
 		Id:                        data.Id,
 		AppId:                     data.App.Id,
 		Identifier:                data.Identifier,
 		GoogleServiceAccountKeyId: data.GoogleServiceAccountKey.Id,
 		BuildCredentials:          buildCredentials,
 	}
+	if data.FCMKey != nil {
+		output.FCMKey = &data.FCMKey.KeyJson
+		output.FCMKeyId = &data.FCMKey.Id
+	}
+	return output
 }

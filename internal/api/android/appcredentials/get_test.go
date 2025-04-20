@@ -12,6 +12,10 @@ func TestGetByIdentifier(t *testing.T) {
 		Id:    "test-id",
 		AppId: "test-app-id",
 	}
+	fcmKey := &fcmKey{
+		Id:      "test-fcm-key-id",
+		KeyJson: "test-fcm-key-json",
+	}
 
 	buildCredential := appbuildcredentials.Data{
 		Id:               "test-build-credentials-id",
@@ -25,6 +29,8 @@ func TestGetByIdentifier(t *testing.T) {
 		AppId:                     input.AppId,
 		Identifier:                "test-identifier",
 		GoogleServiceAccountKeyId: "test-google-service-account-key-id",
+		FCMKey:                    &fcmKey.KeyJson,
+		FCMKeyId:                  &fcmKey.Id,
 		BuildCredentials:          []appbuildcredentials.Data{buildCredential},
 	}
 
@@ -42,6 +48,7 @@ func TestGetByIdentifier(t *testing.T) {
 				GoogleServiceAccountKey: objWithId{
 					Id: expectedData.GoogleServiceAccountKeyId,
 				},
+				FCMKey: fcmKey,
 				BuildCredentials: []buildCredentialsData{{
 					Id:   buildCredential.Id,
 					Name: buildCredential.Name,

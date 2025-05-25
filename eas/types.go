@@ -6,6 +6,7 @@ import (
 	androidappcredentials "github.com/fintreal/eas-sdk-go/internal/api/android/appcredentials"
 	"github.com/fintreal/eas-sdk-go/internal/api/android/fcmkey"
 	"github.com/fintreal/eas-sdk-go/internal/api/android/googleserviceaccountkey"
+	"github.com/fintreal/eas-sdk-go/internal/api/android/keystore"
 	"github.com/fintreal/eas-sdk-go/internal/api/app"
 	appleappbuildcredentials "github.com/fintreal/eas-sdk-go/internal/api/apple/appbuildcredentials"
 	appleappcredentials "github.com/fintreal/eas-sdk-go/internal/api/apple/appcredentials"
@@ -75,3 +76,6 @@ type GetAndroidAppBuildCredentialsData = androidappbuildcredentials.GetData
 type CreateAndroidAppBuildCredentialsData = androidappbuildcredentials.CreateData
 
 type CreateFCMKey = fcmkey.CreateData
+
+type AndroidKeystoreData = keystore.Data
+type CreateAndroidKeystoreData = keystore.CreateData

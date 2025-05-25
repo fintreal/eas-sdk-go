@@ -23,6 +23,7 @@ type Service interface {
 	Create(data CreateData) (*Data, error)
 	Update(data UpdateData) (*Data, error)
 	Get(id string) (*Data, error)
+	GetByFullName(fullName string) (*Data, error)
 }
 
 type service struct {

@@ -22,3 +22,33 @@ func (service *service) Get(id string) (*Data, error) {
 
 	return response.Data, err
 }
+
+const getByFullNameQuery = `
+	query App($fullName: String!) {
+    app {
+      byFullName(fullName: $fullName) {
+        id
+        name
+        slug
+      }
+    }
+	}
+`
+
+type app struct {
+	Data *Data `json:"byFullName"`
+}
+
+type getByFullNameResponse struct {
+	App *app `json:"app"`
+}
+
+// Retrieves an App from EAS by it's full name (@organization/app-slug)
+func (service *service) GetByFullName(fullName string) (*Data, error) {
+	variables := map[string]any{"fullName": fullName}
+
+	var response getByFullNameResponse
+	err := service.graphql.Query(getByFullNameQuery, variables, &response)
+
+	return response.App.Data, err
+}

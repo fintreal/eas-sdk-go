@@ -21,6 +21,19 @@ func TestAppGet(t *testing.T) {
 	assert.Equal(t, nil, actualErr)
 }
 
+func TestAppGetByFullName(t *testing.T) {
+	expectedData := &app.Data{
+		Id:   utils.ImmutableAppId,
+		Name: "Test App",
+		Slug: "test-app",
+	}
+
+	actualData, actualErr := utils.Client.App.GetByFullName("@expo-eas-sdk-go/test-app")
+
+	assert.Equal(t, expectedData, actualData)
+	assert.Equal(t, nil, actualErr)
+}
+
 func TestAppCreate(t *testing.T) {
 	inputData := app.CreateData{
 		AccountId: utils.AccountId,

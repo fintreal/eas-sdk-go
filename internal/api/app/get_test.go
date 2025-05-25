@@ -24,3 +24,22 @@ func TestGet(t *testing.T) {
 	}
 	utils.Test(t, config)
 }
+
+func TestGetByFullName(t *testing.T) {
+	expectedData := &Data{
+		Id:   "test-id",
+		Name: "test-name",
+		Slug: "test-slug",
+	}
+
+	config := utils.TestConfig[string, Data, getByFullNameResponse, Service]{
+		NewServiceFunction: NewService,
+		FunctionUnderTest:  "GetByFullName",
+		Input:              &expectedData.Id,
+		MockResponse:       getByFullNameResponse{App: &app{Data: expectedData}},
+		ExpectedQuery:      getByFullNameQuery,
+		ExpectedVariables:  map[string]any{"fullName": expectedData.Id},
+		ExpectedData:       expectedData,
+	}
+	utils.Test(t, config)
+}

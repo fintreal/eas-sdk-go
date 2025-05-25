@@ -1,5 +1,7 @@
 package app
 
+import "fmt"
+
 type getResponse struct {
 	Data *Data `json:"appByAppId"`
 }
@@ -49,6 +51,10 @@ func (service *service) GetByFullName(fullName string) (*Data, error) {
 
 	var response getByFullNameResponse
 	err := service.graphql.Query(getByFullNameQuery, variables, &response)
+
+	if response.App == nil {
+		return nil, fmt.Errorf("app not found")
+	}
 
 	return response.App.Data, err
 }

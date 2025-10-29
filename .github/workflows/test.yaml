@@ -43,4 +43,4 @@ jobs:
           go-version: '1.24.1'
       
       - name: Run tests
-        run: go test ./test -count=1 -cover
+        run: go test ./test/... -count=1 -cover

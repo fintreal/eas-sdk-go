@@ -25,3 +25,6 @@ go.work.sum
 .env
 
 docs
+
+# Claude Code local instructions (not published)
+CLAUDE.md

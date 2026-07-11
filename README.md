@@ -1,3 +1,8 @@
+> ⚠️ **Deprecated & archived.** This client has been folded into
+> [terraform-provider-eas](https://github.com/fintreal/terraform-provider-eas)
+> under `internal/eas/` and is no longer maintained as a standalone module.
+> Full history is preserved here for reference.
+
 # eas-sdk-go
 
 Expo Application Services SDK for Go.
